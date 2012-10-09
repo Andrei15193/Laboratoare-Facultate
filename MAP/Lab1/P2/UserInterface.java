@@ -8,6 +8,7 @@ public class UserInterface {
         // Initialize menu
         this.menu = new Menu("Main menu");
         this.menu.addItem(new GetFirstPrimeMenuItem(controller));
+        this.menu.addItem(new GetGoldbachsNumbersMenuItem(controller));
     }
     
     // Runs the interface.

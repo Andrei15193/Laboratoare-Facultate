@@ -7,7 +7,7 @@ public class UserInterface {
     public UserInterface(Controller controller){
         // Initialize menu
         this.menu = new Menu("Main menu");
-        this.menu.addItem(new GetFirstPrimeMenuItem(controller));
+        this.menu.addItem(new GetFirstTwinPrimesMenuItem(controller));
     }
     
     // Runs the interface.
