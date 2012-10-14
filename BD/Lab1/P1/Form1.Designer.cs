@@ -60,6 +60,9 @@
             this.ButtonDeleteMovie = new System.Windows.Forms.Button();
             this.OpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.SaveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.ContextMenuActorsRemove = new System.Windows.Forms.ToolStripMenuItem();
+            this.ContextMenuActorsSelectedActor = new System.Windows.Forms.ToolStripMenuItem();
+            this.ContextMenuActorsAllActors = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenu.SuspendLayout();
             this.MainToolBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NumericVotes)).BeginInit();
@@ -283,14 +286,15 @@
             // ContextMenuActors
             // 
             this.ContextMenuActors.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ContextMenuActorsAddActor});
+            this.ContextMenuActorsAddActor,
+            this.ContextMenuActorsRemove});
             this.ContextMenuActors.Name = "ContextMenuActors";
-            this.ContextMenuActors.Size = new System.Drawing.Size(127, 26);
+            this.ContextMenuActors.Size = new System.Drawing.Size(127, 48);
             // 
             // ContextMenuActorsAddActor
             // 
             this.ContextMenuActorsAddActor.Name = "ContextMenuActorsAddActor";
-            this.ContextMenuActorsAddActor.Size = new System.Drawing.Size(126, 22);
+            this.ContextMenuActorsAddActor.Size = new System.Drawing.Size(152, 22);
             this.ContextMenuActorsAddActor.Text = "Add actor";
             this.ContextMenuActorsAddActor.Click += new System.EventHandler(this.EventAddActor);
             // 
@@ -327,6 +331,29 @@
             // SaveFileDialog
             // 
             this.SaveFileDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.EventSaveFile);
+            // 
+            // ContextMenuActorsRemove
+            // 
+            this.ContextMenuActorsRemove.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ContextMenuActorsSelectedActor,
+            this.ContextMenuActorsAllActors});
+            this.ContextMenuActorsRemove.Name = "ContextMenuActorsRemove";
+            this.ContextMenuActorsRemove.Size = new System.Drawing.Size(152, 22);
+            this.ContextMenuActorsRemove.Text = "Remove";
+            // 
+            // ContextMenuActorsSelectedActor
+            // 
+            this.ContextMenuActorsSelectedActor.Name = "ContextMenuActorsSelectedActor";
+            this.ContextMenuActorsSelectedActor.Size = new System.Drawing.Size(152, 22);
+            this.ContextMenuActorsSelectedActor.Text = "Selected actor";
+            this.ContextMenuActorsSelectedActor.Click += new System.EventHandler(this.EventRemoveSelectedActor);
+            // 
+            // ContextMenuActorsAllActors
+            // 
+            this.ContextMenuActorsAllActors.Name = "ContextMenuActorsAllActors";
+            this.ContextMenuActorsAllActors.Size = new System.Drawing.Size(152, 22);
+            this.ContextMenuActorsAllActors.Text = "All actors";
+            this.ContextMenuActorsAllActors.Click += new System.EventHandler(this.EventRemoveAllActors);
             // 
             // MainForm
             // 
@@ -397,6 +424,9 @@
         private System.Windows.Forms.SaveFileDialog SaveFileDialog;
         private System.Windows.Forms.ContextMenuStrip ContextMenuActors;
         private System.Windows.Forms.ToolStripMenuItem ContextMenuActorsAddActor;
+        private System.Windows.Forms.ToolStripMenuItem ContextMenuActorsRemove;
+        private System.Windows.Forms.ToolStripMenuItem ContextMenuActorsSelectedActor;
+        private System.Windows.Forms.ToolStripMenuItem ContextMenuActorsAllActors;
     }
 }
 

@@ -45,7 +45,6 @@ namespace CSLabBD
 
         private void LoadFromFile(string fileName)
         {
-            // Load from File
             string line;
             System.IO.StreamReader file = new System.IO.StreamReader(fileName);
             while ((line = file.ReadLine()) != null)
@@ -60,7 +59,6 @@ namespace CSLabBD
 
         private void EventSaveFile(object sender, CancelEventArgs e)
         {
-            // Save to file
             int countMinusOne;
             string line;
             string[] actors;
@@ -93,7 +91,8 @@ namespace CSLabBD
 
         private void EventAddActor(object sender, EventArgs e)
         {
-            ListBoxActors.Items.Add(string.Copy(TextBoxTitle.Text));
+            if (addActorDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                ListBoxActors.Items.Add(addActorDialog.ActorName);
         }
 
         private void EventCloseApplication(object sender, EventArgs e)
@@ -111,12 +110,33 @@ namespace CSLabBD
 
         private void EventUpdateMovie(object sender, EventArgs e)
         {
-
+            int index = ListBoxMovies.SelectedIndex;
+            Movie movie = ListBoxMovies.SelectedItem as Movie;
+            if (movie != null)
+            {
+                string[] actors = new string[ListBoxActors.Items.Count];
+                for (int i = 0; i < actors.Length; i++)
+                    actors[i] = ListBoxActors.Items[i].ToString();
+                movie.Title = TextBoxTitle.Text;
+                movie.ReleaseDate = DatePickerReleaseDate.Value;
+                movie.Votes = NumericVotes.Value;
+                movie.Actors = actors;
+                ListBoxMovies.Items.Insert(index, movie);
+                ListBoxMovies.Items.RemoveAt(index + 1);
+                ListBoxMovies.SetSelected(index, true);
+            }
         }
 
         private void EventDeleteMovie(object sender, EventArgs e)
         {
-
+            int index = ListBoxMovies.SelectedIndex;
+            if (index != -1)
+            {
+                ListBoxMovies.Items.RemoveAt(index);
+                TextBoxTitle.Text = "";
+                ListBoxActors.Items.Clear();
+                NumericVotes.Value = NumericVotes.Minimum;
+            }
         }
 
         private void EventMovieSelect(object sender, MouseEventArgs e)
@@ -124,6 +144,20 @@ namespace CSLabBD
             Movie movie = ListBoxMovies.SelectedItem as Movie;
             if (movie != null)
                 PopulateFields(movie);
+        }
+
+        private NewActorDialog addActorDialog = new NewActorDialog();
+
+        private void EventRemoveSelectedActor(object sender, EventArgs e)
+        {
+            int index = ListBoxActors.SelectedIndex;
+            if (index != -1)
+                ListBoxActors.Items.RemoveAt(index);
+        }
+
+        private void EventRemoveAllActors(object sender, EventArgs e)
+        {
+            ListBoxActors.Items.Clear();
         }
     }
 }
