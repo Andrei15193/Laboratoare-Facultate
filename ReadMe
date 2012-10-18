@@ -2,7 +2,7 @@ ReadMe
 
 ------------------------------
 Laboratoarele sunt repartizate pe directorii in felul urmator:
-<abreviere_materie> / Lab<numar_laborator> / P<numar_problema> / <fisiere_sursa>
+<abreviere_materie> / Lab<numar_laborator> / [P<numar_problema>[-H|-L] /] <fisiere_sursa>
 
 MAP = Metode Avansate de Programare
 BD  = Baze de Date
