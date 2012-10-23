@@ -62,4 +62,16 @@ impare([H|T], Rez) :-
 descompune([ ], [[ ], [ ]]).
 descompune(L, [RezPare, RezImpare]) :-
 	pare(L, RezPare),
-	impare(L, RezImpare).
+	impare(L, RezImpare),
+        len(RezPare, LenPare),
+        len(RezImpare, LenImpare),
+        format("Numere pare: ~D\n", LenPare),
+        format("Numere impare: ~D\n", LenImpare).
+
+% len(in L, out N)
+%     L: lista
+%     N: lungimea listei
+len([ ], 0).
+len([H|T], N) :-
+       len(T, N1),
+       N = N1 + 1.
