@@ -3,27 +3,20 @@ Laborator 2.8
 Sa se sorteze o lista cu eliminarea dublurilor. Exemplu: [4 2 6 2 3 4]-->[2 3 4 6]
 */
 
-% esteMinimSauMaiMic(in L, in E)
-%     L: lista
-%     E: un element
-%     Returneaza: true daca E este mai mic decat orice element din L
-%                 sau egal cu minimul din L
-%                 false altfel.
-esteMinimSauMaiMic([ ], _).
-esteMinimSauMaiMic([H|T], E) :-
-	E =< H,
-	esteMinimSauMaiMic(T, E).
-
-% min(L, Min)
+% min(in L, out Min)
 %     L: lista (nevida)
 %     Min: elementul minim din L
-min([H|T], H) :-
-    esteMinimSauMaiMic(T, H),
-    !.
-min([_|T], Min) :-
-	min(T, Min).
+min([H|T], E) :-
+      min(T, H, E).
+min([ ], M, M).
+min([H|T], M, E) :-
+      H < M,
+      min(T, H, E),
+      !.
+min([_|T], M, E) :-
+      min(T, M, E).
 
-% elimina(E, L, Rez)
+% elimina(in E, in L, out Rez)
 %     E: element
 %     L: lista
 %     Rez: L \ {E} (toate aparitile sunt eliminate)
