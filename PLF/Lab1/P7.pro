@@ -55,23 +55,26 @@ impare([H|T], Rez) :-
         impare(T, Rez1),
 	Rez = [H|Rez1].
 
-% descompune(in L, out [RezPare, RezImpare])
+% descompune(in L, out [RezPare, RezImpare], out LenPare, out LenImpare)
 %     L: lista
 %     RezPare: L fara numere impare
 %     RezImpare: L fara numere pare
-descompune([ ], [[ ], [ ]]).
-descompune(L, [RezPare, RezImpare]) :-
+%     LenPare: lungimea sirului RezPare
+%     LenImpare: lungimea sirului RezImpare
+descompune([ ], [[ ], [ ]], LenPare, LenImpare) :-
+         LenPare is 0,
+         LenImpare is 0.
+descompune(L, [RezPare, RezImpare], LenPare, LenImpare) :-
 	pare(L, RezPare),
 	impare(L, RezImpare),
         len(RezPare, LenPare),
-        len(RezImpare, LenImpare),
-        format("Numere pare: ~D\n", LenPare),
-        format("Numere impare: ~D\n", LenImpare).
+        len(RezImpare, LenImpare).
 
 % len(in L, out N)
 %     L: lista
 %     N: lungimea listei
-len([ ], 0).
-len([H|T], N) :-
+len([ ], N) :-
+       N is 0.
+len([_|T], N) :-
        len(T, N1),
-       N = N1 + 1.
+       N is 1 + N1.
