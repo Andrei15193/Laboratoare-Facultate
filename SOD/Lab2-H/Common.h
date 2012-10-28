@@ -16,17 +16,17 @@ struct Response{
     int maximum;
 };
 
-//#ifdef UNICODE
+#ifdef UNICODE
 #define SERVER_MAILSLOT L"\\\\.\\mailslot\\fair1064Server"
 #define CLIENT_PREFIX L"\\\\.\\mailslot\\fair1064C"
 
 void DwordToArray(wchar_t*, DWORD);
 
-//#else
-//#define SERVER_MAILSLOT "\\\\.\\mailslot\\fair1064Server"
-//#define CLIENT_PREFIX "\\\\.\\mailslot\\fair1064C"
-//
-//void DwordToArray(char*, DWORD);
-//#endif /* UNICODE */
+#else
+#define SERVER_MAILSLOT "\\\\.\\mailslot\\fair1064Server"
+#define CLIENT_PREFIX "\\\\.\\mailslot\\fair1064C"
+
+void DwordToArray(char*, DWORD);
+#endif /* UNICODE */
 
 #endif /* COMMON_H */
