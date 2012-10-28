@@ -1,8 +1,10 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 
-#include "Comun.h"
+#include "Common.h"
 
-void Client();
+BOOL RunClient(void);
+
+BOOL SendCloseRequest(void);
 
 #endif /* CLIENT_H */
