@@ -1,4 +1,4 @@
-function rez = FuncDeRepartitie(X, x)
+function rez = funcDeRepartitie(X, x)
     s = 0;
     i = 1;
     size = length(X);
