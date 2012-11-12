@@ -155,7 +155,7 @@ select sectii.denumires, medii.nume, medii.media
                     from Rezultate
                     where rezultate.nrmatricol = studenti.nrmatricol
             )
-            group by studenti.nrmatricol, nume, cods, grupa, datan, nota
+            group by studenti.nrmatricol, nume, cods, grupa, datan
     ) as medii
     on sectii.cods = medii.cods
     where medii.media >= all(
@@ -167,7 +167,7 @@ select sectii.denumires, medii.nume, medii.media
                     from Rezultate
                     where rezultate.nrmatricol = studenti.nrmatricol
             )
-            group by studenti.nrmatricol, nume, cods, grupa, datan, nota
+            group by studenti.nrmatricol, nume, cods, grupa, datan
             having cods = medii.cods
     )
 
@@ -270,32 +270,13 @@ select top 1 with ties sectii.denumires, COUNT(*) as numarDiscipline
 
 --17. Pentru fiecare student – numarul total de note, numarul de note >=5, numarul de note <5 (optional, vezi
 --    CASE – SQL-Server documentation).
-select *,
-    noteTotale =
-        case when 1 = 1 then
-            (select COUNT(*)
-                from rezultate as r1
-                where r1.nrmatricol = studenti.nrmatricol)
-        end,
-    noteDeTrecere =
-        case when 1 = 1 then
-            (select COUNT(*)
-                from rezultate as r2
-                where
-                    r2.nrmatricol = studenti.nrmatricol
-                    and
-                    r2.nota >= 5)
-        end,
-    noteSubCinci =
-        case when 1 = 1 then
-            (select COUNT(*)
-                from rezultate as r3
-                where
-                    r3.nrmatricol = studenti.nrmatricol
-                    and
-                    r3.nota < 5)
-        end
-    from studenti
+select nume,
+        SUM(1) as numarNote,
+        SUM(case when nota >= 5 then 1 else 0 end) as numarNoteDeTrecere,
+        SUM(case when nota < 5 then 1 else 0 end) as numarNoteSubCinci
+    from rezultate inner join studenti
+    on rezultate.nrmatricol = studenti.nrmatricol
+    group by studenti.nrmatricol, nume
 
 --18. Stiind ca din fiecare sectie 40% din studenti primesc bursa, sa se afiseze studentii care
 --    primesc bursa din fiecare sectie (un student primeste bursa daca toate notele sale sunt de trecere).
@@ -322,20 +303,16 @@ select s1.nume, denumires
     )
 
 --19. Studentii care nu au cea mai mica nota din grupa din care fac parte.
-select s1.*, media
-    from studenti as s1 inner join(
-        select nrmatricol, AVG(nota) as media
-            from rezultate
-            group by nrmatricol
-    ) as rez1
-    on s1.nrmatricol = rez1.nrmatricol
-    where media <= all(
-        select AVG(nota)
-            from rezultate inner join studenti as s2
-            on rezultate.nrmatricol = s2.nrmatricol
-            where s2.grupa = s1.grupa
-            group by s2.nrmatricol
-    )
+select studenti.*
+    from studenti inner join rezultate as r1
+    on studenti.nrmatricol = r1.nrmatricol
+    where
+        studenti.nrmatricol not in(
+            select top 1 with ties r2.nrmatricol
+                from rezultate as r2
+                where studenti.nrmatricol = r2.nrmatricol
+                order by r2.nota asc
+        )
 
 --20. Pentru fiecare sectie se afiseaza numarul de studenti. Pentru sectiile in care nu este nici un student
 --    se afiseaza 0.
@@ -343,4 +320,3 @@ select denumires, numarStudenti = case when studenti.cods is null then 0 else CO
     from sectii left join studenti
     on sectii.cods = studenti.cods
     group by denumires, studenti.cods
-
