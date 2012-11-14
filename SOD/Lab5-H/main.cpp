@@ -31,6 +31,7 @@ int main(int argc, char* args[]){
 
     mainThreadArgs.list = CreateList(elements, workers);
     mainThreadArgs.listMutex = CreateMutex(NULL, FALSE, NULL);
+    mainThreadArgs.signalSem = CreateSemaphore(NULL, 1, 1, NULL);
     mainThreadArgs.valueEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
 
     PrintList(mainThreadArgs.list);
@@ -40,6 +41,7 @@ int main(int argc, char* args[]){
         workerThreadArgs[i].list = mainThreadArgs.list;
         workerThreadArgs[i].listAccessSemaphore = sem;
         workerThreadArgs[i].listMutex = mainThreadArgs.listMutex;
+        workerThreadArgs[i].signalSem = mainThreadArgs.signalSem;
         workerThreadArgs[i].valueEvent = mainThreadArgs.valueEvent;
         workerThreadArgs[i].worker = i;
         threads[i] = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)WorkerThread, (LPVOID)(&workerThreadArgs[i]), 0, 0);
@@ -49,5 +51,11 @@ int main(int argc, char* args[]){
         CloseHandle(threads[i]);
     }
     DestroyList(mainThreadArgs.list);
+    CloseHandle(sem);
+    CloseHandle(mainThreadArgs.listMutex);
+    CloseHandle(mainThreadArgs.signalSem);
+    CloseHandle(mainThreadArgs.valueEvent);
+    free(workerThreadArgs);
+    free(threads);
     return 0;
 }

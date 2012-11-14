@@ -19,8 +19,18 @@ DWORD WorkerThread(LPVOID workerThreadArgs){
                         newValue = (int)sqrt((double)current->value);
                         printf("    Old value: %d, new value %d\r\n", current->value, newValue);
                         current->value = newValue;
-                        if (current->value < 2)
+                        if (current->value < 2){
+                            // Signal the main thread.
+                            printf("Signaling the main thread\r\n");
+                            WaitForSingleObject(args->signalSem, INFINITE);
                             SetEvent(args->valueEvent);
+                            printf("Signaled the main thread\r\n");
+                            // Wait for main thread to signal back
+                            WaitForSingleObject(args->signalSem, INFINITE);
+                            ReleaseSemaphore(args->signalSem, 1L, NULL);
+                            // Go on with work
+                            printf("Continuing with job\n");
+                        }
                         printf("<-- Mutex unlocked by %d\r\n\r\n", args->worker);
                         ReleaseMutex(args->listMutex);
                     }

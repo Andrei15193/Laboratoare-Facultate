@@ -14,6 +14,7 @@ struct WorkerThreadArgs{
     int worker;
     struct List* list;
     HANDLE listMutex;
+    HANDLE signalSem;
     HANDLE listAccessSemaphore;
     HANDLE valueEvent;
 };
@@ -22,6 +23,7 @@ struct WorkerThreadArgs{
 struct MainThreadArgs{
     struct List* list;
     HANDLE listMutex;
+    HANDLE signalSem;
     HANDLE valueEvent;
 };
 

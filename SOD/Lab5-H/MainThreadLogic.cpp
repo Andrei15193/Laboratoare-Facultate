@@ -11,19 +11,15 @@ DWORD MainThread(LPVOID mainThreadArgs){
     do{
         if (WaitForSingleObject(args->valueEvent, INFINITE) == WAIT_OBJECT_0){
             count++;
-            if (count == 5 || count == args->list->dim)
-                if (WaitForSingleObject(args->listMutex, INFINITE) == WAIT_OBJECT_0){
-                    printf("\r\n--> Mutex locked by main thread\r\n");
-                    MoveNodes(args->list, &top, count);
-                    if (args->list->dim == 0)
-                        jobStatus = Done;
-                    count = 0;
-                    ReleaseMutex(args->listMutex);
-                    printf("Main thread: list size is %d\r\n", args->list->dim);
-                    printf("<-- Mutex unlocked by main thread\r\n\r\n");
-                }
-                else
-                    jobStatus = Error;
+            printf("Main thread: count is %d\r\n", count);
+            if (count == 5 || count == args->list->dim){
+                MoveNodes(args->list, &top, count);
+                if (args->list->dim == 0)
+                    jobStatus = Done;
+                count = 0;
+                printf("Main thread: list size is %d\r\n", args->list->dim);
+            }
+            ReleaseSemaphore(args->signalSem, 1L, NULL);
         }
         else
             jobStatus = Error;
