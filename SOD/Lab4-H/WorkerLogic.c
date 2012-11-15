@@ -27,17 +27,13 @@ void* WorkerThread(void* workerThreadArgs){
                             pthread_mutex_unlock(args->signalMutex);
                             // Signal the main thread.
                             printf("Signaled main thread\n");
-                            pthread_cond_signal(args->valueEvent);
                             pthread_mutex_lock(args->signalBackMutex);
+                            pthread_cond_signal(args->valueEvent);
                             // Wait for main thread to signal back (through mutex).
-                            printf("Waiting for main thread to get into listening state\n");
                             pthread_mutex_lock(args->signalBackMutex);
                             pthread_mutex_unlock(args->signalBackMutex);
-                            // Wait for main thread to get into listening state.
-                            pthread_mutex_lock(args->signalMutex);
-                            pthread_mutex_unlock(args->signalMutex);
-                            printf("Continuing with job\n");
                             // Go on with work
+                            printf("Continuing with job\n");
                         }
                         pthread_mutex_unlock(args->listMutex);
                     }
