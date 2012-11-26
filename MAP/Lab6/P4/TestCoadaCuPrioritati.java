@@ -255,12 +255,13 @@ public class TestCoadaCuPrioritati {
     
     @Test
     public void testScrieInFisier(){
-        CoadaCuPrioritati<Integer> cp1 = new CoadaCuPrioritati<Integer>(), cp2;
-        cp1.insereaza(1);
-        cp1.insereaza(3);
-        cp1.insereaza(2);
+        PersonDestringer destr = new PersonDestringer();
+        CoadaCuPrioritati<Person> cp1 = new CoadaCuPrioritati<Person>(), cp2;
+        cp1.insereaza(new Person("Andrei", 12345));
+        cp1.insereaza(new Person("Mihai", 67890));
+        cp1.insereaza(new Person("Florin", 13579));
         try{
-            cp1.scrieInFisier("fisierDeTest.test");
+            cp1.scrieInFisier("fisierDeTest.test", destr);
         }
         catch (FileNotFoundException e){
             fail(e.getMessage());
@@ -270,8 +271,8 @@ public class TestCoadaCuPrioritati {
         }
         
         try{
-            Iterator<Integer> it1, it2;
-            cp2 = new CoadaCuPrioritati<Integer>("fisierDeTest.test");
+            Iterator<Person> it1, it2;
+            cp2 = new CoadaCuPrioritati<Person>("fisierDeTest.test", destr);
             for (it1 = cp1.iterator(), it2 = cp2.iterator(); it1.eValid(); it1.urmator(), it2.urmator())
                 assertEquals(it1.element(), it2.element());
             assertFalse(it2.eValid());

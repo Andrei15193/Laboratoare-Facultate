@@ -6,12 +6,13 @@ public class CoadaCuPrioritati<T extends Comparable<T> & Serializable> implement
         this.dimensiune = 0;
     }
     
-    CoadaCuPrioritati(String numeFisier) throws FileNotFoundException, IOException{
-        ObjectInputStream file = new ObjectInputStream(new FileInputStream(numeFisier));
-        try{
-            this.readObject(file);
-        }
-        catch (ClassNotFoundException e){
+    CoadaCuPrioritati(String numeFisier, Destringer<T> destringer) throws FileNotFoundException, IOException{
+        String line;
+        BufferedReader file = new BufferedReader(new FileReader(numeFisier));
+        line = file.readLine();
+        while (line != null){
+            this.insereaza(destringer.createObjectFromString(line));
+            line = file.readLine();
         }
         file.close();
     }
@@ -60,10 +61,18 @@ public class CoadaCuPrioritati<T extends Comparable<T> & Serializable> implement
     }
     
     @Override
-    public void scrieInFisier(String numeFisier) throws FileNotFoundException, IOException{
-        ObjectOutputStream file = new ObjectOutputStream(new FileOutputStream(numeFisier));
-        this.writeObject(file);
-        file.close();
+    public void scrieInFisier(String numeFisier, Destringer<T> destringer) throws FileNotFoundException, IOException{
+        PrintStream file = new PrintStream(numeFisier);
+        
+        try{
+            for (Iterator<T> it = this.iterator(); it.eValid(); it.urmator())
+                file.println(destringer.createStringFromObject(it.element()));
+        }
+        catch (IteratorException e){
+        }
+        finally{
+            file.close();
+        }
     }
 
     @Override

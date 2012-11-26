@@ -9,7 +9,7 @@ public interface ICoada<T extends Comparable<T> & Serializable> extends Serializ
 
     Iterator<T> iterator();
     
-    void scrieInFisier(String numeFisier) throws FileNotFoundException, IOException;
+    void scrieInFisier(String numeFisier, Destringer<T> destringer) throws FileNotFoundException, IOException;
 
     int dimensiune();
 
