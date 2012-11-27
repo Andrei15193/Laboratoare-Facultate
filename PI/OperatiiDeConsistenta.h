@@ -31,7 +31,7 @@ void dAdauga(const struct Depozit* depozit, const char numeFisier[]);
 //       cnp sa fie din 13 cifre.
 // Post: Persoana returnata are acelasi CNP cu cel specificat,
 //       in cazul in care fisierul nu contine o astfel de persoana se returneazaa NULL.
-struct Persoana* pCiteste(const char numeFisier[], unsigned long long cnp);
+struct Persoana* pCiteste(const char numeFisier[], const char cnp[]);
 
 // Cauta si returneaza banca din fisierul specificat care are numele dat.
 // Banca returnata trebuie distrusa cu bDistruge().
@@ -54,7 +54,7 @@ struct Banca* bCiteste(const char numeFisier[], const char numeBanca[]);
 // Post: depozitul returnat este asociat Bancii date prin numeBanca si persoanei date
 //       prin cnp. In cazul in care fisierul nu contine o astfel de banca se
 //       returneazaa NULL.
-struct Depozit* dCiteste(const char numeFisier[], unsigned long long cnp, const char numeBanca[]);
+struct Depozit* dCiteste(const char numeFisier[], const char cnp[], const char numeBanca[]);
 
 // Modifica in fisierul specificat prin nume depozitul dat.
 // Cautarea se face dupa cnp si numeBanca stocate in depozitul dat, daca nu se

@@ -1,11 +1,11 @@
-#define TEST
+//#define TEST
 
 #ifndef TEST
-#include <stdio.h>
-#include "Depozit.h"
+#include "Ui.h"
 
 int main(void)
 {
+    ruleaza();
     return 0;
 }
 
@@ -15,13 +15,15 @@ int main(void)
 #include "Test/TestBanca.h"
 #include "Test/TestDepozit.h"
 #include "Test/TestOperatiiDeConsistenta.h"
+#include "Test/TestUtils.h"
 
 int main(){
     testPersoana();
     testBanca();
     testDepozit();
     testOperatiiDeConsistenta();
-    printf("Tests finished without any errors!\r\n");
+    testUtils();
+    printf("Testarea s-a finalizat fara erori!\r\n");
     return 0;
 }
 

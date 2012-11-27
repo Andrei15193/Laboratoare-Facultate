@@ -8,7 +8,7 @@
 
 struct Depozit{
     char numeBanca[31];
-    unsigned long long cnp;
+    char cnp[14];
     double suma;
     double dobanda;
     Bool capitalizare;

@@ -3,18 +3,23 @@
 #include "Depozit.h"
 
 struct Depozit* dCreaza(const struct Banca* banca, const struct Persoana* persoana, double suma, Bool capitalizare){
-    struct Depozit* depozit = (struct Depozit*)malloc(sizeof(struct Depozit));
-    time_t currentTime = time(NULL);
-    struct tm* timeConverted = gmtime(&currentTime);
+    struct Depozit* depozit = NULL;
+    time_t currentTime;
+    struct tm* timeConverted;
 
-    strncpy(depozit->numeBanca, banca->nume, 30);
-    depozit->numeBanca[30] = 0;
-    depozit->dobanda = banca->dobandaCurenta;
-    depozit->dobandaFerma = banca->dobandaFerma;
-    depozit->cnp = persoana->cnp;
-    depozit->suma = suma;
-    depozit->capitalizare = capitalizare;
-    depozit->dataCrearii = *timeConverted;
+    if (suma > 0){
+        currentTime = time(NULL);
+        timeConverted = gmtime(&currentTime);
+        depozit = (struct Depozit*)malloc(sizeof(struct Depozit));
+        strncpy(depozit->numeBanca, banca->nume, 30);
+        depozit->numeBanca[30] = 0;
+        depozit->dobanda = banca->dobandaCurenta;
+        depozit->dobandaFerma = banca->dobandaFerma;
+        strcpy(depozit->cnp, persoana->cnp);
+        depozit->suma = suma;
+        depozit->capitalizare = capitalizare;
+        depozit->dataCrearii = *timeConverted;
+    }
 
     return depozit;
 }

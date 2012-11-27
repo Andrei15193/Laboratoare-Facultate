@@ -30,13 +30,13 @@ void dAdauga(const struct Depozit* depozit, const char numeFisier[]){
     }
 }
 
-struct Persoana* pCiteste(const char numeFisier[], unsigned long long cnp){
+struct Persoana* pCiteste(const char numeFisier[], const char cnp[]){
     size_t citit = 0;
     struct Persoana* p = (struct Persoana*)malloc(sizeof(struct Persoana));
     FILE* file = fopen(numeFisier, "r");
     if (file != NULL){
         citit = fread((void*)p, sizeof(char), sizeof(struct Persoana), file);
-        while (citit != 0 && p->cnp != cnp)
+        while (citit != 0 && strcmp(p->cnp, cnp) != 0)
             citit = fread((void*)p, sizeof(char), sizeof(struct Persoana), file);
         fclose(file);
     }
@@ -64,13 +64,13 @@ struct Banca* bCiteste(const char numeFisier[], const char numeBanca[]){
     return b;
 }
 
-struct Depozit* dCiteste(const char numeFisier[], unsigned long long cnp, const char numeBanca[]){
+struct Depozit* dCiteste(const char numeFisier[], const char cnp[], const char numeBanca[]){
     size_t citit = 0;
     struct Depozit* d = (struct Depozit*)malloc(sizeof(struct Depozit));
     FILE* file = fopen(numeFisier, "r");
     if (file != NULL){
         citit = fread((void*)d, sizeof(char), sizeof(struct Depozit), file);
-        while (citit != 0 && d->cnp != cnp && strcmp(d->numeBanca, numeBanca) != 0)
+        while (citit != 0 && strcmp(d->cnp, cnp) != 0 && strcmp(d->numeBanca, numeBanca) != 0)
             citit = fread((void*)d, sizeof(char), sizeof(struct Depozit), file);
         fclose(file);
     }

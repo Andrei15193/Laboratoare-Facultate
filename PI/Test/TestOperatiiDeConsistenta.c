@@ -1,39 +1,43 @@
 #include <assert.h>
+#include <stdio.h>
 #include <string.h>
 #include "../OperatiiDeConsistenta.h"
 #include "TestOperatiiDeConsistenta.h"
 
-void testAdaugaPersoana();
+void testAdaugaCitestePersoana();
 
-void testAdaugaBanca();
+void testAdaugaCitesteBanca();
 
-void testAdaugaDepozit();
+void testAdaugaCitesteDepozit();
 
 void testModificaDepozit();
 
 void testOperatiiDeConsistenta(){
-    testAdaugaPersoana();
-    testAdaugaBanca();
-    testAdaugaDepozit();
+    testAdaugaCitestePersoana();
+    testAdaugaCitesteBanca();
+    testAdaugaCitesteDepozit();
     testModificaDepozit();
+    remove("pAdaugaTest.test");
+    remove("bAdaugaTest.test");
+    remove("dAdaugaTest.test");
 }
 
-void testAdaugaPersoana(){
-    struct Persoana* p = pCreaza("Andrei Fangli", 1234567890123);
+void testAdaugaCitestePersoana(){
+    struct Persoana* p = pCreaza("Andrei Fangli", "1234567890123");
     struct Persoana* citit;
-    pAdauga(p, "pAdaugaTest");
-    citit = pCiteste("pAdaugaTest", 1234567890123);
-    assert(p->cnp == citit->cnp);
+    pAdauga(p, "pAdaugaTest.test");
+    citit = pCiteste("pAdaugaTest.test", "1234567890123");
+    assert(strcmp(p->cnp, citit->cnp) == 0);
     assert(strcmp(p->nume, citit->nume) == 0);
     pDistruge(p);
     pDistruge(citit);
 }
 
-void testAdaugaBanca(){
+void testAdaugaCitesteBanca(){
     struct Banca* b = bCreaza("ING", 0.3, True);
     struct Banca* citit;
-    bAdauga(b, "bAdaugaTest");
-    citit = bCiteste("bAdaugaTest", "ING");
+    bAdauga(b, "bAdaugaTest.test");
+    citit = bCiteste("bAdaugaTest.test", "ING");
     assert(strcmp(b->nume, citit->nume) == 0);
     assert(b->dobandaFerma == citit->dobandaFerma);
     assert(b->dobandaCurenta == citit->dobandaCurenta);
@@ -42,16 +46,16 @@ void testAdaugaBanca(){
     bDistruge(citit);
 }
 
-void testAdaugaDepozit(){
-    struct Persoana* p = pCreaza("Andrei Fangli", 1234567890123);
+void testAdaugaCitesteDepozit(){
+    struct Persoana* p = pCreaza("Andrei Fangli", "1234567890123");
     struct Banca* b = bCreaza("ING", 0.3, True);
     struct Depozit* d = dCreaza(b, p, 1000, True);
     struct Depozit* citit;
-    dAdauga(d, "dAdaugaTest");
-    citit = dCiteste("dAdaugaTest", p->cnp, p->nume);
+    dAdauga(d, "dAdaugaTest.test");
+    citit = dCiteste("dAdaugaTest.test", p->cnp, p->nume);
     assert(strcmp(d->numeBanca, citit->numeBanca) == 0);
     assert(citit->numeBanca != d->numeBanca);
-    assert(citit->cnp == d->cnp);
+    assert(strcmp(citit->cnp, d->cnp) == 0);
     assert(citit->capitalizare == True);
     assert(citit->dobandaFerma == d->dobandaFerma);
     assert(citit->suma == 1000);
@@ -63,17 +67,17 @@ void testAdaugaDepozit(){
 }
 
 void testModificaDepozit(){
-    struct Persoana* p = pCreaza("Andrei Fangli", 1234567890123);
+    struct Persoana* p = pCreaza("Andrei Fangli", "1234567890123");
     struct Banca* b = bCreaza("ING", 0.3, True);
     struct Depozit* d = dCreaza(b, p, 1000, True);
     struct Depozit* citit;
-    dAdauga(d, "dAdaugaTest");
+    dAdauga(d, "dAdaugaTest.test");
     d->suma = d->suma * 2;
-    dModifica(d, "dAdaugaTest");
-    citit = dCiteste("dAdaugaTest", p->cnp, p->nume);
+    dModifica(d, "dAdaugaTest.test");
+    citit = dCiteste("dAdaugaTest.test", p->cnp, p->nume);
     assert(strcmp(d->numeBanca, citit->numeBanca) == 0);
     assert(citit->numeBanca != d->numeBanca);
-    assert(citit->cnp == d->cnp);
+    assert(strcmp(citit->cnp, d->cnp) == 0);
     assert(citit->capitalizare == True);
     assert(citit->dobandaFerma == d->dobandaFerma);
     assert(citit->suma == d->suma);
