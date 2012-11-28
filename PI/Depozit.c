@@ -18,7 +18,7 @@ struct Depozit* dCreaza(const struct Banca* banca, const struct Persoana* persoa
         strcpy(depozit->cnp, persoana->cnp);
         depozit->suma = suma;
         depozit->capitalizare = capitalizare;
-        depozit->dataCrearii = *timeConverted;
+        depozit->dataCapitalizarii = *timeConverted;
     }
 
     return depozit;

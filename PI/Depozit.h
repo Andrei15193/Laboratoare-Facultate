@@ -13,7 +13,7 @@ struct Depozit{
     double dobanda;
     Bool capitalizare;
     Bool dobandaFerma;
-    struct tm dataCrearii;
+    struct tm dataCapitalizarii;
 };
 
 // Creaza un depozit pentru o persoana la o banca.

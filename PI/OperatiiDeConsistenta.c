@@ -65,20 +65,20 @@ struct Banca* bCiteste(const char numeFisier[], const char numeBanca[]){
 }
 
 struct Depozit* dCiteste(const char numeFisier[], const char cnp[], const char numeBanca[]){
-    size_t citit = 0;
-    struct Depozit* d = (struct Depozit*)malloc(sizeof(struct Depozit));
+    int citit = 0;
+    struct Depozit* depozit = (struct Depozit*)malloc(sizeof(struct Depozit));
     FILE* file = fopen(numeFisier, "r");
     if (file != NULL){
-        citit = fread((void*)d, sizeof(char), sizeof(struct Depozit), file);
-        while (citit != 0 && strcmp(d->cnp, cnp) != 0 && strcmp(d->numeBanca, numeBanca) != 0)
-            citit = fread((void*)d, sizeof(char), sizeof(struct Depozit), file);
+        citit = fread((void*)depozit, sizeof(struct Depozit), 1, file);
+        while (citit == 1 && (strcmp(depozit->cnp, cnp) != 0 || strcmp(depozit->numeBanca, numeBanca) != 0))
+            citit = fread((void*)depozit, sizeof(struct Depozit), 1, file);
         fclose(file);
     }
     if (citit == 0){
-        free(d);
-        d = NULL;
+        free(depozit);
+        depozit = NULL;
     }
-    return d;
+    return depozit;
 }
 
 void dModifica(const struct Depozit* d, const char numeFisier[]){

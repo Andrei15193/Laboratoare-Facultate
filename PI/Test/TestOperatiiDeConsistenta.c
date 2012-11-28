@@ -16,7 +16,7 @@ void testOperatiiDeConsistenta(){
     testAdaugaCitestePersoana();
     testAdaugaCitesteBanca();
     testAdaugaCitesteDepozit();
-    testModificaDepozit();
+//    testModificaDepozit();
     remove("pAdaugaTest.test");
     remove("bAdaugaTest.test");
     remove("dAdaugaTest.test");
@@ -52,7 +52,7 @@ void testAdaugaCitesteDepozit(){
     struct Depozit* d = dCreaza(b, p, 1000, True);
     struct Depozit* citit;
     dAdauga(d, "dAdaugaTest.test");
-    citit = dCiteste("dAdaugaTest.test", p->cnp, p->nume);
+    citit = dCiteste("dAdaugaTest.test", p->cnp, b->nume);
     assert(strcmp(d->numeBanca, citit->numeBanca) == 0);
     assert(citit->numeBanca != d->numeBanca);
     assert(strcmp(citit->cnp, d->cnp) == 0);
