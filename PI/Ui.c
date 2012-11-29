@@ -218,7 +218,7 @@ void afiseazaSituatieGenerala(struct Persoana* persoana){
         memset(linie, '-', 56);
         linie[57] = 0;
         if (file != NULL){
-            fprintf(out, "%s\n|%30s|%7s|%15s|\n%s\n", linie, "Banca", "Zi cap.", "Suma de incasat", linie);
+            fprintf(out, "Afiseaza situatia generala depozit:\n%s\n|%30s|%7s|%15s|\n%s\n", linie, "Banca", "Zi cap.", "Suma de incasat", linie);
             while (fread((void*)&depozit, sizeof(struct Depozit), 1, file) == 1)
                 if (strcmp(persoana->cnp, depozit.cnp) == 0){
                     if (depozit.dobandaFerma || depozit.dobanda == 0)
@@ -265,7 +265,7 @@ void afiseazaSituatieLaSfarsitulLunii(struct Persoana* persoana){
         memset(linie, '-', 56);
         linie[57] = 0;
         if (file != NULL){
-            fprintf(out, "%s\n|%30s|%7s|%15s|\n%s\n", linie, "Banca", "Dobanda", "Suma de incasat", linie);
+            fprintf(out, "Afiseaza situatia la sfarsitul lunii:\n%s\n|%30s|%7s|%15s|\n%s\n", linie, "Banca", "Dobanda", "Suma de incasat", linie);
             while (fread((void*)&depozit, sizeof(struct Depozit), 1, file) == 1)
                 if (strcmp(persoana->cnp, depozit.cnp) == 0){
                     if (depozit.dobandaFerma || depozit.dobanda == 0)
@@ -335,11 +335,9 @@ void autentificare(enum Optiune optiune){
             afiseazaDobanzi(persoana);
             break;
         case AfiseazaSituatieGenerala:
-            printf("Afiseaza situatia generala depozit:\n");
             afiseazaSituatieGenerala(persoana);
             break;
         case AfiseazaSituatieLaSfarsitulLunii:
-            printf("Afiseaza situatia la sfarsitul lunii:\n");
             afiseazaSituatieLaSfarsitulLunii(persoana);
         default: { }
         }
