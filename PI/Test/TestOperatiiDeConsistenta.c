@@ -16,7 +16,7 @@ void testOperatiiDeConsistenta(){
     testAdaugaCitestePersoana();
     testAdaugaCitesteBanca();
     testAdaugaCitesteDepozit();
-//    testModificaDepozit();
+    testModificaDepozit();
     remove("pAdaugaTest.test");
     remove("bAdaugaTest.test");
     remove("dAdaugaTest.test");
@@ -74,7 +74,7 @@ void testModificaDepozit(){
     dAdauga(d, "dAdaugaTest.test");
     d->suma = d->suma * 2;
     dModifica(d, "dAdaugaTest.test");
-    citit = dCiteste("dAdaugaTest.test", p->cnp, p->nume);
+    citit = dCiteste("dAdaugaTest.test", p->cnp, b->nume);
     assert(strcmp(d->numeBanca, citit->numeBanca) == 0);
     assert(citit->numeBanca != d->numeBanca);
     assert(strcmp(citit->cnp, d->cnp) == 0);

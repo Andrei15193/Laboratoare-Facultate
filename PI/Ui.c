@@ -281,6 +281,8 @@ void afiseazaSituatieLaSfarsitulLunii(struct Persoana* persoana){
                         sumaCurenta = depozit.suma + dobanda * depozit.suma;
                         depozit.suma = sumaCurenta;
                         depozit.dataCapitalizarii.tm_mon = tmTimp->tm_mon;
+                        if (!depozit.capitalizare)
+                            depozit.dobanda = 0;
                         fseek(file, -(sizeof(struct Depozit)), SEEK_CUR);
                         fwrite((void*)&depozit, sizeof(struct Depozit), 1, file);
                     }
