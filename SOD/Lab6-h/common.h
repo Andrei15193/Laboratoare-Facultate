@@ -5,12 +5,13 @@
 #include <stdio.h>
 #include <math.h>
 #include <semaphore.h>
-#include <pthread.h>
+#include <thread.h>
+#include <synch.h>
 
 struct CommonParams{
     int count;
     sem_t signalSem;
-    pthread_mutex_t listMutex;
+    mutex_t listMutex;
     struct List* list;
 };
 
