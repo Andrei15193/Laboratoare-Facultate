@@ -1,5 +1,7 @@
 package controller;
 
+import javax.swing.AbstractListModel;
+
 // Represents the application controller. All application logic is done by
 // instances of this type.
 public class ApplicationController{
@@ -7,6 +9,7 @@ public class ApplicationController{
     // the given repository.
     public ApplicationController(repository.FirmRepository firmRepository){
         this.firmRepository = firmRepository;
+        this.firmsListModel = new controller.FirmsListModel(this.firmRepository.getFirmsReader());
     }
     
     // Returns a FirmReader that will iterate through all Firms.
@@ -19,7 +22,9 @@ public class ApplicationController{
     // extended information about the nature of the error.
     public void addFirm(String name, Integer turnover) throws domain.FirmException{
         try{
-            this.firmRepository.storeFirm(new domain.Firm(name, turnover));
+            domain.Firm firm = new domain.Firm(name, turnover);
+            this.firmRepository.storeFirm(firm);
+            this.firmsListModel.addFirm(firm);
         }
         catch (repository.RepositoryException exception){
             throw new domain.FirmException("The Firm could not be stored! " + exception.getMessage());
@@ -59,6 +64,12 @@ public class ApplicationController{
         if (errors.length() > 0)
             throw new java.io.IOException(errors);
     }
+
+    // Gets an abstract model for the list.
+    public AbstractListModel getModel(){
+        return this.firmsListModel;
+    }
     
+    private controller.FirmsListModel firmsListModel;
     private repository.FirmRepository firmRepository;
 }
