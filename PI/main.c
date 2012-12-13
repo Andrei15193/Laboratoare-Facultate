@@ -16,6 +16,7 @@ int main(void)
 #include "Test/TestDepozit.h"
 #include "Test/TestOperatiiDeConsistenta.h"
 #include "Test/TestUtils.h"
+#include "Test/TestFunctionalitati.h"
 
 int main(){
     testPersoana();
@@ -23,6 +24,7 @@ int main(){
     testDepozit();
     testOperatiiDeConsistenta();
     testUtils();
+    testFunctionalitati();
     printf("Testarea s-a finalizat fara erori!\r\n");
     return 0;
 }

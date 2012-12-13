@@ -1,11 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include "Ui.h"
-#include "Comun.h"
-#include "Depozit.h"
-#include "OperatiiDeConsistenta.h"
 
 enum Optiune{
     AdaugaPersoana = 1,
@@ -66,10 +59,10 @@ struct Persoana* citestePersoana(){
 
 // Incearca sa adauge in fisierul de persoane persoana specificata. In caz de reusita
 // se returneaza True, False altfel.
-Bool adaugaPersoana(struct Persoana* persoana){
+Bool adaugaPersoana(struct Persoana* persoana, const char numeFisier[]){
     struct Persoana* citit = pCiteste(FISIER_PERSOANE, persoana->cnp);
     if (citit == NULL){
-        pAdauga(persoana, FISIER_PERSOANE);
+        pAdauga(persoana, numeFisier);
         return True;
     }
     else{
@@ -95,10 +88,10 @@ struct Banca* citesteBanca(){
 
 // Incearca sa adauge in fisierul de persoane persoana specificata. In caz de reusita
 // se returneaza True, False altfel.
-Bool adaugaBanca(struct Banca* banca){
+Bool adaugaBanca(struct Banca* banca, const char numeFisier[]){
     struct Banca* citit = bCiteste(FISIER_BANCI, banca->nume);
     if (citit == NULL){
-        bAdauga(banca, FISIER_BANCI);
+        bAdauga(banca, numeFisier);
         return True;
     }
     else{
@@ -132,10 +125,10 @@ struct Depozit* citesteDepozit(struct Persoana* persoana){
 
 // Incearca sa adauge in fisierul de depozite depozitul specificat. In caz de reusita
 // se returneaza True, False altfel.
-Bool adaugaDepozit(struct Depozit* depozit){
+Bool adaugaDepozit(struct Depozit* depozit, const char numeFisier[]){
     struct Depozit* citit = dCiteste(FISIER_DEPOZITE, depozit->cnp, depozit->numeBanca);
     if (citit == NULL){
-        dAdauga(depozit, FISIER_DEPOZITE);
+        dAdauga(depozit, numeFisier);
         return True;
     }
     else{
@@ -146,16 +139,16 @@ Bool adaugaDepozit(struct Depozit* depozit){
 
 // Afiseaza toate bancile existente pe o linie (doar numele lor).
 // Returneaza True daca exista banci memorate, False altfel.
-Bool afiseazaBancile(){
+Bool afiseazaBancile(FILE* out){
     struct Banca banca, pre;
     FILE* file = fopen(FISIER_BANCI, "r");
     if (file != NULL && fread((void*)&pre, sizeof(struct Banca), 1, file) == 1){
         printf("Bancile memorate sunt: ");
         while (fread((void*)&banca, sizeof(struct Banca), 1, file) == 1){
-            printf("%s, ", pre.nume);
+            fprintf(out, "%s, ", pre.nume);
             pre = banca;
         }
-        printf("%s\n", pre.nume);
+        fprintf(out, "%s\n", pre.nume);
         fclose(file);
         return True;
     }
@@ -165,11 +158,9 @@ Bool afiseazaBancile(){
     }
 }
 
-// Afiseaza, pentru fiecare depozit pe care persoana o detine, dobanzile aferente si
-// totala.
-void afiseazaDobanzi(struct Persoana* persoana){
+void afiseazaDobanzi(struct Persoana* persoana, FILE* out, const char numeFisierDepozite[], const char numeFisierBanci[]){
     char linie[41];
-    FILE* file = fopen(FISIER_DEPOZITE, "r");
+    FILE* file = fopen(numeFisierDepozite, "r");
     double dobandaTotala = 0;
     struct Banca* banca;
     struct Depozit depozit;
@@ -178,16 +169,16 @@ void afiseazaDobanzi(struct Persoana* persoana){
     memset(linie, '-', 40);
     linie[41] = 0;
     if (file != NULL){
-        printf("%s\n|%30s|%7s|\n%s\n", linie, "Banca", "Dobanda", linie);
+        fprintf(out, "%s\n|%30s|%7s|\n%s\n", linie, "Banca", "Dobanda", linie);
         while (fread((void*)&depozit, sizeof(struct Depozit), 1, file) == 1)
             if (strcmp(persoana->cnp, depozit.cnp) == 0){
                 if (depozit.dobandaFerma || depozit.dobanda == 0){
-                    printf("|%30.30s|%7.2f|\n", depozit.numeBanca, depozit.dobanda);
+                    fprintf(out, "|%30.30s|%7.2f|\n", depozit.numeBanca, depozit.dobanda);
                     dobandaTotala += depozit.dobanda;
                 }
                 else{
-                    banca = bCiteste(FISIER_BANCI, depozit.numeBanca);
-                    printf("|%30.30s|%7.2f|\n", depozit.numeBanca, banca->dobandaCurenta);
+                    banca = bCiteste(numeFisierBanci, depozit.numeBanca);
+                    fprintf(out, "|%30.30s|%7.2f|\n", depozit.numeBanca, banca->dobandaCurenta);
                     dobandaTotala += banca->dobandaCurenta;
                     bDistruge(banca);
                 }
@@ -196,18 +187,15 @@ void afiseazaDobanzi(struct Persoana* persoana){
         fclose(file);
     }
     if (!citit)
-        printf("Nu exista depozite inregistrate!\n\n");
+        fprintf(out, "Nu exista depozite inregistrate!\n\n");
     else
-        printf("%s\n Dobanda totala: %22.2f\n\n", linie, dobandaTotala);
+        fprintf(out, "%s\n Dobanda totala: %22.2f\n\n", linie, dobandaTotala);
 }
 
-// Afiseaza intr-un fisier situatia generala a tuturor depozitelor pe care o persoana
-// le detine (Numele banci unde se afla depozitul, data in care urmeaza sa se incaseze
-// suma si suma de incasat).
-void afiseazaSituatieGenerala(struct Persoana* persoana){
+void afiseazaSituatieGenerala(const char numeFisierDepozite[], const char numeFisierBanci[], struct Persoana* persoana, const char numeFisierIesire[]){
     char linie[57];
-    FILE* file = fopen(FISIER_DEPOZITE, "r");
-    FILE* out = fopen("situatieGenerala.txt", "w");
+    FILE* file = fopen(numeFisierDepozite, "r");
+    FILE* out = fopen(numeFisierIesire, "w");
     double dobanda = 0;
     double sumaTotala = 0, sumaCurenta;
     struct Banca* banca;
@@ -224,7 +212,7 @@ void afiseazaSituatieGenerala(struct Persoana* persoana){
                     if (depozit.dobandaFerma || depozit.dobanda == 0)
                         dobanda = depozit.dobanda;
                     else{
-                        banca = bCiteste(FISIER_BANCI, depozit.numeBanca);
+                        banca = bCiteste(numeFisierBanci, depozit.numeBanca);
                         dobanda = banca->dobandaCurenta;
                         bDistruge(banca);
                     }
@@ -236,10 +224,10 @@ void afiseazaSituatieGenerala(struct Persoana* persoana){
             fclose(file);
         }
         if (!citit)
-            printf("Nu exista depozite inregistrate!\n\n");
+            fprintf(out, "Nu exista depozite inregistrate!\n\n");
         else{
             fprintf(out, "%s\n Suma totala: %41.2f\n", linie, sumaTotala);
-            printf("S-a generat fisierul situatieGenerala.txt\n\n");
+            printf("S-a generat fisierul %s cu informatiile cerute\n\n", numeFisierIesire);
         }
         fclose(out);
     }
@@ -247,12 +235,10 @@ void afiseazaSituatieGenerala(struct Persoana* persoana){
         printf("Nu s-a putut crea fisierul situatieGenerala.txt\n");
 }
 
-// Afiseaza intr-un fisier situatia la sfarsitul lunii a tuturor depozitelor unei
-// persoane. Capitalezeaza depozitele atunci cand e cazul.
-void afiseazaSituatieLaSfarsitulLunii(struct Persoana* persoana){
+void afiseazaSituatieLaSfarsitulLunii(const char numeFisierDepozite[], const char numeFisierBanci[], struct Persoana* persoana, const char numeFisierIesire[]){
     char linie[57];
-    FILE* file = fopen(FISIER_DEPOZITE, "r+");
-    FILE* out = fopen("situatieLaSfarsitulLunii.txt", "w");
+    FILE* file = fopen(numeFisierDepozite, "r+");
+    FILE* out = fopen(numeFisierIesire, "w");
     double dobanda = 0;
     double sumaCurenta;
     struct Banca* banca;
@@ -271,7 +257,7 @@ void afiseazaSituatieLaSfarsitulLunii(struct Persoana* persoana){
                     if (depozit.dobandaFerma || depozit.dobanda == 0)
                         dobanda = depozit.dobanda;
                     else{
-                        banca = bCiteste(FISIER_BANCI, depozit.numeBanca);
+                        banca = bCiteste(numeFisierBanci, depozit.numeBanca);
                         dobanda = banca->dobandaCurenta;
                         bDistruge(banca);
                     }
@@ -297,7 +283,7 @@ void afiseazaSituatieLaSfarsitulLunii(struct Persoana* persoana){
             printf("Nu exista depozite inregistrate!\n\n");
         else{
             fprintf(out, "%s\n\n", linie);
-            printf("S-a generat fisierul situatieLaSfarsitulLunii.txt cu informatiile cerute\n");
+            printf("S-a generat fisierul %s cu informatiile cerute\n", numeFisierIesire);
         }
         fclose(out);
     }
@@ -318,11 +304,11 @@ void autentificare(enum Optiune optiune){
         switch (optiune){
         case AdaugaDepozit:
             printf("Adaugarea unui depozit:\n");
-            if (afiseazaBancile())
+            if (afiseazaBancile(stdout))
             {
                 depozit = citesteDepozit(persoana);
                 if (depozit != NULL)
-                    if (adaugaDepozit(depozit))
+                    if (adaugaDepozit(depozit, FISIER_DEPOZITE))
                         printf("Depozitul a fost creat cu succes!\n\n");
                     else
                         printf("Persoana cu numele %s detine deja un depozit la banca %s!\n\n", persoana->nume, depozit->numeBanca);
@@ -334,13 +320,13 @@ void autentificare(enum Optiune optiune){
             break;
         case AfiseazaDobanzi:
             printf("Afiseaza toate dobanzile depozit:\n");
-            afiseazaDobanzi(persoana);
+            afiseazaDobanzi(persoana, stdout, FISIER_DEPOZITE, FISIER_BANCI);
             break;
         case AfiseazaSituatieGenerala:
-            afiseazaSituatieGenerala(persoana);
+            afiseazaSituatieGenerala(FISIER_BANCI, FISIER_DEPOZITE, persoana, "situatieGenerala.txt");
             break;
         case AfiseazaSituatieLaSfarsitulLunii:
-            afiseazaSituatieLaSfarsitulLunii(persoana);
+            afiseazaSituatieLaSfarsitulLunii(FISIER_DEPOZITE, FISIER_BANCI, persoana, "situatieLasfarsitulLunii.txt");
         default: { }
         }
         pDistruge(persoana);
@@ -362,7 +348,7 @@ void ruleaza(){
             if (persoana == NULL)
                 printf("S-au introdus date invalide!\nNumele persoanei poate contine doar litere, spatii sau cratime!\n\n");
             else
-                if (adaugaPersoana(persoana) == True)
+                if (adaugaPersoana(persoana, FISIER_PERSOANE) == True)
                     printf("Persoana a fost adaugata cu succes!\n\n");
                 else
                     printf("Eroare! Persoana este deja memorata!\n\n");
@@ -373,7 +359,7 @@ void ruleaza(){
             if (banca == NULL)
                 printf("S-au introdus date invalide!\nNumele bancii poate contine doar litere, spatii sau cratime!\n\n");
             else
-                if (adaugaBanca(banca) == True)
+                if (adaugaBanca(banca, FISIER_BANCI) == True)
                     printf("Banca a fost adaugata cu succes!\n\n");
                 else
                     printf("Eroare! Banca este deja memorata!\n\n");
