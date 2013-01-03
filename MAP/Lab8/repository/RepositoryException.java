@@ -2,7 +2,7 @@ package repository;
 
 public class RepositoryException extends Exception
 {
-    public RepositoryException(String message)
+    public RepositoryException(final String message)
     {
         super(message);
     }

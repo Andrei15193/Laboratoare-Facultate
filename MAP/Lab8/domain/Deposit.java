@@ -1,45 +1,60 @@
 package domain;
 
-import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 
-public class Deposit implements Serializable
+public class Deposit implements java.io.Serializable
 {
-    // Enumerates the end options available. An end option is a procedure
-    // to be made for the deposit such as automatic capitalization (add the
-    // obtained sum to the deposit and renew the deposit).
-    public enum EndOption
+    public static Deposit cloneDeposit(final Deposit depo,
+                    final boolean automaticCapitalisation)
     {
-        // The obtained sum is added to the deposit and then it is renewed.
-        // This option requires manual deposit closing.
-        automaticCapitalization,
-        // The deposit is closed when it reaches it's end date.
-        close
+        return new Deposit(depo, automaticCapitalisation);
     }
 
-    public Deposit(String bankName, String personId, Double sum,
-                    EndOption endOption)
+    public static Deposit cloneDeposit(final Deposit depo)
     {
-        this.personId = personId;
+        return new Deposit(depo, depo.isAutomaticCapitalisation());
+    }
+
+    public Deposit(final String bankName, final String personId,
+                    final double sum, final boolean automaticCapitalisation)
+    {
         this.bankName = bankName;
+        this.personId = personId;
         this.sum = sum;
-        this.endOption = endOption;
-        this.creationDate = this.lastUpdate = new Date();
+        this.automaticCapitalisation = automaticCapitalisation;
+        this.lastUpdate = this.creationDate = new Date();
     }
 
-    public final void setPersonId(String personId)
+    public final boolean addInterest(final double interest, final Date until)
     {
-        this.personId = personId;
+        int monthCount = this.getMonth(until) - this.getMonth(this.lastUpdate);
+        if (monthCount > 0)
+        {
+            for (int i = 0; i < monthCount; i++)
+                this.sum += this.sum * interest;
+            this.lastUpdate = until;
+            return true;
+        }
+        else
+            return false;
     }
 
-    public final String getPersonId()
+    @Override
+    public boolean equals(Object object)
     {
-        return this.personId;
-    }
-
-    public final void setBankName(String bankName)
-    {
-        this.bankName = bankName;
+        Deposit deposit;
+        boolean result = false;
+        if (object instanceof Deposit)
+        {
+            deposit = (Deposit)object;
+            result = this.bankName.equals(deposit.bankName)
+                            && this.personId.equals(deposit.personId)
+                            && this.creationDate.equals(deposit.creationDate)
+                            && this.sum == deposit.sum
+                            && this.automaticCapitalisation == deposit.automaticCapitalisation;
+        }
+        return result;
     }
 
     public final String getBankName()
@@ -47,15 +62,14 @@ public class Deposit implements Serializable
         return this.bankName;
     }
 
-    public final Double getSum()
+    public final String getPersonId()
     {
-        return this.sum;
+        return this.personId;
     }
 
-    public final void updateSum(Double interest)
+    public final double getSum()
     {
-        this.sum += this.sum * interest;
-        this.lastUpdate = new Date();
+        return this.sum;
     }
 
     public final Date getCreationDate()
@@ -63,21 +77,38 @@ public class Deposit implements Serializable
         return this.creationDate;
     }
 
-    public final Date getLastUpdateDate()
+    public final Date getLastUpdate()
     {
         return this.lastUpdate;
     }
 
-    public final EndOption getEndOption()
+    public final boolean isAutomaticCapitalisation()
     {
-        return this.endOption;
+        return this.automaticCapitalisation;
     }
 
-    private String bankName;
-    private String personId;
-    private Double sum;
-    private Date lastUpdate;
+    private Deposit(final Deposit depo, final boolean automaticCapitalisation)
+    {
+        this.bankName = depo.bankName;
+        this.personId = depo.personId;
+        this.creationDate = depo.creationDate;
+        this.sum = depo.sum;
+        this.lastUpdate = depo.lastUpdate;
+        this.automaticCapitalisation = automaticCapitalisation;
+    }
+
+    private int getMonth(Date date)
+    {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal.get(Calendar.MONTH);
+    }
+
+    private final String bankName;
+    private final String personId;
     private final Date creationDate;
-    private final EndOption endOption;
+    private double sum;
+    private Date lastUpdate;
+    private final boolean automaticCapitalisation;
     private static final long serialVersionUID = 1L;
 }

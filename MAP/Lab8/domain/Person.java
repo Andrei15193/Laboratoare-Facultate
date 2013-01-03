@@ -1,31 +1,36 @@
 package domain;
 
-import java.io.Serializable;
-
-public class Person implements Serializable
+public class Person implements java.io.Serializable
 {
-    public Person(String name, String personalIdentificationNumber)
+    public Person(final String personName, final String personId)
     {
-        this.name = name;
-        this.id = personalIdentificationNumber;
+        this.name = personName;
+        this.id = personId;
     }
 
-    public void setName(String name)
-    {
-        this.name = name;
-    }
-
-    public String getName()
+    public final String getName()
     {
         return this.name;
     }
 
-    public String getPersonalIdentificationNumber()
+    public final String getId()
     {
         return this.id;
     }
 
-    private String name;
+    @Override
+    public boolean equals(Object object)
+    {
+        return object instanceof Person && this.id.equals(((Person)object).id);
+    }
+
+    @Override
+    public String toString()
+    {
+        return this.name + " " + this.id;
+    }
+
+    private final String name;
     private final String id;
     private static final long serialVersionUID = 1L;
 }

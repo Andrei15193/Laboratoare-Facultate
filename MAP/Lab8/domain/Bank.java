@@ -1,83 +1,55 @@
 package domain;
 
-import java.io.Serializable;
-import java.util.Date;
-import repository.RepositoryException;
-
-public abstract class Bank implements Serializable
+public abstract class Bank implements java.io.Serializable
 {
-    public Bank(String name, boolean staticInterest)
-    {
-        this.name = name;
-        this.staticInterest = staticInterest;
-    }
+    public abstract boolean addInterest(final double value,
+                    final java.util.Date startDate);
 
-    public final void setName(String name)
-    {
-        this.name = name;
-    }
+    public abstract double getInterest();
+
+    public abstract double getInterest(final java.util.Date date);
 
     public final String getName()
     {
         return this.name;
     }
 
-    public final boolean getStaticInterest()
+    public final boolean isInterestStatic()
     {
         return this.staticInterest;
     }
 
-    public final boolean isStaticInterest()
+    @Override
+    public boolean equals(Object object)
     {
-        return this.staticInterest;
+        boolean result = false;
+        if (object instanceof Bank)
+        {
+            Bank bank = (Bank)object;
+            result = this.name.equals(bank.name)
+                            && this.staticInterest == bank.staticInterest;
+        }
+        return result;
     }
 
-    // Adds a new interest to the repository having the given starting date.
-    public abstract void addInterest(double value, Date startingDate)
-                    throws RepositoryException;
-
-    // Returns the current interest value.
-    public abstract double getInterest() throws repository.RepositoryException;
-
-    // Returns the interest value for the given date.
-    public abstract double getInterest(Date date)
-                    throws repository.RepositoryException;
-
-    protected class Interest implements Serializable
+    @Override
+    public String toString()
     {
-        public Interest(final double value, final Date startingDate,
-                        final String bankName)
-        {
-            this.value = value;
-            this.startingDate = startingDate;
-            this.bankName = bankName;
-        }
-
-        public final double getValue()
-        {
-            return this.value;
-        }
-
-        public final Date getStartingDate()
-        {
-            return this.startingDate;
-        }
-
-        public final String getBankName()
-        {
-            return this.bankName;
-        }
-
-        private final double value;
-        private final Date startingDate;
-        private final String bankName;
-        private static final long serialVersionUID = 1L;
+        String staticInterest = null;
+        if (this.staticInterest)
+            staticInterest = "yes";
+        else
+            staticInterest = "no";
+        return this.name + " Static interest: " + staticInterest;
     }
 
-    private String name;
-    // If set to true then the bank interest is the same as in the day
-    // the deposit was created. If set to false means that the bank interest
-    // can change over time and affect the deposit.
-    private final Boolean staticInterest;
+    protected Bank(final String name, final boolean isInterestStatic)
+    {
+        this.name = name;
+        this.staticInterest = isInterestStatic;
+    }
+
+    private final String name;
+    private final boolean staticInterest;
     private static final long serialVersionUID = 1L;
 }
