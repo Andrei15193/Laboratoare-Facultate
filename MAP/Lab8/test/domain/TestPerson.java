@@ -22,10 +22,10 @@ public class TestPerson
     @Test
     public void testEquals()
     {
-        Person person1 = new Person("Andrei", "12345");
-        Person person2 = new Person("Alex", "12345");
-        Person person3 = new Person("Florin", "123");
-        Person person4 = new Person("Andrei", "123");
+        final Person person1 = new Person("Andrei", "12345");
+        final Person person2 = new Person("Alex", "12345");
+        final Person person3 = new Person("Florin", "123");
+        final Person person4 = new Person("Andrei", "123");
         Assert.assertEquals(person1, person2);
         Assert.assertNotSame(person1, person3);
         Assert.assertNotSame(person1, person4);

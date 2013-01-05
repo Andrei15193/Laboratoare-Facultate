@@ -4,9 +4,9 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import repository.BankFile;
-import repository.BankRepositoryFile;
 import repository.RepositoryException;
+import repository.file.BankFile;
+import repository.file.BankRepositoryFile;
 import utils.Utils;
 import data.iterators.StreamIterator;
 import domain.Bank;
@@ -23,10 +23,10 @@ public class TestBankRepositoryFileLow
         {
             repo = new BankRepositoryFile(
                             TestBankRepositoryFileLow.fileNames[0]);
-            Bank bank1 = new BankFile(TestBankRepositoryFileLow.bankNames[0],
-                            true, 0.3);
-            Bank bank2 = new BankFile(TestBankRepositoryFileLow.bankNames[1],
-                            true, 0.2);
+            final Bank bank1 = new BankFile(
+                            TestBankRepositoryFileLow.bankNames[0], true, 0.3);
+            final Bank bank2 = new BankFile(
+                            TestBankRepositoryFileLow.bankNames[1], true, 0.2);
             Bank bank3 = null;
             // Adding bank1
             Assert.assertTrue(repo.add(bank1));
@@ -80,10 +80,10 @@ public class TestBankRepositoryFileLow
         {
             repo = new BankRepositoryFile(
                             TestBankRepositoryFileLow.fileNames[0]);
-            Bank bank1 = new BankFile(TestBankRepositoryFileLow.bankNames[0],
-                            true, 0.3);
-            Bank bank2 = new BankFile(TestBankRepositoryFileLow.bankNames[1],
-                            true, 0.2);
+            final Bank bank1 = new BankFile(
+                            TestBankRepositoryFileLow.bankNames[0], true, 0.3);
+            final Bank bank2 = new BankFile(
+                            TestBankRepositoryFileLow.bankNames[1], true, 0.2);
             // Adding banks
             Assert.assertTrue(repo.add(bank1));
             Assert.assertEquals(1, repo.size());
@@ -136,10 +136,10 @@ public class TestBankRepositoryFileLow
         {
             repo = new BankRepositoryFile(
                             TestBankRepositoryFileLow.fileNames[0]);
-            Bank bank1 = new BankFile(TestBankRepositoryFileLow.bankNames[0],
-                            true, 0.3);
-            Bank bank2 = new BankFile(TestBankRepositoryFileLow.bankNames[1],
-                            true, 0.2);
+            final Bank bank1 = new BankFile(
+                            TestBankRepositoryFileLow.bankNames[0], true, 0.3);
+            final Bank bank2 = new BankFile(
+                            TestBankRepositoryFileLow.bankNames[1], true, 0.2);
             // Testing on empty repository
             Assert.assertFalse(repo.contains(bank1));
             Assert.assertFalse(repo.contains(bank2));
@@ -176,10 +176,10 @@ public class TestBankRepositoryFileLow
         {
             repo = new BankRepositoryFile(
                             TestBankRepositoryFileLow.fileNames[0]);
-            Bank bank1 = new BankFile(TestBankRepositoryFileLow.bankNames[0],
-                            true, 0.3);
-            Bank bank2 = new BankFile(TestBankRepositoryFileLow.bankNames[1],
-                            true, 0.2);
+            final Bank bank1 = new BankFile(
+                            TestBankRepositoryFileLow.bankNames[0], true, 0.3);
+            final Bank bank2 = new BankFile(
+                            TestBankRepositoryFileLow.bankNames[1], true, 0.2);
             // Testing on empty repository
             found = repo.find(TestBankRepositoryFileLow.bankNames[0]);
             Assert.assertNull(found);
@@ -227,10 +227,10 @@ public class TestBankRepositoryFileLow
         {
             repo = new BankRepositoryFile(
                             TestBankRepositoryFileLow.fileNames[0]);
-            Bank bank1 = new BankFile(TestBankRepositoryFileLow.bankNames[0],
-                            true, 0.3);
-            Bank bank2 = new BankFile(TestBankRepositoryFileLow.bankNames[1],
-                            true, 0.2);
+            final Bank bank1 = new BankFile(
+                            TestBankRepositoryFileLow.bankNames[0], true, 0.3);
+            final Bank bank2 = new BankFile(
+                            TestBankRepositoryFileLow.bankNames[1], true, 0.2);
             Assert.assertTrue(repo.isEmpty());
             repo.add(bank1);
             Assert.assertFalse(repo.isEmpty());
@@ -263,13 +263,13 @@ public class TestBankRepositoryFileLow
         {
             repo = new BankRepositoryFile(
                             TestBankRepositoryFileLow.fileNames[0]);
-            Bank bank1 = new BankFile(TestBankRepositoryFileLow.bankNames[0],
-                            true, 0.3);
-            Bank bank2 = new BankFile(TestBankRepositoryFileLow.bankNames[1],
-                            true, 0.2);
-            Bank bank3 = new BankFile(TestBankRepositoryFileLow.bankNames[2],
-                            true, 0.1);
-            Bank[] banks1 = {bank1, bank2};
+            final Bank bank1 = new BankFile(
+                            TestBankRepositoryFileLow.bankNames[0], true, 0.3);
+            final Bank bank2 = new BankFile(
+                            TestBankRepositoryFileLow.bankNames[1], true, 0.2);
+            final Bank bank3 = new BankFile(
+                            TestBankRepositoryFileLow.bankNames[2], true, 0.1);
+            final Bank[] banks1 = {bank1, bank2};
             // Testing on empty repo
             i = 0;
             for (Bank it: repo)
@@ -336,10 +336,10 @@ public class TestBankRepositoryFileLow
             repo = new BankRepositoryFile(
                             TestBankRepositoryFileLow.fileNames[0]);
             Bank removed;
-            Bank bank1 = new BankFile(TestBankRepositoryFileLow.bankNames[0],
-                            true, 0.3);
-            Bank bank2 = new BankFile(TestBankRepositoryFileLow.bankNames[1],
-                            true, 0.2);
+            final Bank bank1 = new BankFile(
+                            TestBankRepositoryFileLow.bankNames[0], true, 0.3);
+            final Bank bank2 = new BankFile(
+                            TestBankRepositoryFileLow.bankNames[1], true, 0.2);
             // Testing with one entity
             Assert.assertEquals(0, repo.size());
             Assert.assertNull(repo

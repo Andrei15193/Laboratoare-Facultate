@@ -76,4 +76,6 @@ public class Utils
             }
         };
     }
+
+    public static final String nameRegEx = "^([a-zA-Z]+[ -]?)*[a-zA-Z]+$";
 }

@@ -22,11 +22,16 @@ public class TestBank
     @Test
     public void testEquals()
     {
-        TestBankSuper bank1 = new TestBankSuper(TestBank.bankNames[0], true);
-        TestBankSuper bank2 = new TestBankSuper(TestBank.bankNames[0], true);
-        TestBankSuper bank3 = new TestBankSuper(TestBank.bankNames[0], false);
-        TestBankSuper bank4 = new TestBankSuper(TestBank.bankNames[1], false);
-        TestBankSuper bank5 = new TestBankSuper(TestBank.bankNames[1], true);
+        final TestBankSuper bank1 = new TestBankSuper(TestBank.bankNames[0],
+                        true);
+        final TestBankSuper bank2 = new TestBankSuper(TestBank.bankNames[0],
+                        true);
+        final TestBankSuper bank3 = new TestBankSuper(TestBank.bankNames[0],
+                        false);
+        final TestBankSuper bank4 = new TestBankSuper(TestBank.bankNames[1],
+                        false);
+        final TestBankSuper bank5 = new TestBankSuper(TestBank.bankNames[1],
+                        true);
         Assert.assertTrue(bank1.equals(bank2));
         Assert.assertFalse(bank1.equals(bank3));
         Assert.assertFalse(bank1.equals(bank4));

@@ -4,8 +4,8 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import repository.DepositRepositoryFile;
 import repository.RepositoryException;
+import repository.file.DepositRepositoryFile;
 import utils.Pair;
 import utils.Utils;
 import domain.Deposit;
@@ -20,8 +20,8 @@ public class TestDepositRepositoryFileLow
         {
             DepositRepositoryFile repo = new DepositRepositoryFile(
                             TestDepositRepositoryFileLow.testFileName);
-            Deposit depo1 = new Deposit("ING", "12345", 1000, false);
-            Deposit depo2 = new Deposit("BT", "12345", 1000, false);
+            final Deposit depo1 = new Deposit("ING", "12345", 1000, false);
+            final Deposit depo2 = new Deposit("BT", "12345", 1000, false);
             Assert.assertEquals(0, repo.size());
             Assert.assertTrue(repo.add(depo1));
             Assert.assertEquals(1, repo.size());
@@ -59,8 +59,8 @@ public class TestDepositRepositoryFileLow
         {
             DepositRepositoryFile repo = new DepositRepositoryFile(
                             TestDepositRepositoryFileLow.testFileName);
-            Deposit depo1 = new Deposit("ING", "12345", 1000, false);
-            Deposit depo2 = new Deposit("BT", "12345", 1000, false);
+            final Deposit depo1 = new Deposit("ING", "12345", 1000, false);
+            final Deposit depo2 = new Deposit("BT", "12345", 1000, false);
             Assert.assertFalse(repo.contains(depo1));
             Assert.assertFalse(repo.contains(depo2));
             Assert.assertTrue(repo.add(depo1));
@@ -89,8 +89,8 @@ public class TestDepositRepositoryFileLow
             DepositRepositoryFile repo = new DepositRepositoryFile(
                             TestDepositRepositoryFileLow.testFileName);
             Deposit found;
-            Deposit depo1 = new Deposit("ING", "12345", 1000, false);
-            Deposit depo2 = new Deposit("BT", "12345", 1000, false);
+            final Deposit depo1 = new Deposit("ING", "12345", 1000, false);
+            final Deposit depo2 = new Deposit("BT", "12345", 1000, false);
             Pair<String, String> pair1 = new Pair<String, String>("ING",
                             "12345");
             Pair<String, String> pair2 = new Pair<String, String>("BT", "12345");
@@ -123,8 +123,8 @@ public class TestDepositRepositoryFileLow
         {
             DepositRepositoryFile repo = new DepositRepositoryFile(
                             TestDepositRepositoryFileLow.testFileName);
-            Deposit depo1 = new Deposit("ING", "12345", 1000, false);
-            Deposit depo2 = new Deposit("BT", "12345", 1000, false);
+            final Deposit depo1 = new Deposit("ING", "12345", 1000, false);
+            final Deposit depo2 = new Deposit("BT", "12345", 1000, false);
             Pair<String, String> pair1 = new Pair<String, String>("ING",
                             "12345");
             Pair<String, String> pair2 = new Pair<String, String>("BT", "12345");

@@ -17,9 +17,9 @@ public class TestBankFileLow
         TestBankFileLow.removeTestFiles();
         try
         {
-            Date date = new Date();
-            repository.BankFile bank = null;
-            Assert.assertNotNull(bank = new repository.BankFile(
+            final Date date = new Date();
+            repository.file.BankFile bank = null;
+            Assert.assertNotNull(bank = new repository.file.BankFile(
                             TestBankFileLow.bankNames[0], true, 0.1));
             Assert.assertEquals(bank.getInterest(), 0.1);
             bank.addInterest(0.2, new Date(date.getTime() + 10000));

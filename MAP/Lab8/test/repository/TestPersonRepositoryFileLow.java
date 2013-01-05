@@ -4,8 +4,8 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import repository.PersonRepositoryFile;
 import repository.RepositoryException;
+import repository.file.PersonRepositoryFile;
 import utils.Utils;
 import data.iterators.StreamIterator;
 import domain.Person;
@@ -20,8 +20,8 @@ public class TestPersonRepositoryFileLow
         {
             PersonRepositoryFile repo = new PersonRepositoryFile(
                             TestPersonRepositoryFileLow.testFileName);
-            Person person1 = new Person("Andrei", "12345");
-            Person person2 = new Person("Ioana", "123");
+            final Person person1 = new Person("Andrei", "12345");
+            final Person person2 = new Person("Ioana", "123");
             Assert.assertTrue(repo.isEmpty());
             Assert.assertTrue(repo.add(person1));
             Assert.assertFalse(repo.add(person1));
@@ -56,8 +56,8 @@ public class TestPersonRepositoryFileLow
         {
             PersonRepositoryFile repo = new PersonRepositoryFile(
                             TestPersonRepositoryFileLow.testFileName);
-            Person person1 = new Person("Andrei", "12345");
-            Person person2 = new Person("Ioana", "123");
+            final Person person1 = new Person("Andrei", "12345");
+            final Person person2 = new Person("Ioana", "123");
             Assert.assertEquals(0, repo.size());
             Assert.assertTrue(repo.add(person1));
             Assert.assertEquals(1, repo.size());
@@ -92,8 +92,8 @@ public class TestPersonRepositoryFileLow
         {
             PersonRepositoryFile repo = new PersonRepositoryFile(
                             TestPersonRepositoryFileLow.testFileName);
-            Person person1 = new Person("Andrei", "12345");
-            Person person2 = new Person("Ioana", "123");
+            final Person person1 = new Person("Andrei", "12345");
+            final Person person2 = new Person("Ioana", "123");
             Assert.assertFalse(repo.contains(person1));
             Assert.assertFalse(repo.contains(person2));
             Assert.assertTrue(repo.add(person1));
@@ -127,8 +127,8 @@ public class TestPersonRepositoryFileLow
             PersonRepositoryFile repo = new PersonRepositoryFile(
                             TestPersonRepositoryFileLow.testFileName);
             Person found;
-            Person person1 = new Person("Andrei", "12345");
-            Person person2 = new Person("Ioana", "123");
+            final Person person1 = new Person("Andrei", "12345");
+            final Person person2 = new Person("Ioana", "123");
             Assert.assertNull(repo.find("12345"));
             Assert.assertNull(repo.find("123"));
             Assert.assertTrue(repo.add(person1));
@@ -167,9 +167,9 @@ public class TestPersonRepositoryFileLow
     {
         int i, count;
         Person current;
-        Person person1 = new Person("Andrei", "12345");
-        Person person2 = new Person("Andrei", "123");
-        Person[] persons = {person1, person2};
+        final Person person1 = new Person("Andrei", "12345");
+        final Person person2 = new Person("Andrei", "123");
+        final Person[] persons = {person1, person2};
         TestPersonRepositoryFileLow.removeTestFiles();
         try
         {
@@ -228,8 +228,8 @@ public class TestPersonRepositoryFileLow
         {
             PersonRepositoryFile repo = new PersonRepositoryFile(
                             TestPersonRepositoryFileLow.testFileName);
-            Person person1 = new Person("Andrei", "12345");
-            Person person2 = new Person("Ioana", "123");
+            final Person person1 = new Person("Andrei", "12345");
+            final Person person2 = new Person("Ioana", "123");
             Assert.assertNull(repo.remove("12345"));
             Assert.assertNull(repo.remove("123"));
             Assert.assertTrue(repo.add(person1));
@@ -281,8 +281,8 @@ public class TestPersonRepositoryFileLow
         {
             PersonRepositoryFile repo = new PersonRepositoryFile(
                             TestPersonRepositoryFileLow.testFileName);
-            Person person1 = new Person("Andrei", "12345");
-            Person person2 = new Person("Ioana", "123");
+            final Person person1 = new Person("Andrei", "12345");
+            final Person person2 = new Person("Ioana", "123");
             Assert.assertEquals(0, repo.size());
             Assert.assertTrue(repo.add(person1));
             Assert.assertEquals(1, repo.size());
