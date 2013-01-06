@@ -1,17 +1,17 @@
 create table Categorii(
     codC int,
-	numeC varchar(30),
-	constraint pkCategorii primary key (codC)
+    numeC varchar(30),
+    constraint pkCategorii primary key (codC)
 )
 
 create table Preparate(
     codP int,
-	codC int,
-	numeP varchar(100),
-	pret int,
-	timp_preparare int,
-	constraint pkPreparate primary key (codP),
-	constraint fkPreparateCategorii foreign key (codC) references Categorii(codC)
+    codC int,
+    numeP varchar(100),
+    pret int,
+    timp_preparare int,
+    constraint pkPreparate primary key (codP),
+    constraint fkPreparateCategorii foreign key (codC) references Categorii(codC)
 )
 
 create table Ingrediente(
