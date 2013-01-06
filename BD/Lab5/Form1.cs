@@ -16,6 +16,7 @@ namespace BDLab5
         public MainForm()
         {
             InitializeComponent();
+            this.deletedRowIndexes = new LinkedList<int>();
             dataSet = new DataSet();
             dbConnection = new SqlConnection("Server=ANDREIWINDOWS8; Database=LocalDb; Trusted_Connection=yes; ");
             SetDataAdapters();
@@ -25,6 +26,7 @@ namespace BDLab5
             sectionsDataGridView.DataSource = dataSet.Tables["Sections"];
             sectionsDataGridView.Columns[0].Width = sectionsDataGridView.Width;
             sectionsDataGridView.Columns[1].Visible = false;
+            sectionsDataGridView.Columns[0].SortMode = DataGridViewColumnSortMode.NotSortable;
             studentsDataGridView.Columns[0].Width = studentsDataGridView.Width - studentsDataGridView.Columns[1].Width;
             FillStudentsTable();
         }
@@ -45,7 +47,7 @@ namespace BDLab5
                 DataGridViewRowCollection destination = studentsDataGridView.Rows;
                 destination.Clear();
                 this.studentsFromSelectedSection = dataSet.Tables["Sections"].Rows[sectionsDataGridView.SelectedRows[0].Index].GetChildRows(dataSet.Relations[0]);
-                foreach (DataRow row in studentsFromSelectedSection.Where<DataRow>(row => row.RowState != DataRowState.Deleted))
+                foreach (DataRow row in studentsFromSelectedSection)
                 {
                     DataGridViewRow currentViewRow = new DataGridViewRow();
                     currentViewRow.Cells.Add(new DataGridViewTextBoxCell());
@@ -59,11 +61,10 @@ namespace BDLab5
 
         private void UpdateStudentTable()
         {
-            if (studentsFromSelectedSection != null)
-                studentsDataAdapter.Update(studentsFromSelectedSection);
+            studentsDataAdapter.Update(this.dataSet.Tables["Students"]);
         }
 
-        private int numberOfDeletedRows;
+        private LinkedList<int> deletedRowIndexes;
         private DataSet dataSet;
         private SqlConnection dbConnection;
         private SqlDataAdapter sectionsDataAdapter;

@@ -35,17 +35,23 @@ namespace BDLab5
                     newDataRow["cods"] = sectionsDataGridView.SelectedRows[0].Cells["cods"].Value;
                     studentsDataTable.Rows.Add(newDataRow);
                     studentsDataGridView.Rows.Add(newViewRow);
+
+                    studentsFromSelectedSection = dataSet.Tables["Sections"].Rows[sectionsDataGridView.SelectedRows[0].Index].GetChildRows(dataSet.Relations[0]);
+                    this.deletedRowIndexes.Clear();
                 }
             }
         }
 
         private void UpdateStudentClick(object sender, EventArgs e)
         {
+            int index;
             DataGridViewSelectedRowCollection selectedRows = studentsDataGridView.SelectedRows;
             DataRow selectedDataRow;
             if (selectedRows.Count != 0)
             {
-                selectedDataRow = this.studentsFromSelectedSection[selectedRows[0].Index + numberOfDeletedRows];
+                index = selectedRows[0].Index;
+                int offset = this.deletedRowIndexes.Count((deletedIndex) => index >= deletedIndex);
+                selectedDataRow = this.studentsFromSelectedSection[index + offset];                
                 using (StudentDetailsForm dialog = new StudentDetailsForm("Modifica", selectedDataRow["nume"] as string, selectedDataRow["nrmatricol"] as string, selectedDataRow["grupa"] as string, selectedDataRow["datan"] as DateTime?))
                 {
                     if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
@@ -65,14 +71,16 @@ namespace BDLab5
             if (selectedRows.Count != 0)
             {
                 index = selectedRows[0].Index;
-                this.studentsFromSelectedSection[index + numberOfDeletedRows++].Delete();
+                int offset = this.deletedRowIndexes.Count((deletedIndex) => index >= deletedIndex);
+                this.studentsFromSelectedSection[index + offset].Delete();
                 this.studentsDataGridView.Rows.RemoveAt(index);
+                this.deletedRowIndexes.AddLast(index);
             }
         }
 
         private void CellClicked(object sender, DataGridViewCellEventArgs e)
         {
-            numberOfDeletedRows = 0;
+            this.deletedRowIndexes.Clear();
             this.button1.Enabled = this.button2.Enabled = this.button3.Enabled = true;
             UpdateStudentTable();
             FillStudentsTable();

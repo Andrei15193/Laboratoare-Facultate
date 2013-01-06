@@ -140,12 +140,14 @@
             this.name.HeaderText = "Nume";
             this.name.Name = "name";
             this.name.ReadOnly = true;
+            this.name.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // group
             // 
             this.group.HeaderText = "Grupa";
             this.group.Name = "group";
             this.group.ReadOnly = true;
+            this.group.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // MainForm
             // 
