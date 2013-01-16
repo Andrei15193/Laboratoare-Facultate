@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
-import data.iterators.StreamIterator;
-
 public class Utils
 {
     public static void renameFile(final String sourceName,
@@ -56,37 +54,6 @@ public class Utils
         {
             Utils.closeStream(file);
         }
-    }
-
-    public static <E>StreamIterator<E> buildStreamIteratorOverEmptyCollection()
-    {
-        return new StreamIterator<E>()
-        {
-            @Override
-            public boolean hasNext()
-            {
-                return false;
-            }
-
-            @Override
-            public E next()
-            {
-                throw new java.util.NoSuchElementException(
-                                "There is no element left in the current iteration.");
-            }
-
-            @Override
-            public void remove()
-            {
-                throw new UnsupportedOperationException(
-                                "The remove method is not supported for stream iterators.");
-            }
-
-            @Override
-            public void close()
-            {
-            }
-        };
     }
 
     public static boolean checkIfFileExists(final String filePath)
