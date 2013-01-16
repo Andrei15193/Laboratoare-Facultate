@@ -4,9 +4,6 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.util.Observer;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -22,45 +19,29 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
-import persistence.PersistenceException;
+import persistence.RepositoryException;
 import controller.StudentController;
 
-public class StudentApplicationFrame extends JFrame implements ApplicationFrame
+public class StudentFrame extends JFrame
 {
-    public StudentApplicationFrame(final ApplicationLauncher launcher,
-                    StudentController controller)
+    public StudentFrame(final StudentController controller)
     {
         super("Student application");
-        this.launcher = launcher;
         this.controller = controller;
-        this.marksTable = new JTable(this.controller.getMarksTableModel());
-        this.setResizable(false);
-        this.buildForm();
-        this.addWindowListener(new WindowAdapter()
-        {
-            @Override
-            public void windowClosing(WindowEvent e)
-            {
-                StudentApplicationFrame.this.launcher
-                                .closing(StudentApplicationFrame.this);
-            }
-        });
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.initialize();
+        this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     }
 
-    private void buildForm()
+    private void initialize()
     {
+        this.setResizable(false);
         this.getContentPane().setPreferredSize(new Dimension(300, 300));
+        this.setLayout(null);
         this.setLayout(new GridLayout(1, 1));
         this.setJMenuBar(this.buildMenuBar());
-        this.add(new JScrollPane(this.marksTable));
+        this.add(new JScrollPane(new JTable(this.controller
+                        .getMarksTableModel())));
         this.pack();
-    }
-
-    @Override
-    public Observer getController()
-    {
-        return this.controller;
     }
 
     private JMenuBar buildMenuBar()
@@ -83,7 +64,7 @@ public class StudentApplicationFrame extends JFrame implements ApplicationFrame
     {
         public LogInDialog()
         {
-            super(StudentApplicationFrame.this, "Log in");
+            super(StudentFrame.this, "Log in");
             this.setResizable(false);
             this.setModal(true);
             this.buildForm();
@@ -125,7 +106,7 @@ public class StudentApplicationFrame extends JFrame implements ApplicationFrame
                 {
                     try
                     {
-                        if (StudentApplicationFrame.this.controller.logIn(
+                        if (StudentFrame.this.controller.logIn(
                                         LogInDialog.this.nameTextField
                                                         .getText(),
                                         LogInDialog.this.passwordTextField
@@ -137,7 +118,7 @@ public class StudentApplicationFrame extends JFrame implements ApplicationFrame
                         else
                             LogInDialog.this.errorMessage("Invalid name or password. Could not log in!");
                     }
-                    catch (PersistenceException exception)
+                    catch (RepositoryException exception)
                     {
                         exception.printStackTrace();
                         String message = exception.getMessage();
@@ -187,8 +168,6 @@ public class StudentApplicationFrame extends JFrame implements ApplicationFrame
         private static final long serialVersionUID = 1L;
     }
 
-    private final JTable marksTable;
-    private final ApplicationLauncher launcher;
     private final StudentController controller;
     private static final long serialVersionUID = 1L;
 }

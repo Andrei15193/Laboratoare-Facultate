@@ -4,52 +4,37 @@ import java.io.Serializable;
 
 public class Mark implements Serializable
 {
-    public Mark(final String courseName, final String studentName,
-                    final int mark)
+    public Mark(final Student student, final Course course, final int mark)
     {
-        this.courseName = courseName;
-        this.studentName = studentName;
+        this.student = student;
+        this.course = course;
         this.mark = mark;
     }
 
-    public final String getCourseName()
+    public Student getStudent()
     {
-        return this.courseName;
+        return this.student;
     }
 
-    public final String getStudentName()
+    public Course getCourse()
     {
-        return this.studentName;
+        return this.course;
     }
 
-    public final int getMark()
+    public Integer getMark()
     {
         return this.mark;
     }
 
     @Override
-    public boolean equals(Object object)
-    {
-        Mark mark;
-        boolean result = false;
-        if (object instanceof Mark)
-        {
-            mark = (Mark)object;
-            result = this.courseName.equals(mark.getCourseName())
-                            && this.studentName.equals(mark.getStudentName())
-                            && this.mark == mark.mark;
-        }
-        return result;
-    }
-
-    @Override
     public String toString()
     {
-        return this.courseName + " " + this.studentName + " " + this.mark;
+        return this.student.getName() + " " + this.course.getName() + " "
+                        + this.mark;
     }
 
-    private final String courseName;
-    private final String studentName;
-    private final int mark;
+    private final Student student;
+    private final Course course;
+    private final Integer mark;
     private static final long serialVersionUID = 1L;
 }

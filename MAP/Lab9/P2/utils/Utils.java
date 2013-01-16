@@ -33,6 +33,17 @@ public class Utils
         }
     }
 
+    public static void closeStream(final java.io.InputStream inputStream)
+    {
+        try
+        {
+            inputStream.close();
+        }
+        catch (Exception e)
+        {
+        }
+    }
+
     public static void createFile(final String fileName)
                     throws FileNotFoundException
     {

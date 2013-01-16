@@ -5,50 +5,51 @@ import java.util.Observer;
 
 import javax.swing.table.AbstractTableModel;
 
-import persistence.AllMarks;
-import persistence.AllStudents;
-import persistence.PersistenceException;
-import controller.model.MarksTableModel;
+import persistence.RepositoryException;
 import domain.Mark;
+import domain.MarksApplication;
 import domain.Student;
 
-public class StudentController extends Observable implements Observer
+public class StudentController implements Observer
 {
-    public StudentController(final AllMarks allMarks,
-                    final AllStudents allStudents)
+    public StudentController(final MarksApplication marksApplication)
     {
-        this.allMarks = allMarks;
-        this.allStudents = allStudents;
+        this.marksApplication = marksApplication;
         this.marksTableModel = new MarksTableModel();
+        this.marksApplication.addObserver(this);
     }
 
     @Override
-    public void update(Observable sender, Object object)
+    public void update(Observable sender, Object added)
     {
-        Mark mark;
-        if (this.loggedStudent != null && object instanceof Mark)
+        final Mark mark;
+        if (added instanceof Mark)
         {
-            mark = (Mark)object;
-            if (this.loggedStudent.getName().equals(mark.getStudentName()))
-            {
+            mark = (Mark)added;
+            if (this.loggedInStudent.getName().equals(
+                            mark.getStudent().getName()))
                 this.marksTableModel.addMark(mark);
-            }
         }
     }
 
     public boolean logIn(final String studentName, final String studentPassword)
-                    throws PersistenceException
+                    throws RepositoryException
     {
-        this.loggedStudent = this.allStudents
-                        .with(studentName, studentPassword);
-        if (this.loggedStudent != null)
+        this.loggedInStudent = this.marksApplication.getStudent(studentName,
+                        studentPassword);
+        if (this.loggedInStudent != null)
         {
-            this.marksTableModel.addMarks(this.allMarks
-                            .from(this.loggedStudent));
+            this.marksTableModel.addMarks(this.marksApplication
+                            .getMarksForStudent(studentName));
             return true;
         }
         else
             return false;
+    }
+
+    public void unsubscribe()
+    {
+        this.marksApplication.deleteObserver(this);
     }
 
     public AbstractTableModel getMarksTableModel()
@@ -56,8 +57,7 @@ public class StudentController extends Observable implements Observer
         return this.marksTableModel;
     }
 
-    private Student loggedStudent;
-    private final AllMarks allMarks;
-    private final AllStudents allStudents;
+    private Student loggedInStudent;
+    private final MarksApplication marksApplication;
     private final MarksTableModel marksTableModel;
 }

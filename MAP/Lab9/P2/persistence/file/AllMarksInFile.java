@@ -1,17 +1,18 @@
 package persistence.file;
 
+import java.io.EOFException;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.LinkedList;
+import java.util.List;
 
 import persistence.AllMarks;
-import persistence.PersistenceException;
+import persistence.RepositoryException;
 import utils.AppendingObjectOutputStream;
 import utils.Utils;
-import data.iterators.ObjectStreamIterator;
-import data.iterators.StreamIterator;
 import domain.Mark;
 import domain.Student;
 
@@ -23,44 +24,47 @@ public class AllMarksInFile implements AllMarks
     }
 
     @Override
-    public StreamIterator<Mark> from(final Student student)
-                    throws PersistenceException
+    public Mark[] from(final Student student) throws RepositoryException
     {
-        StreamIterator<Mark> iterator;
+        Mark mark;
+        boolean eof = false;
+        ObjectInputStream input = null;
+        List<Mark> marks = new LinkedList<Mark>();
         try
         {
-            iterator = new ObjectStreamIterator<Mark>(new ObjectInputStream(
-                            new FileInputStream(this.fileName)))
-            {
-                @Override
-                public Mark next()
+            input = new ObjectInputStream(new FileInputStream(this.fileName));
+            do
+                try
                 {
-                    Mark found;
-                    do
-                        found = super.next();
-                    while (super.hasNext()
-                                    && !this.name.equals(found.getStudentName()));
-                    return found;
+                    mark = (Mark)input.readObject();
+                    if (student.equals(mark.getStudent()))
+                        marks.add(mark);
                 }
-
-                private final String name = new String(student.getName());
-            };
+                catch (EOFException e)
+                {
+                    eof = true;
+                }
+            while (!eof);
         }
-        catch (FileNotFoundException e)
+        catch (ClassNotFoundException e)
         {
-            iterator = Utils.<Mark>buildStreamIteratorOverEmptyCollection();
+            new RepositoryException("Corrupted data file", e);
         }
-        catch (Exception e)
+        catch (IOException e)
         {
-            throw new PersistenceException("Inaccessible file", e);
+            new RepositoryException("Data file inaccessible", e);
         }
-        return iterator;
+        finally
+        {
+            Utils.closeStream(input);
+        }
+        return marks.toArray(new Mark[marks.size()]);
     }
 
     @Override
-    public void nowInclude(final Mark newMark) throws PersistenceException
+    public void nowInclude(final Mark mark) throws RepositoryException
     {
-        ObjectOutputStream output;
+        ObjectOutputStream output = null;
         try
         {
             if (Utils.checkIfFileExists(this.fileName))
@@ -69,12 +73,15 @@ public class AllMarksInFile implements AllMarks
             else
                 output = new ObjectOutputStream(new FileOutputStream(
                                 this.fileName));
-            output.writeObject(newMark);
-            Utils.closeStream(output);
+            output.writeObject(mark);
         }
-        catch (Exception e)
+        catch (IOException e)
         {
-            throw new PersistenceException("Inaccessible file", e);
+            throw new RepositoryException("Data file inaccessible.", e);
+        }
+        finally
+        {
+            Utils.closeStream(output);
         }
     }
 

@@ -1,17 +1,16 @@
 package persistence.file;
 
+import java.io.EOFException;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import persistence.AllStudents;
-import persistence.PersistenceException;
+import persistence.RepositoryException;
 import utils.AppendingObjectOutputStream;
 import utils.Utils;
-import data.iterators.ObjectStreamIterator;
-import data.iterators.StreamIterator;
 import domain.Student;
 
 public class AllStudentsInFile implements AllStudents
@@ -22,69 +21,84 @@ public class AllStudentsInFile implements AllStudents
     }
 
     @Override
-    public Student with(String name) throws PersistenceException
+    public Student with(final String name) throws RepositoryException
     {
-        Student found = null;
-        StreamIterator<Student> iterator;
+        boolean eof = false;
+        Student student = null;
+        ObjectInputStream input = null;
         try
         {
-            iterator = new ObjectStreamIterator<Student>(new ObjectInputStream(
-                            new FileInputStream(this.fileName)));
-            while (iterator.hasNext() && found == null)
-            {
-                found = iterator.next();
-                if (!name.equals(found.getName()))
-                    found = null;
-            }
-            iterator.close();
+            input = new ObjectInputStream(new FileInputStream(this.fileName));
+            do
+                try
+                {
+                    student = (Student)input.readObject();
+                }
+                catch (EOFException e)
+                {
+                    student = null;
+                    eof = true;
+                }
+            while (!eof && !name.equals(student.getName()));
         }
-        catch (FileNotFoundException e)
+        catch (ClassNotFoundException e)
         {
-            iterator = Utils.<Student>buildStreamIteratorOverEmptyCollection();
         }
-        catch (Exception e)
+        catch (IOException e)
         {
-            throw new PersistenceException("Inaccessible file", e);
+            new RepositoryException("File inaccessible", e);
         }
-        return found;
+        finally
+        {
+            Utils.closeStream(input);
+        }
+        return student;
     }
 
     @Override
     public Student with(final String name, final String password)
-                    throws PersistenceException
+                    throws RepositoryException
     {
-        Student found = null;
-        StreamIterator<Student> iterator;
+        boolean eof = false;
+        Student student = null;
+        ObjectInputStream input = null;
         try
         {
-            iterator = new ObjectStreamIterator<Student>(new ObjectInputStream(
-                            new FileInputStream(this.fileName)));
-            while (iterator.hasNext() && found == null)
-            {
-                found = iterator.next();
-                if (!(name.equals(found.getName()) && password.equals(found
-                                .getPassword())))
-                    found = null;
-            }
-            iterator.close();
+            input = new ObjectInputStream(new FileInputStream(this.fileName));
+            do
+                try
+                {
+                    student = (Student)input.readObject();
+                }
+                catch (EOFException e)
+                {
+                    student = null;
+                    eof = true;
+                }
+            while (!eof
+                            && !(name.equals(student.getName()) && password
+                                            .equals(student.getPassword())));
         }
-        catch (FileNotFoundException e)
+        catch (ClassNotFoundException e)
         {
-            iterator = Utils.<Student>buildStreamIteratorOverEmptyCollection();
+            new RepositoryException("Corrupted data file", e);
         }
-        catch (Exception e)
+        catch (IOException e)
         {
-            throw new PersistenceException("Inaccessible file", e);
+            new RepositoryException("Data file inaccessible", e);
         }
-        return found;
+        finally
+        {
+            Utils.closeStream(input);
+        }
+        return student;
     }
 
     @Override
-    public void nowInclude(final Student newStudent)
-                    throws PersistenceException
+    public void nowInclude(final Student student) throws RepositoryException
     {
-        ObjectOutputStream output;
-        if (this.with(newStudent.getName()) == null)
+        ObjectOutputStream output = null;
+        if (this.with(student.getName()) == null)
             try
             {
                 if (Utils.checkIfFileExists(this.fileName))
@@ -93,17 +107,18 @@ public class AllStudentsInFile implements AllStudents
                 else
                     output = new ObjectOutputStream(new FileOutputStream(
                                     this.fileName));
-                output.writeObject(newStudent);
+                output.writeObject(student);
+            }
+            catch (IOException e)
+            {
+                throw new RepositoryException("File inaccessible.", e);
+            }
+            finally
+            {
                 Utils.closeStream(output);
             }
-            catch (Exception e)
-            {
-                throw new PersistenceException("Inaccessible file", e);
-            }
         else
-            throw new PersistenceException(
-                            "The new student could not be included because he is already present.",
-                            null);
+            throw new RepositoryException("The student already exists!");
     }
 
     private final String fileName;

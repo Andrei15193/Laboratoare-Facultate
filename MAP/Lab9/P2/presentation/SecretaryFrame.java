@@ -1,13 +1,9 @@
 package presentation;
 
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.util.Observer;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -23,56 +19,29 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
-import persistence.PersistenceException;
+import persistence.RepositoryException;
 import controller.SecretaryController;
+import domain.Course;
 
-public class SecretaryApplicationFrame extends JFrame implements
-                ApplicationFrame
+public class SecretaryFrame extends JFrame
 {
-    public SecretaryApplicationFrame(final ApplicationLauncher launcher,
-                    final SecretaryController controller)
+    public SecretaryFrame(final SecretaryController controller)
     {
-        super("Secreatry Application");
-        this.launcher = launcher;
+        super("Secretary application");
         this.controller = controller;
-        this.courseList = new JList<String>(
-                        this.controller.getCoursesListModel());
-        this.setResizable(false);
-        this.buildForm();
-        this.addWindowListener(new WindowAdapter()
-        {
-            @Override
-            public void windowClosing(WindowEvent e)
-            {
-                SecretaryApplicationFrame.this.launcher
-                                .closing(SecretaryApplicationFrame.this);
-            }
-        });
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.courseList = new JList<Course>(
+                        this.controller.getCourseListModel());
+        this.initialize();
+        this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     }
 
-    @Override
-    public Observer getController()
+    private void initialize()
     {
-        return this.controller;
-    }
-
-    private void buildForm()
-    {
-        this.getContentPane().setPreferredSize(new Dimension(200, 200));
-        this.setLayout(null);
+        this.getContentPane().setPreferredSize(new Dimension(300, 300));
+        this.setLayout(new GridLayout(1, 1));
         this.setJMenuBar(this.buildMenuBar());
-        this.add(this.buildCourseList());
+        this.add(new JScrollPane(this.courseList));
         this.pack();
-    }
-
-    private Component buildCourseList()
-    {
-        JPanel panel = new JPanel(new GridLayout(1, 1));
-        panel.setLocation(10, 10);
-        panel.setSize(180, 180);
-        panel.add(new JScrollPane(this.courseList));
-        return panel;
     }
 
     private JMenuBar buildMenuBar()
@@ -103,12 +72,12 @@ public class SecretaryApplicationFrame extends JFrame implements
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                final String course = SecretaryApplicationFrame.this.courseList
+                final Course course = SecretaryFrame.this.courseList
                                 .getSelectedValue();
                 if (course != null)
-                    new AddMarkDialog(course).setVisible(true);
+                    new AddMarkDialog(course.getName()).setVisible(true);
                 else
-                    SecretaryApplicationFrame.this
+                    SecretaryFrame.this
                                     .errorMessage("There is no course selected.");
             }
         });
@@ -135,7 +104,7 @@ public class SecretaryApplicationFrame extends JFrame implements
     {
         public AddCourseDialog()
         {
-            super(SecretaryApplicationFrame.this, "Add course");
+            super(SecretaryFrame.this, "Add course");
             this.setResizable(false);
             this.setModal(true);
             this.buildForm();
@@ -165,21 +134,21 @@ public class SecretaryApplicationFrame extends JFrame implements
                 {
                     try
                     {
-                        SecretaryApplicationFrame.this.controller
+                        SecretaryFrame.this.controller
                                         .addCourse(AddCourseDialog.this.nameTextField
                                                         .getText());
-                        SecretaryApplicationFrame.this
+                        SecretaryFrame.this
                                         .confirmationMessage("The course has been successfully added!");
                         AddCourseDialog.this.dispose();
                     }
-                    catch (PersistenceException exception)
+                    catch (RepositoryException exception)
                     {
                         exception.printStackTrace();
                         String message = exception.getMessage();
                         final Throwable cause = exception.getCause();
                         if (cause != null)
                             message += " " + cause.getMessage();
-                        SecretaryApplicationFrame.this.errorMessage(message);
+                        SecretaryFrame.this.errorMessage(message);
                     }
                 }
             });
@@ -217,7 +186,7 @@ public class SecretaryApplicationFrame extends JFrame implements
     {
         public AddStudentDialog()
         {
-            super(SecretaryApplicationFrame.this, "Add student");
+            super(SecretaryFrame.this, "Add student");
             this.setResizable(false);
             this.setModal(true);
             this.buildForm();
@@ -247,23 +216,23 @@ public class SecretaryApplicationFrame extends JFrame implements
                 {
                     try
                     {
-                        SecretaryApplicationFrame.this.controller.addStudent(
+                        SecretaryFrame.this.controller.addStudent(
                                         AddStudentDialog.this.nameTextField
                                                         .getText(),
                                         AddStudentDialog.this.passwordTextField
                                                         .getText());
-                        SecretaryApplicationFrame.this
+                        SecretaryFrame.this
                                         .confirmationMessage("The student has been successfully added!");
                         AddStudentDialog.this.dispose();
                     }
-                    catch (PersistenceException exception)
+                    catch (RepositoryException exception)
                     {
                         exception.printStackTrace();
                         String message = exception.getMessage();
                         final Throwable cause = exception.getCause();
                         if (cause != null)
                             message += " " + cause.getMessage();
-                        SecretaryApplicationFrame.this.errorMessage(message);
+                        SecretaryFrame.this.errorMessage(message);
                     }
                 }
             });
@@ -310,7 +279,7 @@ public class SecretaryApplicationFrame extends JFrame implements
     {
         public AddMarkDialog(final String courseName)
         {
-            super(SecretaryApplicationFrame.this, "Add mark");
+            super(SecretaryFrame.this, "Add mark");
             this.courseName = courseName;
             this.setResizable(false);
             this.setModal(true);
@@ -341,25 +310,30 @@ public class SecretaryApplicationFrame extends JFrame implements
                 {
                     try
                     {
-                        SecretaryApplicationFrame.this.controller
-                                        .addMark(AddMarkDialog.this.courseName,
-                                                        AddMarkDialog.this.nameTextField
-                                                                        .getText(),
-                                                        new Integer(
-                                                                        AddMarkDialog.this.markTextField
-                                                                                        .getText()));
-                        SecretaryApplicationFrame.this
+                        SecretaryFrame.this.controller.addMark(
+                                        AddMarkDialog.this.nameTextField
+                                                        .getText(),
+                                        AddMarkDialog.this.courseName,
+                                        new Integer(
+                                                        AddMarkDialog.this.markTextField
+                                                                        .getText()));
+                        SecretaryFrame.this
                                         .confirmationMessage("The mark has been successfully added!");
                         AddMarkDialog.this.dispose();
                     }
-                    catch (NumberFormatException | PersistenceException exception)
+                    catch (NumberFormatException exception)
+                    {
+                        SecretaryFrame.this
+                                        .errorMessage("The mark must be a number!");
+                    }
+                    catch (RepositoryException exception)
                     {
                         exception.printStackTrace();
                         String message = exception.getMessage();
                         final Throwable cause = exception.getCause();
                         if (cause != null)
                             message += " " + cause.getMessage();
-                        SecretaryApplicationFrame.this.errorMessage(message);
+                        SecretaryFrame.this.errorMessage(message);
                     }
                 }
             });
@@ -403,8 +377,7 @@ public class SecretaryApplicationFrame extends JFrame implements
         private static final long serialVersionUID = 1L;
     }
 
-    private final JList<String> courseList;
-    private final ApplicationLauncher launcher;
+    private final JList<Course> courseList;
     private final SecretaryController controller;
     private static final long serialVersionUID = 1L;
 }

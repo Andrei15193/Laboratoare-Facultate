@@ -1,13 +1,12 @@
 package persistence;
 
-import data.iterators.StreamIterator;
 import domain.Course;
 
 public interface AllCourses
 {
-    Course with(final String name) throws PersistenceException;
+    Course with(final String name) throws RepositoryException;
 
-    StreamIterator<Course> iterator() throws PersistenceException;
+    Course[] get() throws RepositoryException;
 
-    void nowInclude(final Course newCourse) throws PersistenceException;
+    void nowInclude(final Course course) throws RepositoryException;
 }

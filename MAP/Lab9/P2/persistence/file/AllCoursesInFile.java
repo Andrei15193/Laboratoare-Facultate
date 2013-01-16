@@ -1,17 +1,18 @@
 package persistence.file;
 
+import java.io.EOFException;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.LinkedList;
+import java.util.List;
 
 import persistence.AllCourses;
-import persistence.PersistenceException;
+import persistence.RepositoryException;
 import utils.AppendingObjectOutputStream;
 import utils.Utils;
-import data.iterators.ObjectStreamIterator;
-import data.iterators.StreamIterator;
 import domain.Course;
 
 public class AllCoursesInFile implements AllCourses
@@ -22,58 +23,81 @@ public class AllCoursesInFile implements AllCourses
     }
 
     @Override
-    public Course with(String name) throws PersistenceException
+    public Course with(final String name) throws RepositoryException
     {
-        Course found = null;
-        StreamIterator<Course> iterator;
+        boolean eof = false;
+        Course course = null;
+        ObjectInputStream input = null;
         try
         {
-            iterator = new ObjectStreamIterator<Course>(new ObjectInputStream(
-                            new FileInputStream(this.fileName)));
-            while (iterator.hasNext() && found == null)
-            {
-                found = iterator.next();
-                if (!name.equals(found.getName()))
-                    found = null;
-            }
-            iterator.close();
+            input = new ObjectInputStream(new FileInputStream(this.fileName));
+            do
+                try
+                {
+                    course = (Course)input.readObject();
+                }
+                catch (EOFException e)
+                {
+                    course = null;
+                    eof = true;
+                }
+            while (!eof && !name.equals(course.getName()));
         }
-        catch (FileNotFoundException e)
+        catch (ClassNotFoundException e)
         {
-            iterator = Utils.<Course>buildStreamIteratorOverEmptyCollection();
+            course = null;
         }
-        catch (Exception e)
+        catch (IOException e)
         {
-            throw new PersistenceException("Inaccessible file", e);
+            new RepositoryException("Data file inaccessible", e);
         }
-        return found;
+        finally
+        {
+            Utils.closeStream(input);
+        }
+        return course;
     }
 
     @Override
-    public StreamIterator<Course> iterator() throws PersistenceException
+    public Course[] get() throws RepositoryException
     {
-        StreamIterator<Course> iterator;
+        boolean eof = false;
+        ObjectInputStream input = null;
+        List<Course> courses = new LinkedList<Course>();
         try
         {
-            iterator = new ObjectStreamIterator<Course>(new ObjectInputStream(
-                            new FileInputStream(this.fileName)));
+            input = new ObjectInputStream(new FileInputStream(this.fileName));
+            do
+                try
+                {
+                    courses.add((Course)input.readObject());
+                }
+                catch (EOFException e)
+                {
+                    eof = true;
+                }
+            while (!eof);
         }
-        catch (FileNotFoundException e)
+        catch (ClassNotFoundException e)
         {
-            iterator = Utils.<Course>buildStreamIteratorOverEmptyCollection();
+            new RepositoryException("Corrupted data file", e);
         }
-        catch (Exception e)
+        catch (IOException e)
         {
-            throw new PersistenceException("Inaccessible file", e);
+            new RepositoryException("Data file inaccessible", e);
         }
-        return iterator;
+        finally
+        {
+            Utils.closeStream(input);
+        }
+        return courses.toArray(new Course[courses.size()]);
     }
 
     @Override
-    public void nowInclude(Course newCourse) throws PersistenceException
+    public void nowInclude(final Course course) throws RepositoryException
     {
-        ObjectOutputStream output;
-        if (this.with(newCourse.getName()) == null)
+        ObjectOutputStream output = null;
+        if (this.with(course.getName()) == null)
             try
             {
                 if (Utils.checkIfFileExists(this.fileName))
@@ -82,18 +106,19 @@ public class AllCoursesInFile implements AllCourses
                 else
                     output = new ObjectOutputStream(new FileOutputStream(
                                     this.fileName));
-                output.writeObject(newCourse);
+                output.writeObject(course);
+            }
+            catch (IOException e)
+            {
+                throw new RepositoryException("Data file inaccessible.", e);
+            }
+            finally
+            {
                 Utils.closeStream(output);
             }
-            catch (Exception e)
-            {
-                throw new PersistenceException("Inaccessible file", e);
-            }
         else
-            throw new PersistenceException(
-                            "The new course could not be included because it is already present.",
-                            null);
+            throw new RepositoryException("The course already exists!");
     }
 
-    private final String fileName;
+    final String fileName;
 }
