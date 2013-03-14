@@ -1,0 +1,39 @@
+  Laboratorul 1.15:
+--------------------------------------------------------------------------------
+  Un client TCP trimite unui server doua siruri de numere intregi. Serverul va
+  returnaclientului sirul de numere care se regasesc in primul sir dar nu se
+  regasesc in al doilea.
+
+  Protocolul de comunicare
+--------------------------------------------------------------------------------
+  > Clientul se conecteaza la server si trimite cele doua siruri, unul dupa
+    altul, astfel: trimite lungimea sirului reprezentata pe doi octeti fara
+    semn, apoi se trimit elementele sirului care sunt reprezentate pe doi
+    octeti cu semn.
+
+  > Serverul citeste sirurile si realizeaza operatia de a obtine un sir cu
+    elementele incluse doar in primul sir. Dupa ce obtine sirul ii raspunde
+    clientului astfel: trimite un cod de retur reprezentat pe un octet fara
+    semn.
+    > In cazul in care codul de retur este 0 (zero) se trimite lunfimea
+      sirului reprezentata pe doi octeti fara semn, dupa care se trimit
+      elementele reprezentate pe doi octeti cu semn.
+      
+    > In cazul in care codul de retur este diferit de 0 (zero) nu se mai
+      trimite alt ceva.
+      
+    > Codul de retur are urmatoarele semnificatii:
+      0: trimiterea sirurilor de la client la server s-a desfasurat fara
+         probleme.
+         
+      1: Clientul nu a trimis intreg sirul (oricare din cele doua) si au
+         trecut cel putin 5 secunde de la ultima transmitere (clientul a
+         trimis cel putin un octet).
+         
+      2: Clientul nu a trimis vreun octet si au trecut cel putin 5 secunde
+         de la conectarea la server.
+
+      3: Serverul a inchis conexiunea. Aceasta se poate intampla, de exemplu, 
+         in momentul in care serverul trebuie sa se opreasca la cerea 
+         utilizatorului.
+
