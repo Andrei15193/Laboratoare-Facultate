@@ -1,6 +1,8 @@
 #ifndef COMMON_H
 #define COMMON_H
 
+#define ARRAY_INIT {0, NULL}
+
 #include <stdio.h>
 #include <signal.h>
 #include <stdlib.h>
@@ -21,9 +23,13 @@ struct Array
     int16_t* Items;
 };
 
-int ReadMessage(int fileDescriptor, unsigned int timeOut, struct Array* array);
+unsigned char WriteMessage(int fileDescriptor, struct Array* array);
 
-int WriteMessage(int fileDescriptor, struct Array* array);
+unsigned char ReadMessage(int fileDescriptor, unsigned int timeOut, struct Array* array);
+
+void PrintArray(struct Array* array);
+
+void ClearArray(struct Array* array);
 
 #endif /* COMMON_H */
 

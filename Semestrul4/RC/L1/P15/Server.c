@@ -18,6 +18,7 @@ struct ServerState{
         int socket;
         uint16_t port;
         pthread_t consoleThread;
+        fd_set fdSet;
     }private;
     struct PublicServerState public;
 };
@@ -31,6 +32,10 @@ void PrintServerState(enum ServerRunState serverRunState){
 enum StartServerResult InitializeServer(struct ServerState *serverState, uint16_t port){
     struct sockaddr_in server;
     serverState->private.socket = socket(AF_INET, SOCK_STREAM, 0);
+    
+    FD_ZERO(&serverState->private.fdSet);
+    FD_SET(serverState->private.socket, &serverState->private.fdSet);
+    
     if (serverState->private.socket < 0)
         return FailedToCreateSocket;
     else{
@@ -65,25 +70,46 @@ void* ServerConsole(void* param){
     return NULL;
 }
 
+unsigned char ReadArrays(int sock, struct Array *array1, struct Array *array2){
+    unsigned char response;
+    response = ReadMessage(sock, 5, array1);
+    if (response == 0)
+        response = ReadMessage(sock, 5, array2);
+    return response;
+}
+
+void ExtractArray(struct Array *array1, struct Array *array2, struct Array *array3){
+}
+
 int ClientResponse(int sock){
-    printf("I am in the client response process!");
-    return EXIT_SUCCESS;
+    int retur = EXIT_SUCCESS;
+    unsigned char response;
+    struct Array array1 = ARRAY_INIT, array2 = ARRAY_INIT, array3 = ARRAY_INIT;
+    response = ReadArrays(sock, &array1, &array2);
+    send(sock, &response, sizeof(unsigned char), 0);
+    if (response == 0){
+        ExtractArray(&array1, &array2, &array3);
+        WriteMessage(sock, &array3);
+    }
+    else
+        retur = EXIT_FAILURE;
+    ClearArray(&array1);
+    ClearArray(&array2);
+    ClearArray(&array3);
+    return retur;
 }
 
 void AcceptClient(struct ServerState *serverState, long sec, long microsec){
-    int clientSock, size = sizeof(struct sockaddr_in);
-    fd_set fdSet;
+    char* message;
+    int clientSock, size = sizeof(struct sockaddr_in), result;
+    FILE* logFile;
     struct timeval timeout = {sec, microsec};
     struct sockaddr_in client;
     memset((char*) &client, 0, sizeof(struct sockaddr_in));
     
-    FD_ZERO(&fdSet);
-    FD_SET(serverState->private.socket, &fdSet);
-    
-    if (select(1, &fdSet, NULL, NULL, &timeout) == 1){
+    if (select(serverState->private.socket + 1, &serverState->private.fdSet, NULL, NULL, &timeout) > 0){
         clientSock = accept(serverState->private.socket, (struct sockaddr*) &client, &size);
         if (fork() == 0){
-            int result;
             close(serverState->private.socket);
             pthread_rwlock_destroy(&serverState->public.runStateRW);
             result = ClientResponse(clientSock);
@@ -91,13 +117,18 @@ void AcceptClient(struct ServerState *serverState, long sec, long microsec){
             exit(result);
         }
         else{
-            // Log IP into a text file.
+            close(clientSock);
+            logFile = fopen("logFile.txt", "a");
+            if (logFile != NULL){
+                fprintf(logFile, "%s:%d\r\n", inet_ntoa(client.sin_addr), ntohs(client.sin_port));
+                fclose(logFile);
+            }
         }
     }
 }
 
 enum StartServerResult StartServer(uint16_t port){
-    int ok = 1;
+    int canRun = 1, i;
     struct ServerState serverState = SERVER_INITIAL_STATE;
     enum StartServerResult startResult;
     signal(SIGCHLD, SIG_IGN);
@@ -111,10 +142,12 @@ enum StartServerResult StartServer(uint16_t port){
                 AcceptClient(&serverState, 3, 0);
                 pthread_rwlock_rdlock(&serverState.public.runStateRW);
                 if (serverState.public.runState == SignaledToClose)
-                    ok = 0;
+                    canRun = 0;
                 pthread_rwlock_unlock(&serverState.public.runStateRW);
-            }while(ok != 0);
-            close(serverState.private.socket);
+            }while (canRun == 1);
+            for (i = 0; i < serverState.private.socket + 1; i++)
+                if (FD_ISSET(i, &serverState.private.fdSet))
+                    close(i);
             pthread_join(serverState.private.consoleThread, NULL);
             pthread_rwlock_destroy(&serverState.public.runStateRW);
             serverState.public.runState = Closed;
