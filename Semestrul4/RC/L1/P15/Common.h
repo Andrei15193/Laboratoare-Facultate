@@ -3,33 +3,42 @@
 
 #define ARRAY_INIT {0, NULL}
 
-#include <stdio.h>
+#define ClearStdIn() while (getchar() != '\n')
+
 #include <signal.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include <arpa/inet.h>
+#include <fcntl.h>
 #include <netdb.h>
 #include <netinet/in.h>
+#include <poll.h>
 #include <pthread.h>
 #include <sys/socket.h>
 #include <sys/types.h>
-#include <sys/time.h>
 #include <unistd.h>
 
-struct Array
-{
+struct Array{
     uint16_t Length;
     int16_t* Items;
 };
 
-unsigned char WriteMessage(int fileDescriptor, struct Array* array);
+int16_t ReadInt16(const char* message);
 
-unsigned char ReadMessage(int fileDescriptor, unsigned int timeOut, struct Array* array);
+uint16_t ReadUInt16(const char* message);
+
+struct Array ReadArray();
 
 void PrintArray(struct Array* array);
 
 void ClearArray(struct Array* array);
 
-#endif /* COMMON_H */
+struct Array CastArray(struct Array* array, uint16_t (*ntohs_htons)(uint16_t));
 
+int SendArray(int sock, struct Array* array);
+
+int RecvArray(int sock, time_t timeOut, struct Array* array);
+
+#endif // COMMON_H

@@ -1,184 +1,222 @@
-#define SERVER_INITIAL_STATE { {-1, port, 0}, {PTHREAD_RWLOCK_INITIALIZER, Closed} }
-
 #include "Server.h"
 
-enum ServerRunState{
-    Open,
-    SignaledToClose,
-    Closed
-};
-
-struct PublicServerState{
-    pthread_rwlock_t runStateRW;
-    enum ServerRunState runState;
-};
-
-struct ServerState{
-    struct{
-        int socket;
-        uint16_t port;
-        pthread_t consoleThread;
-        fd_set fdSet;
-    }private;
-    struct PublicServerState public;
-};
-
-
-void PrintServerState(enum ServerRunState serverRunState){
-    char runState[3][8] = {"Open", "Closing", "Closed"};
-    printf("Server run state: %s\n", runState[serverRunState]);
-}
-
-enum StartServerResult InitializeServer(struct ServerState *serverState, uint16_t port){
-    struct sockaddr_in server;
-    serverState->private.socket = socket(AF_INET, SOCK_STREAM, 0);
-    
-    FD_ZERO(&serverState->private.fdSet);
-    FD_SET(serverState->private.socket, &serverState->private.fdSet);
-    
-    if (serverState->private.socket < 0)
-        return FailedToCreateSocket;
-    else{
-        memset((char*) &server, 0, sizeof(struct sockaddr_in));
-        server.sin_family = AF_INET;
-        server.sin_port = htons(port);
-        server.sin_addr.s_addr = INADDR_ANY;
-        if (bind(serverState->private.socket, (const struct sockaddr*) &server, sizeof(struct sockaddr_in)) < 0)
-            return FailedToBindPort;
-        else
-            if (listen(serverState->private.socket, 5) < 0)
-                return FailedToListen;
-            else{
-                serverState->public.runState = Open;
-                return Success;
-            }
+void PrintServerState(struct ServerState* serverState){
+    pthread_rwlock_rdlock(&serverState->rwStateVariable);
+    printf("Server state:\n");
+    switch(serverState->runState){
+    case Open:
+        printf("Run state: Open\n");
+        break;
+    case Closing:
+        printf("Run state: Closing\n");
+        break;
+    case Closed:
+        printf("Run state: Closed\n");
+        break;
     }
+    pthread_rwlock_unlock(&serverState->rwStateVariable);
 }
 
-void* ServerConsole(void* param){
-    char buffer[101];
-    struct PublicServerState* state = (struct PublicServerState*)param;
+void SetServerRunState(struct ServerState* serverState, enum ServerRunState newRunState){
+    pthread_rwlock_wrlock(&serverState->rwStateVariable);
+    serverState->runState = newRunState;
+    pthread_rwlock_unlock(&serverState->rwStateVariable);
+    PrintServerState(serverState);
+}
+
+enum ServerConsoleCommand ReadCommand(const char* message){
+    char buff[128];
+    printf("%s", message);
+    fgets(buff, sizeof(buff), stdin);
+    if (strcasecmp(buff, "close\n") == 0)
+        return Close;
+    else if (strcasecmp(buff, "help\n") == 0 || strcasecmp(buff, "?\n") == 0)
+        return Help;
+    else
+        return InvalidCommand;
+}
+
+void* ServerConsoleThread(void* param){
+    struct ServerState* serverState = (struct ServerState*)param;
+    enum ServerConsoleCommand command;
     printf("Server console:\n");
     do{
-        printf("> ");
-        fgets(buffer, sizeof(buffer), stdin);
-    }while (strcmp(buffer, "exit\n") != 0);
-    pthread_rwlock_wrlock(&state->runStateRW);
-    state->runState = SignaledToClose;
-    PrintServerState(state->runState);
-    pthread_rwlock_unlock(&state->runStateRW);
+        command = ReadCommand("> ");
+        switch(command){
+        case Close:
+            SetServerRunState(serverState, Closing);
+            break;
+        case Help:
+            printf("Availalble commands\n  > close\n    Closes the server.\n  > help\n    Shows this help page (equivalent to ?).\n");
+            break;
+        }
+    }while(command != Close);
     return NULL;
 }
 
-unsigned char ReadArrays(int sock, struct Array *array1, struct Array *array2){
-    unsigned char response;
-    response = ReadMessage(sock, 5, array1);
-    if (response == 0)
-        response = ReadMessage(sock, 5, array2);
-    return response;
+void SetServerStruct(struct sockaddr_in* server, uint16_t port){
+    memset((void*)server, 0, sizeof(*server));
+    server->sin_family = AF_INET;
+    server->sin_addr.s_addr = INADDR_ANY;
+    server->sin_port = htons(port);
 }
 
-void ExtractArray(struct Array *array1, struct Array *array2, struct Array *array3){
-}
-
-int ClientResponse(int sock){
-    int retur = EXIT_SUCCESS;
-    unsigned char response;
-    struct Array array1 = ARRAY_INIT, array2 = ARRAY_INIT, array3 = ARRAY_INIT;
-    response = ReadArrays(sock, &array1, &array2);
-    send(sock, &response, sizeof(unsigned char), 0);
-    if (response == 0){
-        ExtractArray(&array1, &array2, &array3);
-        WriteMessage(sock, &array3);
-    }
-    else
-        retur = EXIT_FAILURE;
-    ClearArray(&array1);
-    ClearArray(&array2);
-    ClearArray(&array3);
-    return retur;
-}
-
-void AcceptClient(struct ServerState *serverState, long sec, long microsec){
-    char* message;
-    int clientSock, size = sizeof(struct sockaddr_in), result;
-    FILE* logFile;
-    struct timeval timeout = {sec, microsec};
-    struct sockaddr_in client;
-    memset((char*) &client, 0, sizeof(struct sockaddr_in));
-    
-    if (select(serverState->private.socket + 1, &serverState->private.fdSet, NULL, NULL, &timeout) > 0){
-        clientSock = accept(serverState->private.socket, (struct sockaddr*) &client, &size);
-        if (fork() == 0){
-            close(serverState->private.socket);
-            pthread_rwlock_destroy(&serverState->public.runStateRW);
-            result = ClientResponse(clientSock);
-            close(clientSock);
-            exit(result);
-        }
-        else{
-            close(clientSock);
-            logFile = fopen("logFile.txt", "a");
-            if (logFile != NULL){
-                fprintf(logFile, "%s:%d\r\n", inet_ntoa(client.sin_addr), ntohs(client.sin_port));
-                fclose(logFile);
-            }
-        }
-    }
-}
-
-enum StartServerResult StartServer(uint16_t port){
-    int canRun = 1, i;
-    struct ServerState serverState = SERVER_INITIAL_STATE;
-    enum StartServerResult startResult;
-    signal(SIGCHLD, SIG_IGN);
-    PrintServerState(serverState.public.runState);
-    printf("Initializing server\n");
-    startResult = InitializeServer(&serverState, port);
-    PrintServerState(serverState.public.runState);
-    if (startResult == Success)
-        if (pthread_create(&serverState.private.consoleThread, NULL, ServerConsole, &serverState.public) == 0){
-            do{
-                AcceptClient(&serverState, 3, 0);
-                pthread_rwlock_rdlock(&serverState.public.runStateRW);
-                if (serverState.public.runState == SignaledToClose)
-                    canRun = 0;
-                pthread_rwlock_unlock(&serverState.public.runStateRW);
-            }while (canRun == 1);
-            for (i = 0; i < serverState.private.socket + 1; i++)
-                if (FD_ISSET(i, &serverState.private.fdSet))
-                    close(i);
-            pthread_join(serverState.private.consoleThread, NULL);
-            pthread_rwlock_destroy(&serverState.public.runStateRW);
-            serverState.public.runState = Closed;
-            PrintServerState(serverState.public.runState);
-            return Success;
-        }
+int SetUpServer(struct sockaddr_in* server){
+    int sock = socket(AF_INET, SOCK_STREAM, 0);
+    if (sock >= 0){
+        if (bind(sock, (struct sockaddr*)server, sizeof(*server)) == 0)
+            if (listen(sock, 5) == 0)
+                return sock;
+            else
+                return -3;
         else
-            return FailedToStartConsoleThread;
+            return -2;
+    }
     else
-        return startResult;
+        return -1;
 }
 
-void PrintStartServerResult(enum StartServerResult result){
-    char initializeResult[5][31] = { "successful", "failed to create socket", "failed to bind port", "failed to listen", "failed to start console thread" };
-    printf("Server initialize result: %s\n", initializeResult[result]);
+int ReadArrays(int clientSock, struct Array* array1, struct Array* array2){
+    struct Array* array[2] = {array1, array2};
+    unsigned char responseCode = 0, i = 0;
+    do
+        switch (RecvArray(clientSock, TIMEOUT_MS, array[i])){
+        case 0:
+            break;
+        case -1:
+            responseCode = 1;
+            break;
+        case -2:
+            responseCode = 2;
+            break;
+        }
+    while (++i < 2 && responseCode == 0);
+    return responseCode;
+}
+
+struct Array ExtractArray(struct Array* array1, struct Array* array2){
+    uint16_t i, j;
+    struct Array result = ARRAY_INIT;
+    result.Items = (int16_t*)calloc(array1->Length, sizeof(int16_t));
+    for (i = 0; i < array1->Length; i++){
+        j = 0;
+        while (j < array2->Length && array1->Items[i] != array2->Items[j])
+            j++;
+        if (j == array2->Length)
+            result.Items[result.Length++] = array1->Items[i];
+    }
+    return result;
+}
+
+int ReplyToClient(int clientSock, unsigned char responseCode, struct Array* array1, struct Array* array2){
+    struct Array array3 = ARRAY_INIT;
+    if (send(clientSock, (void*) &responseCode, sizeof(responseCode), 0) != -1 && responseCode == 0){
+        array3 = ExtractArray(array1, array2);
+        if (SendArray(clientSock, &array3) == 0)
+            return 0;
+        else
+            return -2;
+    }
+    else
+        return -1;
+}
+
+int AcceptClient(int listenSock, int* clientSock, struct sockaddr* clientInfo, int* clientInfoLength, int timeout_ms){
+    struct pollfd pollFd = {listenSock, POLLIN, 0};
+    if (poll(&pollFd, 1, timeout_ms) == 1){
+        *clientSock = accept(listenSock, clientInfo, clientInfoLength);
+        return 0;
+    }
+    else
+        return -1;
+}
+
+void LogClient(const char* logFileName, struct sockaddr_in* clientInfo){
+    FILE* logFile = fopen(logFileName, "a");
+    if (logFile != NULL){
+        fprintf(logFile, "%s:%d\r\n", inet_ntoa(clientInfo->sin_addr), ntohs(clientInfo->sin_port));
+        fclose(logFile);
+    }
+}
+
+void RunServerLoop(int serverSock, struct ServerState* serverState){
+    unsigned char responseCode;
+    int clientSock, clientInfoLength, replyResult;
+    struct sockaddr_in clientInfo;
+    struct Array array[3] = {ARRAY_INIT, ARRAY_INIT, ARRAY_INIT};
+    pthread_rwlock_rdlock(&serverState->rwStateVariable);
+    while (serverState->runState != Closing){
+        pthread_rwlock_unlock(&serverState->rwStateVariable);
+        clientInfoLength = sizeof(clientInfo);
+        if (AcceptClient(serverSock, &clientSock, (struct sockaddr*) &clientInfo, &clientInfoLength, 1000) == 0)
+            switch (fork()){
+            case 0:
+                close(serverSock);
+                pthread_rwlock_destroy(&serverState->rwStateVariable);
+                replyResult = ReplyToClient(clientSock, ReadArrays(clientSock, array, array + 1), array, array + 1);
+                close(clientSock);
+                exit(replyResult == 0 ? EXIT_SUCCESS : EXIT_FAILURE);
+                break;
+            case -1:
+                responseCode = 3;
+                send(clientSock, (void*) &responseCode, sizeof(responseCode), 0);
+                close(clientSock);
+                break;
+            default:
+                close(clientSock);
+                LogClient(LOGFILE, &clientInfo);
+                break;
+            }
+        pthread_rwlock_rdlock(&serverState->rwStateVariable);
+    }
+    pthread_rwlock_unlock(&serverState->rwStateVariable);
+}
+
+int RunServerLogic(int sock){
+    pthread_t consoleThread;
+    struct ServerState serverState = SERVERSTATE_INIT;
+    SetServerRunState(&serverState, Open);
+    if (pthread_create(&consoleThread, NULL, ServerConsoleThread, (void*) &serverState) == 0)
+    {
+        RunServerLoop(sock, &serverState);
+        pthread_join(consoleThread, NULL);
+        SetServerRunState(&serverState, Closed);
+        pthread_rwlock_destroy(&serverState.rwStateVariable);
+        return EXIT_SUCCESS;
+    }
+    else
+        return EXIT_FAILURE;
+}
+
+int StartServer(uint16_t port){
+    int sock, result = EXIT_FAILURE;
+    struct sockaddr_in server;
+    signal(SIGCHLD, SIG_IGN);
+    SetServerStruct(&server, port);
+    sock = SetUpServer(&server);
+    switch (sock){
+    case -1:
+        printf("Error @ socket()\n");
+        break;
+    case -2:
+        printf("Error @ bind()\n");
+        break;
+    case -3:
+        printf("Error @ listen()\n");
+        break;
+    default:
+        result = RunServerLogic(sock);
+        close(sock);
+        break;
+    }
+    return result;
 }
 
 int main(int argc, char* args[]){
-    enum StartServerResult result;
-    if (argc > 1){
-        result = StartServer(atoi(args[1]));
-        if (result != Success){
-            PrintStartServerResult(result);
-            return EXIT_FAILURE;
-        }
-        else
-            return EXIT_SUCCESS;
-    }
+    if (argc > 1)
+        return StartServer(atoi(args[1]));
     else{
-        printf("Usage: ./Server <PORT>\n");
-        return EXIT_FAILURE;
+        printf("Usage: ./Server <SERVER_PORT>\n");
+        return EXIT_SUCCESS;
     }
 }
-

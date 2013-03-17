@@ -3,5 +3,4 @@
 
 #include "Common.h"
 
-#endif /* CLIENT_H */
-
+#endif // CLIENT_H
