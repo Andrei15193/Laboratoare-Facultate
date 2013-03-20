@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+    xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    
+    <bean id = "courseValidator" class = "aop1.validator.CourseValidator"/>
+    <bean id = "markValidator" class = "aop1.validator.MarkValidator"/>
+    <bean id = "studentValidator" class = "aop1.validator.StudentValidator"/>
+    
+    <bean id = "allCourses" class = "aop1.persistence.file.AllCoursesInFile">
+        <constructor-arg value = "allCourses" />
+    </bean>
+    <bean id = "allMarks" class = "aop1.persistence.file.AllMarksInFile">
+        <constructor-arg value = "allMarks" />
+    </bean>
+    <bean id = "allStudents" class = "aop1.persistence.file.AllStudentsInFile">
+        <constructor-arg value = "allStudents" />
+    </bean>
+
+    <bean id = "marksApplication" class = "aop1.domain.MarksApplication">
+        <constructor-arg ref = "allStudents" />
+        <constructor-arg ref = "allCourses" />
+        <constructor-arg ref = "allMarks" />
+        <property name = "courseValidator" ref = "courseValidator" />
+        <property name = "markValidator" ref = "markValidator" />
+        <property name = "studentValidator" ref = "studentValidator" />
+    </bean>
+
+    <bean id = "launcherController" class = "aop1.controller.LauncherController">
+        <constructor-arg ref = "marksApplication" />
+    </bean>
+
+    <bean id = "applicationLauncherFrame" class = "aop1.presentation.ApplicationLauncherFrame">
+        <constructor-arg ref = "launcherController" />
+    </bean>
+    
+    <bean id = "application" class = "aop1.Application">
+        <constructor-arg ref = "applicationLauncherFrame" />
+    </bean>
+</beans>
