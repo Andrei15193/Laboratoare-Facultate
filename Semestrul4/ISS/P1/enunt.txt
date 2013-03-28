@@ -1,0 +1,20 @@
+  Biblioteca
+--------------------------------------------------------------------------------
+  O biblioteca ofera abonatilor sai o lista de carti ce pot fi imprumutate. Un
+  abonat are nume, prenume si un cod unic. O carte are titlu, autor si
+  cod_carte. O carte (titlu, autor) poate sa apara de mai multe ori in lista,
+  dar codul asociat este diferit. Biblioteca are mai multe terminale de unde
+  abonatii pot sa imprumute carti. Pentru a putea folosi un terminal, abonatul
+  trebuie sa introduca codul sau. Dupa introducerea unui cod corect, abonatul
+  vede lista cartilor disponibile (care nu sunt imprumutate) si poate imprumuta
+  una sau mai multe carti. Dupa efectuarea imprumutului, toti abonatii care fo-
+  losesc terminalele vad lista actualizata a cartilor disponibile. Pentru res-
+  tituirea cartilor exista un singur punct de lucru. La restituire se introduce
+  codul abonatului si codul cartii. Dupa restituire se actualizeaza lista car-
+  tilor disponibile.
+
+  Rezolvare:
+--------------------------------------------------------------------------------
+  Instrument vizual de analiza si proiectare: Microsoft Office Visio 2013 Pro
+  Instrument vizual de dezvoltare (IDE):      Visual Studio 2012 Ultimate
+  Limbaj de programare:                       C#.NET

@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="IALab1.MainView">
+    <Position X="6" Y="0.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>jAAUgFQkBCAAhhAACCCAAIACAAQABAAAAIAhQABACAA=</HashCode>
+      <FileName>MainView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IALab1.BFS">
+    <Position X="6.75" Y="9.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BFS.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.1" />
+  </Class>
+  <Class Name="IALab1.ThreadedTask">
+    <Position X="3.5" Y="6" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAgAAAAEAAAAAAACAAAAAACAAAEAAAAAQgAA=</HashCode>
+      <FileName>ThreadedTask.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IALab1.SearchThreadedTask">
+    <Position X="3.25" Y="9.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>ABCEAAAAAAAAAAAAAAAAAAAAAAAAAgAAAEAQAAAQAAA=</HashCode>
+      <FileName>SearchThreadedTask.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IALab1.GBFS">
+    <Position X="9.5" Y="9.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GBFS.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="IALab1.SearchMethod">
+    <Position X="2" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SearchMethod.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="IALab1.UninformedSearchMethod">
+    <Position X="0.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UninformedSearchMethod.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="IALab1.InformedSearchMethod">
+    <Position X="3.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>InformedSearchMethod.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="IALab1.BestFS">
+    <Position X="3.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BestFS.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="IALab1.ThreadedTaskResult">
+    <Position X="1.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAABAAAAAAAAQAAAAQAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>ThreadedTask.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

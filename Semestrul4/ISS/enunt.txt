@@ -1,0 +1,30 @@
+  Cerinte generale:
+--------------------------------------------------------------------------------
+  Trebuie sa realizati o aplicatie stand-alone (desktop) cu architectura stra-
+  tificata (prezentare, business logic, data access). Interfata cu utilizatorul
+  (stratul de prezentare) trebuie realizata cu un instrument vizual, de exemplu
+  NetBeans (http://www.netbeans.org/). Trebuie aplicat obligatoriu sablonul
+  arhitectural MVC (Model-View-Controller). Corespondenta intre arhitectura
+  stratificata si pachetele specifice MVC este: stratul prezentare (clase View/
+  boundary si Controller/control), stratul business logic (clase Model/entity),
+  stratul de data access (clase de acces la date / data access obiects).
+  Conform sablonului arhitectural MVC, obiectele din stratul de prezentare
+  comunica cu obiectele din stratul de business logic prin intermediul unor
+  obiecte Controller (exista o relatie de 1:1 intre un obiect View si un obiect
+  Controller, dar se poate si ca un obiect Controller sa serveasca mai multe
+  obiecte View. Clasele Controller sunt dependente de clasele Model, care re-
+  prezinta entitati din domeniul problemei.
+
+  Aplicatia trebuie sa exploateze obligatoriu o baza de date relationala prin
+  stratul de data access. Se recomanda ca interactiunea cu baza de date sa se
+  faca prin intermediul bibliotecii Hibernate (http://www.hibernate.org/).
+  Proiectul trebuie sa ofere functii de tip CRUD (Create-Read-Update-Delete)
+  pentru cel putin o entitate din domeniul problemei (clasa din Model).
+
+  Implementarea claselor din pachetul Model trebuie sa rezulte in urma unei
+  operatii de tip forward/direct engineering aplicate cu ajutorul unui instru-
+  ment CASE (Computer Aided Software Engineering), de exemplu cu ajutorul apli-
+  catiei StarUML (http://staruml.sourceforge.net/en/).
+
+  Obligatoriu, toate elementele de modelare (de exemplu diagrame, dar nu numai)
+  vor fi construite cu ajutorul unui instrument CASE.

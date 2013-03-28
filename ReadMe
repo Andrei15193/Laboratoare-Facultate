@@ -4,6 +4,16 @@
   Semestrul<numar_semestru>/<abreviere_materie>/Lab<numar_laborator>[-H|-L]/
   [P<numar_problema>/][<standard_sau_limbaj>/]<fisiere_sursa_sau_text>
 
+  Fiecare director poate sa contina un fisier enunt.txt care contine enuntul
+  sau parte a enuntului problemei pentru problema, laboratorul, materia, semes-
+  trul directoriului in care se afla. De exemplu: Semestrul4/ISS/enunt.txt con-
+  tine partea din enunt care este valabila pentru toate problemele.
+
+  Enuntul dintr-un directoriu se aplica tuturor subdirectorilor. In cazul in
+  care exista un fisier enunt.txt in subdirector atunci ambele enunturi sunt
+  valabile. Intreg enuntul problemei este format din reuniunea tuturor fisi-
+  erelor enunt.txt de pe o ramura de directorii.
+
   Materii din semestrul 3:
 --------------------------------------------------------------------------------
   MAP = Metode Avansate de Programare
@@ -15,5 +25,8 @@
 
   Materii din semestrul 4:
 --------------------------------------------------------------------------------
-  RC = Retele de Calculatoare
+  RC  = Retele de Calculatoare
+  AOP = Aspect Oriented Programming (optional)
+  IA  = Inteligenta Artificiala
+  ISS = Ingineria Sistemelor Soft
 

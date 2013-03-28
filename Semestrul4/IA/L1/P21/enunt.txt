@@ -1,0 +1,6 @@
+﻿  Problema lui Frobenius (problema schimbului de monezi) {BFS, GBFS}
+--------------------------------------------------------------------------------
+  Se dau n monezi de valori întregi m1, m2, ..., mn astfel încât mi>1, pentru
+  i = 1, 2, ... , n şi cmmdc(m1,m2,...,mn) = 1. Să se găsească cel mai mare
+  număr întreg NF (numărul lui Froebenius) care nu pote fi exprimat ca o
+  combinaţie liniară a celor n monezi (NF = a1m1 + a2m2 + ... + anmn).
