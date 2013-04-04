@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 import javax.swing.SwingUtilities;
 
+import org.apache.log4j.PropertyConfigurator;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -34,15 +35,24 @@ public class Application
     public static void main(String[] args) throws SecurityException,
                     IOException
     {
-        FileInputStream file = new FileInputStream("src/logging.properties");
-        LogManager.getLogManager().readConfiguration(file);
-        file.close();
+        Application.setUpLoggers();
         ApplicationContext factory = new ClassPathXmlApplicationContext(
                         "config.xml");
         Application application = (Application)factory.getBean("application");
         application.start();
     }
 
-    public static Logger logger = Logger.getLogger("aop2");
+    private static void setUpLoggers() throws SecurityException, IOException
+    {
+        FileInputStream file = new FileInputStream("src/logging.properties");
+        LogManager.getLogManager().readConfiguration(file);
+        file.close();
+        Application.logger = Logger.getLogger("aop2logger");
+        PropertyConfigurator.configure("src/log4j.properties");
+        Application.log4j = org.apache.log4j.Logger.getLogger("aop2log4j");
+    }
+
+    public static Logger logger;
+    public static org.apache.log4j.Logger log4j;
     private final ApplicationLauncherFrame applicationLauncherFrame;
 }
