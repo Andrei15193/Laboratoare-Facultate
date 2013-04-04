@@ -1,0 +1,5 @@
+  Laboratorul 2.09:
+--------------------------------------------------------------------------------
+  Un client trimite unui server doua siruri de numere intregi. Serverul va re-
+  turna clientului sirul de numere care se regaseste in primul sir dar nu se
+  regasesc in al doile.

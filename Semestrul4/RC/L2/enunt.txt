@@ -1,0 +1,4 @@
+  Cerinte generale pentru laboratorul 2
+--------------------------------------------------------------------------------
+  Urmatoarele probleme presupun comunicarea intre un client si un server prin
+  intermediul protocolului UDP.
