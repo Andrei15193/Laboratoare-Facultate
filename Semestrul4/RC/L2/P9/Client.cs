@@ -8,21 +8,16 @@ namespace RCLab2
 {
     static class Client
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             int port;
             IPAddress ipAddress;
-            if (args.Length >= 0)
-                if (IPAddress.TryParse("127.0.0.1", out ipAddress))
-                    try
-                    {
-                        port = int.Parse("12345");
+            if (args.Length > 1)
+                if (IPAddress.TryParse(args[0], out ipAddress))
+                    if (int.TryParse(args[1], out port))
                         RunClient(ipAddress, port);
-                    }
-                    catch (Exception)
-                    {
+                    else
                         Console.WriteLine("Invalid port! Must be a number!");
-                    }
                 else
                     Console.WriteLine("Invalid server IP (must be IPv4)");
             else
@@ -59,7 +54,6 @@ namespace RCLab2
             }
             finally
             {
-                Console.ReadKey();
                 if (socket != null)
                     socket.Dispose();
             }

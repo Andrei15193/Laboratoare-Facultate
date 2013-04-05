@@ -9,19 +9,14 @@ namespace RCLab2
 {
     static class Server
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             int port;
-            if (args.Length >= 0)
-                try
-                {
-                    port = int.Parse("12345");
+            if (args.Length > 0)
+                if (int.TryParse(args[0], out port))
                     StartServer(port);
-                }
-                catch (Exception)
-                {
+                else
                     Console.WriteLine("Invalid port! Must be a number!");
-                }
             else
                 Console.WriteLine("Usage: server <port>");
         }
