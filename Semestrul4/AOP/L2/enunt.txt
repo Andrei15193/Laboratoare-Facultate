@@ -1,0 +1,9 @@
+  Laborator 2: Tracing with AOP
+--------------------------------------------------------------------------------
+  Modify the previous system from lab1, to trace the methods using AspectJ. 
+
+  1. Count the number of new added classes/methods/aspects/lines of code and
+  the time needed for modification.
+
+  2. Modify the library used for tracing (Logging ->Log4J, Log4J->Logging).
+
