@@ -1,0 +1,35 @@
+  Enuntul pentru laboratorul 3
+--------------------------------------------------------------------------------
+  Sa se scrie un program care in acelasi timp actioneaza atat ca si sender cat
+  si ca receiver UDP. Programul la rulare va detecta singur adresa IP de
+  broadcast a retelei locale si va trimite pe aceasta adresa un mesaj de forma:
+
+  'JOIN: NUME\0', unde NUME este un nume pentru sender-ul respectiv citit de
+  program de la tastatura. Aceste mesaj se va trimite repetat, o data pe minut
+  (folosind SIGALARM).
+
+  Programul va afisa lista tuturor celorlalti sender-i din reteaua locala sun
+  forma unei liste de forma:
+    IP1 (NUME primit prin mesajul JOIN de la calculatorul cu IP1)
+
+    IP2 (NUME primit prin mesajul JOIN de la calculatorul cu IP2)
+
+    ... 
+
+  Un sender va fi scos din lista de mai sus in urmatoarele doua situatii: 
+  Acesta 'uita' sa trimita mesajul de JOIN (fie uita intetionat, fie si-a
+  incheiat anormal executia si nu mai ruleaza; Un anumit sender trimite tot pe
+  adresa de bordcast un mesaj 'LEAVE\0'. Acest mesaj se va trimite la
+  incheierea executiei programului (spre exemplu la primirea semnalului SIGINT
+  - CTRL-C). Pe langa mesajele JOIN si LEAVE, un sender va mai trimite tot pe
+  adresa de broadcast si mesaje de forma:
+
+  'MESSAGE: SOME_TEXT\0'
+
+  unde SOME_TEXT este un text citit de sender de la tastatura. Acest mesaj va
+  fi afisat de toti ceilalti sender-i din retea in modul urmator:
+
+  NUME: SOME_TEXT
+
+  unde NUME va fi numele sender-ului UDP care a trimis mesajul (NUME anuntat
+  in prealabil prin mesajul JOIN). 
