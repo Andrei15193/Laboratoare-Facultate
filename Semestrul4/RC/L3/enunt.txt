@@ -32,4 +32,4 @@
   NUME: SOME_TEXT
 
   unde NUME va fi numele sender-ului UDP care a trimis mesajul (NUME anuntat
-  in prealabil prin mesajul JOIN). 
+  in prealabil prin mesajul JOIN).

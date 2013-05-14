@@ -1,37 +1,25 @@
-  Enuntul problemei
-
-:
+  Enuntul problemei:
 --------------------------------------------------------------------------------
   Un client TCP trimite unui server mai multe siruri de caractere. Serverul va
   returna clientului aceste siruri concatenate.
 
-  
-
-Protocolul
+  Protocolul
 --------------------------------------------------------------------------------  
-
-
   1. Clientul trimite serverului un intreg `n` fara semn (pe doi octeti) re-
      prezentand numarul de siruri de caractere; clientul trimite apoi `n`
      siruri de caractere (de lungime maxim 99) terminate cu caracterul NULL
      ('\0').
 
-  
-
-2. La primirea ultimului sir de caractere serverul considera datele trimise
+  2. La primirea ultimului sir de caractere serverul considera datele trimise
      de client terminate.
 
-  
-
-3. Daca serverul nu primeste sirul de caractere asteptat timp de 10 de se-
+  3. Daca serverul nu primeste sirul de caractere asteptat timp de 10 de se-
      cunde serverul inchide conexiunea clientului incercand sa ii trimita
      acestuia (este posibil ca clientul sa se fi blocat sau sa fi pierdut co-
      nexiunea cu serverul) valoarea -1 (intreg cu semn pe 4 octeti) ca si cod
      de eroare.
 
-  
-
-4. Serverul returneaza clientului valoarea 0 (intreg cu semn pe 4 octeti)
+  4. Serverul returneaza clientului valoarea 0 (intreg cu semn pe 4 octeti)
      daca cererea acestuia a fost rezolvata cu succes alaturi de stringul re-
      zultat prin concatenarea tuturor celor primite impreuna cu caracterul
      NULL(0. '\0').

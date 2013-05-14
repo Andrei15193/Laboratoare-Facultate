@@ -16,15 +16,11 @@ namespace IALab1
 
         public override void Task(object param)
         {
-            try
-            {
-                KeyValuePair<uint, uint[]> values = (KeyValuePair<uint, uint[]>)param;
-                this.numberOfFrobenius = this.searchMethod.SearchForFrobeniusNumber(values.Value, values.Key);
-            }
-            catch (InvalidCastException)
-            {
+            uint[] numbers = param as uint[];
+            if (numbers != null)
+                this.numberOfFrobenius = this.searchMethod.SearchForFrobeniusNumber(numbers);
+            else
                 this.taskResult = ThreadedTaskResult.Error;
-            }
         }
 
         public override ThreadedTaskResult TaskResult

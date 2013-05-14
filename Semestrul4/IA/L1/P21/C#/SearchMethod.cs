@@ -7,6 +7,6 @@ namespace IALab1
 {
     public interface SearchMethod
     {
-        uint SearchForFrobeniusNumber(uint[] values, uint maxA);
+        uint SearchForFrobeniusNumber(uint[] values);
     }
 }

@@ -18,7 +18,6 @@ namespace IALab1
             InitializeComponent();
             toolTip.SetToolTip(coefficientsLabel, "Enter all coin values separated by semicolons. The GCD of all numbers must be 1! Any number must be greater than 1!");
             toolTip.SetToolTip(maximumCoefficientValueLabel, "The maximum value the coin value coefficients can have (exclusive). The minimum value is 1!");
-            this.coefficientMaximumValueNumericUpDown.Maximum = 100000;
             this.Value = 0;
         }
 
@@ -35,7 +34,7 @@ namespace IALab1
                     EnableForStart();
                     break;
                 case 1:
-                    if (this.gbfs == null)
+                    if (this.bfs == null)
                         this.gbfs = new GBFS();
                     this.searchMethod = this.gbfs;
                     EnableForStart();
@@ -75,14 +74,13 @@ namespace IALab1
             {
                 numbers = ParseNumbers();
                 if (numbers == null)
-                    MessageBox.Show(this, "Invalid coin values!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(this, "Invalid coinv values!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 else
                 {
                     EnableForStop();
                     task = new SearchThreadedTask(this.searchMethod);
                     task.ThreadEndCallback += this.SearchEnded;
-                    this.startTimeValueLabel.Text = DateTime.Now.TimeOfDay.ToString();
-                    task.StartTask(new KeyValuePair<uint, uint[]>((uint)coefficientMaximumValueNumericUpDown.Value, numbers));
+                    task.StartTask(numbers);
                 }
             }
             else

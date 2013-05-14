@@ -55,14 +55,14 @@
             this.ListBoxActors = new System.Windows.Forms.ListBox();
             this.ContextMenuActors = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ContextMenuActorsAddActor = new System.Windows.Forms.ToolStripMenuItem();
+            this.ContextMenuActorsRemove = new System.Windows.Forms.ToolStripMenuItem();
+            this.ContextMenuActorsSelectedActor = new System.Windows.Forms.ToolStripMenuItem();
+            this.ContextMenuActorsAllActors = new System.Windows.Forms.ToolStripMenuItem();
             this.ButtonAddMovie = new System.Windows.Forms.Button();
             this.ButtonUpdateMovie = new System.Windows.Forms.Button();
             this.ButtonDeleteMovie = new System.Windows.Forms.Button();
             this.OpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.SaveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.ContextMenuActorsRemove = new System.Windows.Forms.ToolStripMenuItem();
-            this.ContextMenuActorsSelectedActor = new System.Windows.Forms.ToolStripMenuItem();
-            this.ContextMenuActorsAllActors = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenu.SuspendLayout();
             this.MainToolBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NumericVotes)).BeginInit();
@@ -141,21 +141,21 @@
             // MainToolBarOpenFile
             // 
             this.MainToolBarOpenFile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.MainToolBarOpenFile.Image = ((System.Drawing.Image)(resources.GetObject("MainToolBarOpenFile.Image")));
+            this.MainToolBarOpenFile.Image = global::BDLab1.Properties.Resources.Open;
             this.MainToolBarOpenFile.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.MainToolBarOpenFile.Name = "MainToolBarOpenFile";
             this.MainToolBarOpenFile.Size = new System.Drawing.Size(23, 22);
-            this.MainToolBarOpenFile.Text = "toolStripButton1";
+            this.MainToolBarOpenFile.Text = "Open movies from file";
             this.MainToolBarOpenFile.Click += new System.EventHandler(this.EventOpenFile);
             // 
             // MainToolBarSaveFile
             // 
             this.MainToolBarSaveFile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.MainToolBarSaveFile.Image = ((System.Drawing.Image)(resources.GetObject("MainToolBarSaveFile.Image")));
+            this.MainToolBarSaveFile.Image = global::BDLab1.Properties.Resources.Save;
             this.MainToolBarSaveFile.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.MainToolBarSaveFile.Name = "MainToolBarSaveFile";
             this.MainToolBarSaveFile.Size = new System.Drawing.Size(23, 22);
-            this.MainToolBarSaveFile.Text = "toolStripButton2";
+            this.MainToolBarSaveFile.Text = "Save files to file";
             this.MainToolBarSaveFile.Click += new System.EventHandler(this.EventSaveFile);
             // 
             // toolStripSeparator2
@@ -166,11 +166,11 @@
             // MainToolBarClear
             // 
             this.MainToolBarClear.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.MainToolBarClear.Image = ((System.Drawing.Image)(resources.GetObject("MainToolBarClear.Image")));
+            this.MainToolBarClear.Image = global::BDLab1.Properties.Resources.Delete;
             this.MainToolBarClear.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.MainToolBarClear.Name = "MainToolBarClear";
             this.MainToolBarClear.Size = new System.Drawing.Size(23, 22);
-            this.MainToolBarClear.Text = "toolStripButton1";
+            this.MainToolBarClear.Text = "Clear all movies";
             this.MainToolBarClear.Click += new System.EventHandler(this.EventClearAll);
             // 
             // MainToolBarClose
@@ -180,7 +180,7 @@
             this.MainToolBarClose.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.MainToolBarClose.Name = "MainToolBarClose";
             this.MainToolBarClose.Size = new System.Drawing.Size(23, 22);
-            this.MainToolBarClose.Text = "toolStripButton3";
+            this.MainToolBarClose.Text = "Close the application";
             this.MainToolBarClose.Click += new System.EventHandler(this.EventCloseApplication);
             // 
             // LabelMovies
@@ -294,9 +294,32 @@
             // ContextMenuActorsAddActor
             // 
             this.ContextMenuActorsAddActor.Name = "ContextMenuActorsAddActor";
-            this.ContextMenuActorsAddActor.Size = new System.Drawing.Size(152, 22);
+            this.ContextMenuActorsAddActor.Size = new System.Drawing.Size(126, 22);
             this.ContextMenuActorsAddActor.Text = "Add actor";
             this.ContextMenuActorsAddActor.Click += new System.EventHandler(this.EventAddActor);
+            // 
+            // ContextMenuActorsRemove
+            // 
+            this.ContextMenuActorsRemove.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ContextMenuActorsSelectedActor,
+            this.ContextMenuActorsAllActors});
+            this.ContextMenuActorsRemove.Name = "ContextMenuActorsRemove";
+            this.ContextMenuActorsRemove.Size = new System.Drawing.Size(126, 22);
+            this.ContextMenuActorsRemove.Text = "Remove";
+            // 
+            // ContextMenuActorsSelectedActor
+            // 
+            this.ContextMenuActorsSelectedActor.Name = "ContextMenuActorsSelectedActor";
+            this.ContextMenuActorsSelectedActor.Size = new System.Drawing.Size(148, 22);
+            this.ContextMenuActorsSelectedActor.Text = "Selected actor";
+            this.ContextMenuActorsSelectedActor.Click += new System.EventHandler(this.EventRemoveSelectedActor);
+            // 
+            // ContextMenuActorsAllActors
+            // 
+            this.ContextMenuActorsAllActors.Name = "ContextMenuActorsAllActors";
+            this.ContextMenuActorsAllActors.Size = new System.Drawing.Size(148, 22);
+            this.ContextMenuActorsAllActors.Text = "All actors";
+            this.ContextMenuActorsAllActors.Click += new System.EventHandler(this.EventRemoveAllActors);
             // 
             // ButtonAddMovie
             // 
@@ -332,29 +355,6 @@
             // 
             this.SaveFileDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.EventSaveFile);
             // 
-            // ContextMenuActorsRemove
-            // 
-            this.ContextMenuActorsRemove.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ContextMenuActorsSelectedActor,
-            this.ContextMenuActorsAllActors});
-            this.ContextMenuActorsRemove.Name = "ContextMenuActorsRemove";
-            this.ContextMenuActorsRemove.Size = new System.Drawing.Size(152, 22);
-            this.ContextMenuActorsRemove.Text = "Remove";
-            // 
-            // ContextMenuActorsSelectedActor
-            // 
-            this.ContextMenuActorsSelectedActor.Name = "ContextMenuActorsSelectedActor";
-            this.ContextMenuActorsSelectedActor.Size = new System.Drawing.Size(152, 22);
-            this.ContextMenuActorsSelectedActor.Text = "Selected actor";
-            this.ContextMenuActorsSelectedActor.Click += new System.EventHandler(this.EventRemoveSelectedActor);
-            // 
-            // ContextMenuActorsAllActors
-            // 
-            this.ContextMenuActorsAllActors.Name = "ContextMenuActorsAllActors";
-            this.ContextMenuActorsAllActors.Size = new System.Drawing.Size(152, 22);
-            this.ContextMenuActorsAllActors.Text = "All actors";
-            this.ContextMenuActorsAllActors.Click += new System.EventHandler(this.EventRemoveAllActors);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -376,7 +376,6 @@
             this.Controls.Add(this.MainToolBar);
             this.Controls.Add(this.MainMenu);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.MainMenu;
             this.MaximizeBox = false;
             this.Name = "MainForm";
