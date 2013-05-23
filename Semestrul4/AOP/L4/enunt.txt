@@ -1,0 +1,7 @@
+  Laborator 4: Performance monitoring and caching
+--------------------------------------------------------------------------------
+  1. Modify the lab from APM or Individual Project to use the Spring Framework
+     and databases (at your choice).
+
+  2. Use Spring AOP for performance monitoring and caching the objects
+     retrieved from the database.
