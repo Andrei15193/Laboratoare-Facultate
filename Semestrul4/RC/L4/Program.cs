@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -12,8 +13,9 @@ namespace RCLab4
 {
     static class Program
     {
-        static ConcurrentBag<Task> proxies = new ConcurrentBag<Task>();
-        static ConcurrentDictionary<IPEndPoint, _ProxyInfo> proxyEndPoints = new ConcurrentDictionary<IPEndPoint, _ProxyInfo>();
+        private static ConcurrentBag<Task> proxies = new ConcurrentBag<Task>();
+        private static ConcurrentDictionary<IPEndPoint, _ProxyInfo> proxyEndPoints = new ConcurrentDictionary<IPEndPoint, _ProxyInfo>();
+        private static int bufferSize = 10000;
 
         static void Main(string[] args)
         {
@@ -75,6 +77,7 @@ namespace RCLab4
                         else
                         {
                             WriteMessage("Bound to 127.0.0.1:{0}!", proxyInfo.IncomingPort);
+                            proxySocket.Listen(5);
                             if (proxyEndPoints.TryAdd(proxyEndPoint, proxyInfo))
                                 StartProxyJob(proxySocket, proxyEndPoint);
                         }
@@ -89,6 +92,7 @@ namespace RCLab4
 
         private static void StartProxyJob(Socket proxySocket, IPEndPoint proxyEndPoint)
         {
+            Console.WriteLine("Starting job...");
             _ProxyInfo proxyInfo;
             ConcurrentBag<Task> clientTasks = new ConcurrentBag<Task>();
             CancellationTokenSource clientCancellation = new CancellationTokenSource();
@@ -96,6 +100,7 @@ namespace RCLab4
                 if (proxySocket.Poll(1000, SelectMode.SelectRead))
                     Task.Factory.StartNew(DoClientJob, new _ClientJobState(proxySocket.Accept(), proxyInfo), clientCancellation.Token);
             clientCancellation.Cancel();
+            Console.WriteLine("Ending job...");
         }
 
         private static void DoClientJob(object state)
@@ -115,18 +120,35 @@ namespace RCLab4
 
         private static void StartClientJob(Socket destination, Socket source)
         {
-            byte[] buffer = new byte[1000];
-            while (destination.Connected && source.Connected)
-            {
-                if (destination.Poll(1000, SelectMode.SelectRead))
-                    do
-                        source.Send(buffer, destination.Receive(buffer), SocketFlags.None);
-                    while (destination.Poll(0, SelectMode.SelectRead));
-                if (source.Poll(1000, SelectMode.SelectRead))
-                    do
-                        destination.Send(buffer, source.Receive(buffer), SocketFlags.None);
-                    while (source.Poll(1000, SelectMode.SelectRead));
-            }
+            Console.WriteLine("Starting client job...");
+            Parallel.Invoke(
+                () =>
+                {
+                    try
+                    {
+                        byte[] buffer = new byte[bufferSize];
+                        while (source.Connected || source.Poll(5000, SelectMode.SelectRead))
+                            destination.Send(buffer, source.Receive(buffer), SocketFlags.None);
+                    }
+                    catch (SocketException exception)
+                    {
+                        Debug.WriteLine(exception);
+                    }
+                },
+                () =>
+                {
+                    try
+                    {
+                        byte[] buffer = new byte[bufferSize];
+                        while (destination.Connected || destination.Poll(5000, SelectMode.SelectRead))
+                            source.Send(buffer, destination.Receive(buffer), SocketFlags.None);
+                    }
+                    catch (SocketException exception)
+                    {
+                        Debug.WriteLine(exception);
+                    }
+                });
+            Console.WriteLine("Ending client job...");
         }
 
         private static bool Bind(Socket proxySocket, IPEndPoint endPoint)

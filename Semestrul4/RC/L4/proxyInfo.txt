@@ -1,1 +1,1 @@
-1000,google.ro,80
+1000,proxy.scs.ubbcluj.ro,80
