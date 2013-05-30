@@ -1,0 +1,7 @@
+  Laborator 5: Spring Security
+--------------------------------------------------------------------------------
+  1. Modify the solution from Lab4 to add authentication to service methods
+     that modify your domain classes (addition, removal, etc.)
+
+  2. Use the annotation-based solution to select the service methods in the
+     pointcut. 
