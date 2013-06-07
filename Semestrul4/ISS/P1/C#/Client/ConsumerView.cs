@@ -12,36 +12,11 @@ namespace ISSApp
 {
     public partial class ConsumerView : Form
     {
-        public ConsumerView()
+        public ConsumerView(Library library)
         {
-            AuthenticationView authentication = new AuthenticationView();
-            if (authentication.ShowDialog() == DialogResult.OK)
-            {
-                InitializeComponent();
-                FillForm();
-            }
-            else
-            {
-                MessageBox.Show(this, "The authentication failed!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                this.canRun = false;
-            }
-            authentication.Dispose();
-        }
-
-        public bool CanRun
-        {
-            get
-            {
-                return this.canRun;
-            }
-        }
-
-        private void FillForm()
-        {
-            this.booksDataGridView.Rows.Add("Ion", "Liviu Rebreanu", 4, "1432356534");
-            this.booksDataGridView.Rows.Add("C++ ghid pentru incepatori", "Brian Overland", 10, "7837845314");
-            this.booksDataGridView.Rows.Add("Curs de C#", "Constantin Galatan", 10, "1524553456");
-            this.booksDataGridView.Rows.Add("The C Programming Language", "Dennis Ritchie", 20, "8945785367");
+            InitializeComponent();
+            this.library = library;
+            booksDataGridView.DataSource = library.BooksTableView;
         }
 
         private void BookTableSelectionChanged(object sender, EventArgs e)
@@ -73,8 +48,8 @@ namespace ISSApp
                     this.booksDataGridView.SelectedRows[j].Cells["Count"].Value = Convert.ToDecimal(this.booksDataGridView.SelectedRows[j].Cells["Count"].Value) - this.bookCountNumericUpDown.Value;
         }
 
-        private bool canRun = true;
         private static string borrowBookText = "Borrow book";
         private static string borrowBooksText = "Borrow books";
+        private Library library;
     }
 }

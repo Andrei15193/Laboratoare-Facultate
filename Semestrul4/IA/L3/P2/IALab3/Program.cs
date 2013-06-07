@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ISSApp
+namespace IALab3
 {
     static class Program
     {
@@ -16,7 +16,7 @@ namespace ISSApp
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new IssApplication("Server= ANDREI-NETBOOK; Database= AndreiLocal; Trusted_Connection= True; "));
+            Application.Run(new Form1());
         }
     }
 }

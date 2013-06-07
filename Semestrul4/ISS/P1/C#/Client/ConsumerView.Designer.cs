@@ -29,10 +29,6 @@
         private void InitializeComponent()
         {
             this.booksDataGridView = new System.Windows.Forms.DataGridView();
-            this.Title = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Author = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Count = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ISBN = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.booksLabel = new System.Windows.Forms.Label();
             this.retrieveBookButton = new System.Windows.Forms.Button();
             this.bookCountLabel = new System.Windows.Forms.Label();
@@ -49,11 +45,6 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.booksDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.booksDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Title,
-            this.Author,
-            this.Count,
-            this.ISBN});
             this.booksDataGridView.Location = new System.Drawing.Point(15, 25);
             this.booksDataGridView.Name = "booksDataGridView";
             this.booksDataGridView.ReadOnly = true;
@@ -63,32 +54,6 @@
             this.booksDataGridView.Size = new System.Drawing.Size(527, 215);
             this.booksDataGridView.TabIndex = 0;
             this.booksDataGridView.SelectionChanged += new System.EventHandler(this.BookTableSelectionChanged);
-            // 
-            // Title
-            // 
-            this.Title.HeaderText = "Title";
-            this.Title.Name = "Title";
-            this.Title.ReadOnly = true;
-            this.Title.Width = 200;
-            // 
-            // Author
-            // 
-            this.Author.HeaderText = "Author";
-            this.Author.Name = "Author";
-            this.Author.ReadOnly = true;
-            this.Author.Width = 120;
-            // 
-            // Count
-            // 
-            this.Count.HeaderText = "Available copies";
-            this.Count.Name = "Count";
-            this.Count.ReadOnly = true;
-            // 
-            // ISBN
-            // 
-            this.ISBN.HeaderText = "ISBN";
-            this.ISBN.Name = "ISBN";
-            this.ISBN.ReadOnly = true;
             // 
             // booksLabel
             // 

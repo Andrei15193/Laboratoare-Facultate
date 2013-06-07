@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ISSApp
@@ -17,25 +10,17 @@ namespace ISSApp
             InitializeComponent();
         }
 
-        private void OnAuthenticate(object sender, EventArgs e)
+        public string Code
         {
-            int number;
-            DialogResult dialogResult = DialogResult.No;
-            try
+            get
             {
-                number = Convert.ToInt32(this.codePasswordTextbox.Text);
-                if (codes.Contains(number))
-                    dialogResult = DialogResult.OK;
+                return codePasswordTextbox.Text;
             }
-            catch (FormatException)
-            {
-                if (password.Contains(this.codePasswordTextbox.Text))
-                    dialogResult = DialogResult.OK;
-            }
-            this.DialogResult = dialogResult;
         }
 
-        private static int[] codes = { 1412, 1234, 0000 };
-        private static string[] password = { "password" };
+        private void OnAuthenticate(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.OK;
+        }
     }
 }
