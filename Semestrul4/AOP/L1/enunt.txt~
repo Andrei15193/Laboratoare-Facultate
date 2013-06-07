@@ -1,9 +1,0 @@
-  Laborator 1: Tracing
---------------------------------------------------------------------------------
-  Modify the code from one of the labs from Advanced Programming Methods
-  (Individual Project or Observer) to trace the execution of each public method 
-  (name and parameters) using Logging  or Log4J.
-
-  Count the number of classes and methods that you have modified, the number of 
-  source code lines that you have added, and the time needed for modification.
-
