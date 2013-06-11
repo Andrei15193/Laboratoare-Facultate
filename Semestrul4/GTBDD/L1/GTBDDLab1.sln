@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GTBDDLab1", "GTBDDLab1\GTBDDLab1.csproj", "{CE9D358F-04AD-409A-98F8-1F94180EEA73}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FFB1E07D-403D-4881-9803-513C6FDAF7C5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{CC612551-79CD-4EB4-B643-DFD1B8F1F237}"
+	ProjectSection(SolutionItems) = preProject
+		Solution Items\Scripts\Drops.sql = Solution Items\Scripts\Drops.sql
+		Solution Items\Scripts\Problema1.sql = Solution Items\Scripts\Problema1.sql
+		Solution Items\Scripts\Problema2.sql = Solution Items\Scripts\Problema2.sql
+		Solution Items\Scripts\Problema3.sql = Solution Items\Scripts\Problema3.sql
+		Solution Items\Scripts\Problema4.sql = Solution Items\Scripts\Problema4.sql
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CE9D358F-04AD-409A-98F8-1F94180EEA73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE9D358F-04AD-409A-98F8-1F94180EEA73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE9D358F-04AD-409A-98F8-1F94180EEA73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE9D358F-04AD-409A-98F8-1F94180EEA73}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CC612551-79CD-4EB4-B643-DFD1B8F1F237} = {FFB1E07D-403D-4881-9803-513C6FDAF7C5}
+	EndGlobalSection
+EndGlobal
