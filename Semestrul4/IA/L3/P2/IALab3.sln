@@ -1,7 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IALab302", "..\..\LabsRepo\Semestrul4\IA\L3\P2\IALab302.csproj", "{C799927D-AB58-427C-9507-52ABEDAEF27A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IALab302.SBG", "IALab302.SBG.csproj", "{C799927D-AB58-427C-9507-52ABEDAEF27A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IALab302.Fuzzy", "IALab302.Fuzzy\IALab302.Fuzzy.csproj", "{4988315E-4279-4248-BF65-6817FBC6B83B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,6 +15,10 @@ Global
 		{C799927D-AB58-427C-9507-52ABEDAEF27A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C799927D-AB58-427C-9507-52ABEDAEF27A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C799927D-AB58-427C-9507-52ABEDAEF27A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4988315E-4279-4248-BF65-6817FBC6B83B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4988315E-4279-4248-BF65-6817FBC6B83B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4988315E-4279-4248-BF65-6817FBC6B83B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4988315E-4279-4248-BF65-6817FBC6B83B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
