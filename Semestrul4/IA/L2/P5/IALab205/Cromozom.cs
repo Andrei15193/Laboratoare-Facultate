@@ -2,8 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IALab205
 {
@@ -40,16 +38,19 @@ namespace IALab205
 
         public ICromozom Muteaza(TipMutatie tipMutatie)
         {
-            Random random = Globale.Random;
-            int index = random.Next(muchii.Length);
-            switch (tipMutatie)
+            if (muchii.Length > 0)
             {
-                case TipMutatie.Tare:
-                    muchii[index] = !muchii[index];
-                    break;
-                default:
-                    muchii[index] = random.Next(10) < 5;
-                    break;
+                Random random = Globale.Random;
+                int index = random.Next(muchii.Length);
+                switch (tipMutatie)
+                {
+                    case TipMutatie.Tare:
+                        muchii[index] = !muchii[index];
+                        break;
+                    default:
+                        muchii[index] = random.Next(10) < 5;
+                        break;
+                }
             }
             return this;
         }
@@ -58,16 +59,7 @@ namespace IALab205
         {
             get
             {
-                int numarDeTriunghiuri = 0;
-                foreach (int nod in Graf.Noduri)
-                    foreach (int vecin in DeterminaVecini(nod, nod))
-                        foreach (int vecinulVecinului in DeterminaVecini(vecin, vecin))
-                            numarDeTriunghiuri += DeterminaVecini(vecinulVecinului).Count((vecinulVecinuluiVecinului) => vecinulVecinuluiVecinului == nod);
-                foreach (int nod in Graf.Noduri)
-                    foreach (int vecin in DeterminaVecini(nod, nod, false))
-                        foreach (int vecinulVecinului in DeterminaVecini(vecin, vecin, false))
-                            numarDeTriunghiuri += DeterminaVecini(vecinulVecinului, false).Count((vecinulVecinuluiVecinului) => vecinulVecinuluiVecinului == nod);
-                return numarDeTriunghiuri;
+                return _NumaraVecini(true) + _NumaraVecini(false);
             }
         }
 
@@ -93,13 +85,23 @@ namespace IALab205
             }
         }
 
+        private int _NumaraVecini(bool estePrimulGraf)
+        {
+            int numarDeTriunghiuri = 0;
+            foreach (int nod in Graf.Noduri)
+                foreach (int vecin in _DeterminaVecini(nod, nod))
+                    foreach (int vecinulVecinului in _DeterminaVecini(vecin, vecin, estePrimulGraf))
+                        numarDeTriunghiuri += _DeterminaVecini(vecinulVecinului).Count((vecinulVecinuluiVecinului) => vecinulVecinuluiVecinului == nod);
+            return numarDeTriunghiuri;
+        }
+
         private Cromozom(Cromozom subiect)
         {
             Graf = subiect.Graf;
             muchii = subiect.muchii.Clone() as BitArray;
         }
 
-        private IEnumerable<int> DeterminaVecini(int nod, bool esteMuchie = true)
+        private IEnumerable<int> _DeterminaVecini(int nod, bool esteMuchie = true)
         {
             ICollection<int> vecini = new HashSet<int>();
             for (int i = 0; i < muchii.Length; i++)
@@ -112,9 +114,9 @@ namespace IALab205
             return vecini;
         }
 
-        private IEnumerable<int> DeterminaVecini(int nod, int limitaInferioara, bool esteMuchie = true)
+        private IEnumerable<int> _DeterminaVecini(int nod, int limitaInferioara, bool esteMuchie = true)
         {
-            return DeterminaVecini(nod, esteMuchie).Where((vecin) => limitaInferioara < vecin);
+            return _DeterminaVecini(nod, esteMuchie).Where((vecin) => limitaInferioara < vecin);
         }
 
         private BitArray muchii;

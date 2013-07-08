@@ -44,6 +44,7 @@
             // 
             // button1
             // 
+            this.button1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.button1.Location = new System.Drawing.Point(141, 35);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
@@ -54,6 +55,8 @@
             // 
             // noduriAdiacenteTextBox
             // 
+            this.noduriAdiacenteTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.noduriAdiacenteTextBox.Location = new System.Drawing.Point(94, 9);
             this.noduriAdiacenteTextBox.Name = "noduriAdiacenteTextBox";
             this.noduriAdiacenteTextBox.Size = new System.Drawing.Size(235, 20);

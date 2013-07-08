@@ -10,14 +10,14 @@ namespace IALab205
     {
         public Comparator(Func<T, T, int> functieDeComparare)
         {
-            this.functieDeComparare = functieDeComparare;
+            this._functieDeComparare = functieDeComparare;
         }
 
         public int Compare(T x, T y)
         {
-            return functieDeComparare(x, y);
+            return _functieDeComparare(x, y);
         }
 
-        private Func<T, T, int> functieDeComparare;
+        private Func<T, T, int> _functieDeComparare;
     }
 }

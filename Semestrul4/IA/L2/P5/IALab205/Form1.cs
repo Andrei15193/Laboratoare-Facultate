@@ -23,7 +23,9 @@ namespace IALab205
             for (int i = 0; i < numarNoduriNumericUpDown.Value; i++)
             {
                 Form2 adiacentaForm = new Form2(i, (int)numarNoduriNumericUpDown.Value);
-                adiacentaForm.ShowDialog();
+                while (adiacentaForm.ShowDialog() != DialogResult.OK)
+                {
+                }
                 for (int j = 0; j < numarNoduriNumericUpDown.Value; j++)
                     adiacenta[i, j] = adiacentaForm.Adiacente[j];
             }
@@ -34,9 +36,36 @@ namespace IALab205
 
         private void button1_Click(object sender, EventArgs e)
         {
-            AbstractAlgoritmEvolutiv algoritmEvolutiv = new Problema5AlgoritmEvolutiv(graf);
-            Cromozom rezultat = algoritmEvolutiv.CautaRezultat((int)dimensiunePopulatieNumericUpDown.Value, (int)numarGeneratiiNumericUpDown.Value, TipMutatie.Tare, (x, y) => x.CompareTo(y)) as Cromozom;
-            new Form3(rezultat).ShowDialog();
+            if (_aeRadioButton.Checked)
+                new Form3(new Problema5AlgoritmEvolutiv(graf).CautaRezultat((int)dimensiunePopulatieNumericUpDown.Value, (int)numarGeneratiiNumericUpDown.Value, TipMutatie.Tare, (x, y) => x.CompareTo(y)) as Cromozom).ShowDialog();
+            else
+                new Form3(new Problema5ParticleSwarmOptimization(graf)
+                    .CautaRezultat(
+                    (int)dimensiunePopulatieNumericUpDown.Value,
+                    (int)numarGeneratiiNumericUpDown.Value,
+                    (double)_factorInertieNumericUpDown.Value,
+                    (double)_factorCognitivNumericUpDown.Value,
+                    (double)_factorSocialNumericUpDown.Value,
+                    (x, y) => x.CompareTo(y)) as Particula
+                ).ShowDialog();
+        }
+
+        private void _aeRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            _numarGeneratiiLabel.Text = "Numar generatii:";
+            _dimensiunePopulatieLabel.Text = "Dimensiune populatie:";
+            _factorCognitivNumericUpDown.Enabled = false;
+            _factorInertieNumericUpDown.Enabled = false;
+            _factorSocialNumericUpDown.Enabled = false;
+        }
+
+        private void _psoRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            _numarGeneratiiLabel.Text = "Numar cicluri:";
+            _dimensiunePopulatieLabel.Text = "Numar particule:";
+            _factorCognitivNumericUpDown.Enabled = true;
+            _factorInertieNumericUpDown.Enabled = true;
+            _factorSocialNumericUpDown.Enabled = true;
         }
 
         private bool[,] adiacenta;

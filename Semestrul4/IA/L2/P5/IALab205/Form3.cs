@@ -25,6 +25,19 @@ namespace IALab205
             solutieTextBox.Text += string.Format("Fitness: {0}", rezultat.Fitness);
         }
 
+        public Form3(Particula rezultat)
+        {
+            InitializeComponent();
+            solutieTextBox.Text = "Solutia:\r\n\r\nPartitionarea primului graf:\r\n";
+            foreach (var muchie in rezultat.MuchiilePrimuluiGraf)
+                solutieTextBox.Text += string.Format("{0} - {1}, ", muchie.PrimulNod, muchie.AlDoileaNod);
+            solutieTextBox.Text += "\r\n\r\nPartitionarea celui de al doilea graf:\r\n";
+            foreach (var muchie in rezultat.MuchiileCeluiDeAlDoileaGraf)
+                solutieTextBox.Text += string.Format("{0} - {1}, ", muchie.PrimulNod, muchie.AlDoileaNod);
+            solutieTextBox.Text += "\r\n";
+            solutieTextBox.Text += string.Format("Fitness: {0}", rezultat.Fitness);
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.OK;

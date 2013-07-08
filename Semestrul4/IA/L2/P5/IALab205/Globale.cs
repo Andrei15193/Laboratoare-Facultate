@@ -12,12 +12,12 @@ namespace IALab205
         {
             get
             {
-                if (random == null)
-                     random = new Random(DateTime.Now.Millisecond);
-                return random;
+                if (_random == null)
+                     _random = new Random(DateTime.Now.Millisecond);
+                return _random;
             }
         }
 
-        private static Random random = null;
+        private static Random _random = null;
     }
 }
