@@ -32,7 +32,10 @@ namespace IALab205
             Particula performantaProprie = _memorie.OrderBy((particula) => particula.Fitness).First();
             Particula performantaVecinului = Vecini.OrderBy((particula) => particula.Fitness).First() as Particula;
             for (int i = 0; i < Viteze.Length; i++)
+            {
                 Viteze[i] = _factorDeInertie * Viteze[i] + factorDeInvatareCognitiv * Globale.Random.NextDouble() * (Convert.ToInt32(performantaProprie._muchii[i]) - Convert.ToInt32(_muchii[i])) + factorDeInvatareSocial * Globale.Random.NextDouble() * (Convert.ToInt32(performantaVecinului._muchii[i]) - Convert.ToInt32(_muchii[i]));
+                _muchii[i] = Convert.ToBoolean((Convert.ToInt32(_muchii[i]) + Viteze[i])%2);
+            }
         }
 
         public object Clone()
@@ -55,7 +58,16 @@ namespace IALab205
         {
             get
             {
-                return _NumaraVecini(true) + _NumaraVecini(false);
+                int numarDeTriunghiuri = 0;
+                foreach (int nod in Graf.Noduri)
+                    foreach (int vecin in _DeterminaVecini(nod, nod))
+                        foreach (int vecinulVecinului in _DeterminaVecini(vecin, vecin))
+                            numarDeTriunghiuri += _DeterminaVecini(vecinulVecinului).Count((vecinulVecinuluiVecinului) => vecinulVecinuluiVecinului == nod);
+                foreach (int nod in Graf.Noduri)
+                    foreach (int vecin in _DeterminaVecini(nod, nod, false))
+                        foreach (int vecinulVecinului in _DeterminaVecini(vecin, vecin, false))
+                            numarDeTriunghiuri += _DeterminaVecini(vecinulVecinului, false).Count((vecinulVecinuluiVecinului) => vecinulVecinuluiVecinului == nod);
+                return numarDeTriunghiuri;
             }
         }
 
@@ -105,16 +117,6 @@ namespace IALab205
                     return VitezaMaxima;
                 else
                     return viteza;
-        }
-
-        private int _NumaraVecini(bool estePrimulGraf)
-        {
-            int numarDeTriunghiuri = 0;
-            foreach (int nod in Graf.Noduri)
-                foreach (int vecin in _DeterminaVecini(nod, nod))
-                    foreach (int vecinulVecinului in _DeterminaVecini(vecin, vecin, estePrimulGraf))
-                        numarDeTriunghiuri += _DeterminaVecini(vecinulVecinului).Count((vecinulVecinuluiVecinului) => vecinulVecinuluiVecinului == nod);
-            return numarDeTriunghiuri;
         }
 
         private IEnumerable<int> _DeterminaVecini(int nod, bool esteMuchie = true)

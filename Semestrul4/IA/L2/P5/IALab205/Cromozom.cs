@@ -59,7 +59,16 @@ namespace IALab205
         {
             get
             {
-                return _NumaraVecini(true) + _NumaraVecini(false);
+                int numarDeTriunghiuri = 0;
+                foreach (int nod in Graf.Noduri)
+                    foreach (int vecin in _DeterminaVecini(nod, nod))
+                        foreach (int vecinulVecinului in _DeterminaVecini(vecin, vecin))
+                            numarDeTriunghiuri += _DeterminaVecini(vecinulVecinului).Count((vecinulVecinuluiVecinului) => vecinulVecinuluiVecinului == nod);
+                foreach (int nod in Graf.Noduri)
+                    foreach (int vecin in _DeterminaVecini(nod, nod, false))
+                        foreach (int vecinulVecinului in _DeterminaVecini(vecin, vecin, false))
+                            numarDeTriunghiuri += _DeterminaVecini(vecinulVecinului, false).Count((vecinulVecinuluiVecinului) => vecinulVecinuluiVecinului == nod);
+                return numarDeTriunghiuri;
             }
         }
 
