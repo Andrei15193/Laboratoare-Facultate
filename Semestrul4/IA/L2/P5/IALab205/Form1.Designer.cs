@@ -154,7 +154,7 @@
             0,
             0});
             this.dimensiunePopulatieNumericUpDown.Minimum = new decimal(new int[] {
-            100,
+            20,
             0,
             0,
             0});
