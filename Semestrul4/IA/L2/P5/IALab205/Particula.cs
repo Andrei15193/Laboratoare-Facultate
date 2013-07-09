@@ -33,7 +33,7 @@ namespace IALab205
             Particula performantaVecinului = Vecini.OrderBy((particula) => particula.Fitness).First() as Particula;
             for (int i = 0; i < Viteze.Length; i++)
             {
-                Viteze[i] = _factorDeInertie * Viteze[i] + factorDeInvatareCognitiv * Globale.Random.NextDouble() * (Convert.ToInt32(performantaProprie._muchii[i]) - Convert.ToInt32(_muchii[i])) + factorDeInvatareSocial * Globale.Random.NextDouble() * (Convert.ToInt32(performantaVecinului._muchii[i]) - Convert.ToInt32(_muchii[i]));
+                Viteze[i] = _NormalizeazaViteza(_factorDeInertie * Viteze[i] + factorDeInvatareCognitiv * Globale.Random.NextDouble() * (Convert.ToInt32(performantaProprie._muchii[i]) - Convert.ToInt32(_muchii[i])) + factorDeInvatareSocial * Globale.Random.NextDouble() * (Convert.ToInt32(performantaVecinului._muchii[i]) - Convert.ToInt32(_muchii[i])));
                 _muchii[i] = Convert.ToBoolean((Convert.ToInt32(_muchii[i]) + Viteze[i])%2);
             }
         }
