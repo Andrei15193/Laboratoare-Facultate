@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IALab205", "IALab205\IALab205.csproj", "{9D9171BB-89D3-454E-8F91-5DD8C9B38F18}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IALab205", "IALab205.csproj", "{9D9171BB-89D3-454E-8F91-5DD8C9B38F18}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
