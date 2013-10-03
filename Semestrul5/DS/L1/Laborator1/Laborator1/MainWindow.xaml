@@ -1,0 +1,45 @@
+﻿<Window
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:viewModels="clr-namespace:Laborator1.ViewModels"
+    x:Class="Laborator1.MainWindow"
+    Title="Laborator 1 Date Semistructurate"
+    Height="350"
+    Width="525">
+    <Window.Resources>
+        <viewModels:MainViewModel
+            x:Key="MainViewModel" />
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Label
+            Content="{Binding RootCategory.Name, Source={StaticResource MainViewModel}}"
+            Margin="10,10,10,0"
+            VerticalAlignment="Top"/>
+        <TreeView
+            Margin="10,41,10,10"
+            ItemsSource="{Binding RootCategory.Subcategories, Source={StaticResource MainViewModel}}"
+            SelectedItemChanged="_TreeViewSelectedItemChanged">
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate
+                    ItemsSource="{Binding Subcategories}">
+                    <TextBlock
+                        Text="{Binding Name}" />
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+        </TreeView>
+        <Label
+            Grid.Column="1"
+            Content="Toate categoriile"
+            Margin="10,10,10,0"
+            VerticalAlignment="Top"/>
+        <ListBox
+            Grid.Column="1"
+            Margin="10,41,10,10"
+            DisplayMemberPath="Name"
+            ItemsSource="{Binding SelectedCategory.Subcategories, Source={StaticResource MainViewModel}}"/>
+    </Grid>
+</Window>

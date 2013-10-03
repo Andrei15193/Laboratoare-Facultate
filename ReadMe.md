@@ -37,4 +37,4 @@ Materii din semestrul 5
 * LFTC = Limbaje Formale si Tehnici de Compilare
 * AG   = Algoritmica Grafelor
 * AGSC = Analiza si Gestiune Sistemelor Complexe
-* RI   = Roboti Inteligenti
+* DS   = Date Semistructurate
