@@ -1,8 +1,8 @@
-﻿using Laborator1.Model;
+﻿using DateSemistructurate.Laborator1.Model;
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace Laborator1.ViewModels
+namespace DateSemistructurate.Laborator1.ViewModels
 {
     internal class MainViewModel : INotifyPropertyChanged
     {

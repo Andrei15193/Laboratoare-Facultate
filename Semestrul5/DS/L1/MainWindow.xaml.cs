@@ -1,8 +1,8 @@
-﻿using Laborator1.Model;
-using Laborator1.ViewModels;
+﻿using DateSemistructurate.Laborator1.Model;
+using DateSemistructurate.Laborator1.ViewModels;
 using System.Windows;
 
-namespace Laborator1
+namespace DateSemistructurate.Laborator1
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

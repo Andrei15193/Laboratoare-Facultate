@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace Laborator1.Model
+namespace DateSemistructurate.Laborator1.Model
 {
     internal class Category
     {
