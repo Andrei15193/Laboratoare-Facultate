@@ -5,6 +5,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Laborator1.Transformari", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Laborator1", "Laborator1\Laborator1.csproj", "{6FB9BFDE-1184-495D-B758-EA0DE43BDDE4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{77DAFBC9-DCE7-4053-9496-74D01A1EEEFA}"
+	ProjectSection(SolutionItems) = preProject
+		Enunt.txt = Enunt.txt
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Laborator1.Transformari.Tests", "Laborator1.Transformari.Tests\Laborator1.Transformari.Tests.csproj", "{79382BE9-1670-4A8F-B5C7-17B16984122C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +26,10 @@ Global
 		{6FB9BFDE-1184-495D-B758-EA0DE43BDDE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6FB9BFDE-1184-495D-B758-EA0DE43BDDE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6FB9BFDE-1184-495D-B758-EA0DE43BDDE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79382BE9-1670-4A8F-B5C7-17B16984122C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79382BE9-1670-4A8F-B5C7-17B16984122C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79382BE9-1670-4A8F-B5C7-17B16984122C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79382BE9-1670-4A8F-B5C7-17B16984122C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

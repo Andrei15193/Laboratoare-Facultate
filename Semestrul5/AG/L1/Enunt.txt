@@ -10,7 +10,7 @@ linia respectiva.
 b)
 Sa se conceapa un algoritm care primeste ca parametru de intrare o lista 
 reprezentand toate varfurile unui graf, iar pentru fiecare element din lista
-se memoreaza o lista de valori reprezentand lista succesorilor acelui varf si
+se memoreaza o lista de valori reprezentand lista Successorilor acelui varf si
 returneaza o matrice patratica ce memoreaza valori boolene reprezentand matricea
 de adiacenta a grafului primit. Matricea rezultata are tot atatea linii cate
 elemente se afla in lista primita.
