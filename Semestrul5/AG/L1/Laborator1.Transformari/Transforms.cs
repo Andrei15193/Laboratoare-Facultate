@@ -7,7 +7,7 @@ namespace AlgoritmicaGrafelor.Laborator1.Transformari
     {
         /// <exception cref="System.ArgumentNullException">Thrown when adjancency matrix is null.</exception>
         /// <exception cref="System.ArgumentException">Thrown when the adjacency matrix is not a square matrix.</exception>
-        static public IList<IList<int>> ToSuccessorList(bool[,] adjacencyMatrix)
+        static public IList<IList<int>> ToSuccessorsList(bool[,] adjacencyMatrix)
         {
             if (adjacencyMatrix != null)
             {
@@ -15,20 +15,20 @@ namespace AlgoritmicaGrafelor.Laborator1.Transformari
 
                 if (Math.Pow(numberOfPeaks, 2) == adjacencyMatrix.Length)
                 {
-                    IList<IList<int>> SuccessorsList = new List<IList<int>>(numberOfPeaks);
+                    IList<IList<int>> successorsList = new List<IList<int>>(numberOfPeaks);
 
-                    for (int i = 0; i < numberOfPeaks; i++)
+                    for (int lineIndex = 0; lineIndex < numberOfPeaks; lineIndex++)
                     {
-                        IList<int> SuccessorPeaks = new List<int>();
+                        IList<int> successorPeaks = new List<int>();
 
-                        for (int j = 0; j < numberOfPeaks; j++)
-                            if (adjacencyMatrix[i, j])
-                                SuccessorPeaks.Add(j);
+                        for (int columnIndex = 0; columnIndex < numberOfPeaks; columnIndex++)
+                            if (adjacencyMatrix[lineIndex, columnIndex])
+                                successorPeaks.Add(columnIndex);
 
-                        SuccessorsList.Add(SuccessorPeaks);
+                        successorsList.Add(successorPeaks);
                     }
 
-                    return SuccessorsList;
+                    return successorsList;
                 }
                 else
                     throw new ArgumentException("The adjacencyMatrix is not a square matrix!");

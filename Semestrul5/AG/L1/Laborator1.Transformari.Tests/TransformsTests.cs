@@ -13,7 +13,7 @@ namespace AlgoritmicaGrafelor.Laborator1.Transformari.Tests
             [TestMethod]
             public void TestWhenAdjacencyMatrixIsEmpty()
             {
-                var SuccessorList = Transforms.ToSuccessorList(new bool[,] { });
+                var SuccessorList = Transforms.ToSuccessorsList(new bool[,] { });
 
                 Assert.AreEqual(0, SuccessorList.Count);
             }
@@ -21,7 +21,7 @@ namespace AlgoritmicaGrafelor.Laborator1.Transformari.Tests
             [TestMethod]
             public void TestWhenAdjacencyMatrixContainsOnlyFalse()
             {
-                var SuccessorList = Transforms.ToSuccessorList(new bool[,] { { false, false }, { false, false } });
+                var SuccessorList = Transforms.ToSuccessorsList(new bool[,] { { false, false }, { false, false } });
 
                 Assert.AreEqual(2, SuccessorList.Count);
                 Assert.AreEqual(0, SuccessorList[0].Count);
@@ -31,7 +31,7 @@ namespace AlgoritmicaGrafelor.Laborator1.Transformari.Tests
             [TestMethod]
             public void TestWhenAdjacencyMatrixContainsOneTrueOnFirstPosition()
             {
-                var SuccessorList = Transforms.ToSuccessorList(new bool[,] { { true, false }, { false, false } });
+                var SuccessorList = Transforms.ToSuccessorsList(new bool[,] { { true, false }, { false, false } });
 
                 Assert.AreEqual(2, SuccessorList.Count);
                 Assert.AreEqual(1, SuccessorList[0].Count);
@@ -42,7 +42,7 @@ namespace AlgoritmicaGrafelor.Laborator1.Transformari.Tests
             [TestMethod]
             public void TestWhenAdjacencyMatrixContainsContainsOnlyTrue()
             {
-                var SuccessorList = Transforms.ToSuccessorList(new bool[,] { { true, true }, { true, true } });
+                var SuccessorList = Transforms.ToSuccessorsList(new bool[,] { { true, true }, { true, true } });
 
                 Assert.AreEqual(2, SuccessorList.Count);
                 Assert.AreEqual(2, SuccessorList[0].Count);
@@ -56,7 +56,7 @@ namespace AlgoritmicaGrafelor.Laborator1.Transformari.Tests
             [TestMethod]
             public void TestWhenAdjacencyMatrixHasCircularReference()
             {
-                var SuccessorList = Transforms.ToSuccessorList(new bool[,] { { false, true }, { true, false } });
+                var SuccessorList = Transforms.ToSuccessorsList(new bool[,] { { false, true }, { true, false } });
 
                 Assert.AreEqual(2, SuccessorList.Count);
                 Assert.AreEqual(1, SuccessorList[0].Count);
@@ -68,13 +68,13 @@ namespace AlgoritmicaGrafelor.Laborator1.Transformari.Tests
             [TestMethod, ExpectedException(typeof(ArgumentNullException))]
             public void TestWhenAdjacencyMatrixIsNull()
             {
-                Transforms.ToSuccessorList(null);
+                Transforms.ToSuccessorsList(null);
             }
 
             [TestMethod, ExpectedException(typeof(ArgumentException))]
             public void TestWhenAdjacencyMatrixIsNotSquareMatrix()
             {
-                Transforms.ToSuccessorList(new bool[,] { { false }, { true } });
+                Transforms.ToSuccessorsList(new bool[,] { { false }, { true } });
             }
         }
 
