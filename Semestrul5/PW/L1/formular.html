@@ -1,0 +1,242 @@
+﻿<!DOCTYPE HTML
+          PUBLIC
+          "-//W3C//DTD HTML 4.01 Transitional//EN"
+          "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ro">
+<head>
+    <meta http-equiv="content-type"
+        content="text/html; charset=UTF-8">
+    <title>Comandă carte</title>
+</head>
+<body>
+    <form action="succes.html">
+        <table border="1"
+            cellspacing="0"
+            cellpadding="5">
+            <tr>
+                <td>
+                    <table border="1"
+                        cellspacing="0">
+                        <tr bgcolor="#87E293">
+                            <th colspan="2">Informații carte
+                            </th>
+                        </tr>
+                        <tr>
+                            <td width="100px">Autor:
+                            </td>
+                            <td>
+                                <input type="text"
+                                    name="autor"
+                                    size="100">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="100px">Titlu:
+                            </td>
+                            <td>
+                                <input type="text"
+                                    name="titlu"
+                                    size="100">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="100px">Editura:
+                            </td>
+                            <td>
+                                <input type="text"
+                                    name="editura"
+                                    size="100">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="100px">Tip carte:
+                            </td>
+                            <td>
+                                <select>
+                                    <option>Virtuală (eBook)</option>
+                                    <option>Fizică</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="1"
+                        cellspacing="0">
+                        <tr>
+                            <th bgcolor="#51A5BA"
+                                colspan="2">Informații plată
+                            </th>
+                        </tr>
+                        <tr>
+                            <td width="100px">Tip card:
+                            </td>
+                            <td>
+                                <input type="radio"
+                                    name="tipCard">
+                                <img src="images/visa.gif"
+                                    width="50"
+                                    height="50"
+                                    alt="Visa">
+                                <input type="radio"
+                                    name="tipCard">
+                                <img src="images/mastercard.png"
+                                    width="50"
+                                    height="50"
+                                    alt="MasterCard">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="100px">Nume:
+                            </td>
+                            <td>
+                                <input type="text"
+                                    name="nume"
+                                    size="100">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="100px">Prenume:
+                            </td>
+                            <td>
+                                <input type="text"
+                                    name="prenume"
+                                    size="100">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="100px">Adresă, linia 1:
+                            </td>
+                            <td>
+                                <input type="text"
+                                    name="adresa1"
+                                    size="100">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="100px">Adresă, linia 2:
+                            </td>
+                            <td>
+                                <input type="text"
+                                    name="adresa2"
+                                    size="100">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="100px">Număr card:
+                            </td>
+                            <td>
+                                <input type="text"
+                                    name="numarCard"
+                                    size="100">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="100px">CVN:
+                            </td>
+                            <td>
+                                <input type="text"
+                                    name="cvn"
+                                    size="100">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="100px">Telefon:
+                            </td>
+                            <td>
+                                <input type="text"
+                                    name="telefon"
+                                    size="100"
+                                    value="+40">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="100px">eMail:
+                            </td>
+                            <td>
+                                <input type="text"
+                                    name="eMail"
+                                    size="100"><br>
+                                <label>Trimite material promoțional?</label>
+                                <input type="checkbox"
+                                    checked="checked"
+                                    name="trimiteMaterialPromotional">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="100px">Termeni și conditii:
+                            </td>
+                            <td>
+                                <p>
+                                    <b>Utilizarea servicilor.</b><br>
+                                    Prin efectuarea unei comenzi sunteți de acord cu termenii și condițiile de mai jos.
+                                </p>
+                                <ul>
+                                    <li>
+                                        <b>Plata.</b><br>
+                                        Plata se face exclusiv online, prin card, iar livrarea se face în cel mai scurt timp posibil
+                                            prin intermediul unui curier rapid. În momentul în care se renunță la comandă, banii vor fi
+                                            restituiți în maximum 30 de zile de la data anulării.
+                                    </li>
+                                    <li>
+                                        <b>Lista curierilor.</b><br>
+                                        Mai jos se află lista curierilor care pot livra comanda dumneavoastră:
+                                            <ul>
+                                                <li>Fan Courier</li>
+                                                <li>Urgent Curier</li>
+                                            </ul>
+                                    </li>
+                                    <li>
+                                        <b>Efectuarea comenzii.</b><br>
+                                        Comanda se efectueaza astfel:
+                                            <ol type="1">
+                                                <li>Înregistrare comandă (pasul curent).</li>
+                                                <li>Primire comandă la furnizor.</li>
+                                                <li>Trimitere confirmare prin eMail (validarea eMailului și a autenticității utilizatorului).</li>
+                                                <li>Efectuarea plății.</li>
+                                                <li>Trimiterea comenzii prin curierat (pentru carte fizică)<br>
+                                                    sau trimiterea comenzii în format electronic (pentru eBook).
+                                                </li>
+                                                <li>Trimiterea unui eMail informativ cu starea comenzii.
+                                                </li>
+                                                <li>Livrarea efectivă și finalizarea comenzii.
+                                                </li>
+                                            </ol>
+                                        <br>
+                                        <b>Dacă oricare din pașii de mai sus nu este întâlnit comanda este anulată, iar banii sunt
+                                                restituiți în maximum 30 de zile de la data anulării!
+                                        </b>
+                                    </li>
+                                    <li>
+                                        <b>Anularea comenzii.</b><br>
+                                        Pentru a anula o comandă accesați din panoul dumneavoastră de control tabul "comenzi" și
+                                            urmați următorii pași.
+                                            <ol type="A">
+                                                <li>Selectați comanda pe care doriți să o anulați.</li>
+                                                <li>Faceti click pe butonul "Anulare comanda".</li>
+                                                <li>Așteptați un eMail de confirmare.</li>
+                                                <li>Dupa primirea eMailului confirmați anularea.</li>
+                                                <li>Din momentul anulării banii se vor restitui în maximum 30 de zile.</li>
+                                                <li>După restituirea banilor anularea comenzii va fi completă.</li>
+                                            </ol>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <center>
+                        <input type="Submit"
+                            value="Comandă carte">
+                    </center>
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>
