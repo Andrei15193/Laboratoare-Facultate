@@ -33,8 +33,8 @@ Materii din semestrul 4
 
 Materii din semestrul 5
 =======================
-* PW   = Programare Web
-* LFTC = Limbaje Formale si Tehnici de Compilare
-* AG   = Algoritmica Grafelor
-* AGSC = Analiza si Gestiune Sistemelor Complexe
-* DS   = Date Semistructurate
+* PW    = Programare Web
+* LFTC  = Limbaje Formale si Tehnici de Compilare
+* AG    = Algoritmica Grafelor
+* AGSIC = Analiza si Gestiune Sistemelor Informatice Complexe
+* DS    = Date Semistructurate
