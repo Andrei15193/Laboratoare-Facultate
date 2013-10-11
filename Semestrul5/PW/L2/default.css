@@ -1,0 +1,66 @@
+﻿body {
+    background-color: #F0F0F0;
+    font-family: Arial;
+}
+
+form, div.error, div.successful {
+    margin: 0 auto;
+    border: 1px solid black;
+    padding: 20px;
+    width: 350px;
+}
+
+    form h1 {
+        margin: 0;
+        font-size: 20pt;
+    }
+
+    form div {
+        clear: both;
+        margin: 5px 0 5px;
+        text-align: center;
+    }
+
+        form div div.left {
+            clear: none;
+            float: left;
+            padding-top: 2px;
+            margin-right: 5px;
+            width: 140px;
+            text-align: right;
+        }
+
+        form div div.right {
+            clear: none;
+            float: right;
+            width: 300px;
+        }
+
+            form div div.right input {
+                margin-top: 0;
+                width: 300px;
+                text-align: left;
+            }
+
+        form div input {
+            margin-top: 10px;
+        }
+
+        form div.links {
+            text-align: left;
+            font-size: 9pt;
+        }
+
+            form div.links a {
+                color: #1F7872;
+                text-decoration: none;
+            }
+
+                form div.links a:hover {
+                    color: #72B095;
+                    text-decoration: underline;
+                }
+
+div.error, div.successful {
+    text-align: justify;
+}
