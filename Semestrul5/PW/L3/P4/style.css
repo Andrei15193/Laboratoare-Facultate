@@ -1,0 +1,59 @@
+﻿html
+{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+body
+{
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    position: relative;
+}
+
+div#header
+{
+    height: 100px;
+    background-color: blue;
+}
+
+div#content
+{
+    padding-bottom: 60px;
+    background-color: green;
+}
+
+    div#content ul#menu
+    {
+        float: left;
+        margin: 0;
+        padding: 0;
+        width: 150px;
+        background-color: red;
+    }
+
+        div#content ul#menu li
+        {
+            height: 25px;
+            width: 150px;
+            background-color: orange;
+        }
+
+    div#content div#mainView
+    {
+        padding: 1px;
+        margin-left: 150px;
+        background-color: purple;
+    }
+
+div#footer
+{
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    height: 60px;
+    width: 100%;
+    background-color: yellow;
+}
