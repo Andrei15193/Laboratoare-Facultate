@@ -3,6 +3,7 @@
     margin: 0;
     padding: 0;
     height: 100%;
+    font-family: Arial;
 }
 
 body
@@ -15,14 +16,23 @@ body
 
 div#header
 {
-    height: 100px;
-    background-color: blue;
+    padding: 30px 0 0;
+    height: 70px;
+    background-color: #CA6259;
+    color: wheat;
+    text-align: center;
 }
+
+    div#header h1
+    {
+        margin: 0;
+        font-size: 30pt;
+    }
 
 div#content
 {
     padding-bottom: 60px;
-    background-color: green;
+    background-color: #3D4935;
 }
 
     div#content ul#menu
@@ -38,14 +48,15 @@ div#content
         {
             height: 25px;
             width: 150px;
-            background-color: orange;
+            background-color: #C19E82;
         }
 
     div#content div#mainView
     {
-        padding: 1px;
+        padding: 10px;
         margin-left: 150px;
-        background-color: purple;
+        background-color: wheat;
+        text-indent: 2em;
     }
 
 div#footer
@@ -53,7 +64,10 @@ div#footer
     bottom: 0;
     left: 0;
     position: absolute;
-    height: 60px;
+    padding: 20px 0 10px;
+    height: 30px;
     width: 100%;
-    background-color: yellow;
+    background-color: #969577;
+    color: #E6F1F5;
+    text-align: center;
 }
