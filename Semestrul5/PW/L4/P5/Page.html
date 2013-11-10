@@ -1,0 +1,183 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Laborator4 Programare Web</title>
+    <script>
+        var items = ["ActionScript", "AppleScript", "Asp", "BASIC", "C", "C++", "Clojure", "COBOL", "ColdFusion", "Erlang", "Fortran", "Groovy", "Haskell", "Java", "JavaScript", "Lisp", "Perl", "PHP", "Python", "Ruby", "Scala", "Scheme"];
+        var fileteredItems = null;
+        var selectedIndex = null;
+        var previousText;
+
+        function showList(text) {
+            var valueToSearch = text.toLowerCase().trim();
+
+            if (previousText != valueToSearch) {
+                var options;
+
+                selectedIndex = null;
+                previousText = valueToSearch;
+                if (valueToSearch.length > 0) {
+                    fileteredItems = new Array();
+                    options = "<ul>";
+                    for (var itemIndex = 0; itemIndex < items.length; itemIndex++)
+                        if (items[itemIndex].toLowerCase().indexOf(valueToSearch) == 0) {
+                            options += "<li onclick='selectOption(\"" + items[itemIndex] + "\")'>" + items[itemIndex] + "</li>";
+                            fileteredItems.push(items[itemIndex]);
+                        }
+                    options += "</ul>";
+                }
+                else {
+                    options = "";
+                    fileteredItems = null;
+                }
+
+                document.getElementById("optionList").innerHTML = options;
+            }
+        }
+
+        function showAll() {
+            var options;
+
+            options = "<ul>";
+            for (var itemIndex = 0; itemIndex < items.length; itemIndex++)
+                options += "<li onclick='selectOption(\"" + items[itemIndex] + "\")'>" + items[itemIndex] + "</li>";
+            options += "</ul>";
+
+            document.getElementById("optionList").innerHTML = options;
+        }
+
+        function showWithSelectedIndex() {
+            var options;
+
+            if (fileteredItems != null) {
+                options = "<ul>";
+                for (var itemIndex = 0; itemIndex < fileteredItems.length; itemIndex++)
+                    if (itemIndex == selectedIndex)
+                        options += "<li class=\"selected\" onclick='selectOption(\"" + fileteredItems[itemIndex] + "\")'>" + fileteredItems[itemIndex] + "</li>";
+                    else
+                        options += "<li onclick='selectOption(\"" + fileteredItems[itemIndex] + "\")'>" + fileteredItems[itemIndex] + "</li>";
+                options += "</ul>";
+            }
+            else
+                options = "";
+
+            document.getElementById("optionList").innerHTML = options;
+        }
+
+        function selectOption(text, showList) {
+            previousText = text;
+            document.getElementById("optionText").value = text;
+            fileteredItems = null;
+            selectedIndex = null;
+            showWithSelectedIndex();
+        }
+
+        function keyPressed(keyEvent) {
+            var pressedKeyValue = keyEvent.keyCode;
+
+            if (pressedKeyValue == 27) {
+                fileteredItems = null;
+                selectedIndex = null;
+                showWithSelectedIndex();
+            }
+            else
+                if (fileteredItems != null)
+                    if (pressedKeyValue == 40) {
+                        if (selectedIndex != null)
+                            selectedIndex = (selectedIndex + 1) % fileteredItems.length;
+                        else
+                            selectedIndex = 0;
+                        showWithSelectedIndex();
+                    }
+                    else
+                        if (pressedKeyValue == 38) {
+                            if (selectedIndex != null) {
+                                selectedIndex -= 1;
+                                if (selectedIndex < 0)
+                                    selectedIndex = fileteredItems.length - 1;
+                            }
+                            else
+                                selectedIndex = fileteredItems.length - 1;
+                            showWithSelectedIndex();
+                        }
+                        else
+                            if (pressedKeyValue == 13 && selectedIndex != null) {
+                                previousText = fileteredItems[selectedIndex].toLowerCase().trim();
+                                document.getElementById("optionText").value = fileteredItems[selectedIndex];
+                                document.getElementById("optionList").innerHTML = "";
+                            }
+        }
+
+    </script>
+    <style>
+        body
+        {
+            font-family: Arial;
+        }
+
+        .optionText
+        {
+            height: 15px;
+            color: #000000;
+            width: 200px;
+        }
+
+        div.optionList
+        {
+            position: absolute;
+            background-color: #FFFFFF;
+        }
+
+            div.optionList ul
+            {
+                list-style: none;
+                margin: 0;
+                border: 1px solid black;
+                border-top-width: 0;
+                padding: 0;
+                width: 202px;
+            }
+
+                div.optionList ul li
+                {
+                    color: #666666;
+                    font-size: 10pt;
+                }
+
+                    div.optionList ul li:hover, div.optionList ul li.selected
+                    {
+                        background-color: #FFBE00;
+                        cursor: default;
+                    }
+
+        span.arrow
+        {
+            float: right;
+            background: url('./arrow.png') center no-repeat;
+            width: 21px;
+            height: 21px;
+        }
+
+            span.arrow:hover
+            {
+                background-color: #FFBE00;
+            }
+
+        div.comboBox
+        {
+            width: 229px;
+        }
+    </style>
+</head>
+<body>
+    <div class="comboBox">
+        <input type="text" class="optionText" id="optionText" onkeydown="keyPressed(event)" onkeyup="showList(value)" />
+        <span class="arrow" onkeydown="keyPressed(event)" onclick="showAll()"></span>
+    </div>
+    <div id="optionList" class="optionList">
+    </div>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vulputate posuere rutrum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque semper ante a augue auctor, convallis imperdiet dolor blandit. Sed id imperdiet neque. Duis vel lectus eget metus blandit interdum quis a neque. Sed sollicitudin adipiscing ipsum, eu ornare sem tincidunt sed. Sed rutrum ultricies lacus a pretium. Nullam neque nulla, viverra in mollis eget, vestibulum eu dolor. Nam ultricies faucibus fermentum. Nam nec ipsum vitae tortor placerat mattis. Etiam pharetra felis et mi tempus tempor. Nulla eget enim blandit nulla dictum bibendum eu sit amet ligula.</p>
+</body>
+</html>
