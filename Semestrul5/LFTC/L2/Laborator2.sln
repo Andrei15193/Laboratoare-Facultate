@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Partea1", "Partea1\Partea1.csproj", "{C0A30AEE-A30A-4ABE-9249-F023D4827247}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FFC324E3-26FE-44F8-90AA-1E4FF7BE0AEC}"
+	ProjectSection(SolutionItems) = preProject
+		default.xml = default.xml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C0A30AEE-A30A-4ABE-9249-F023D4827247}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0A30AEE-A30A-4ABE-9249-F023D4827247}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0A30AEE-A30A-4ABE-9249-F023D4827247}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0A30AEE-A30A-4ABE-9249-F023D4827247}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

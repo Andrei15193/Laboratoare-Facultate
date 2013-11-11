@@ -1,0 +1,103 @@
+﻿<Window
+    x:Class="Partea1.MainWindow"
+    x:ClassModifier="internal"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:vm="clr-namespace:Partea1.ViewModels"
+    Title="Lab2.1 LFTC"
+    Height="165"
+    Width="700"
+    MinHeight="165"
+    MinWidth="700">
+    <Window.Resources>
+        <vm:MainViewModel
+            x:Key="MainViewModel" />
+    </Window.Resources>
+    <Grid>
+        <Label
+            Content="Sequence:"
+            HorizontalAlignment="Left"
+            Margin="10,6,0,0"
+            VerticalAlignment="Top"
+            Width="93" />
+        <TextBox
+            Text="{Binding Sequence, Source={StaticResource MainViewModel}}"
+            Height="23"
+            Margin="108,10,66,0"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top" />
+        <CheckBox
+            Content="Valid"
+            Margin="0,12,10,0"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Right"
+            Width="51"
+            IsHitTestVisible="False"
+            IsChecked="{Binding IsSequenceValid, Source={StaticResource MainViewModel}}" />
+        <Label
+            Content="Longest prefix:"
+            HorizontalAlignment="Left"
+            Margin="10,34,0,0"
+            VerticalAlignment="Top"
+            Width="93" />
+        <TextBox
+            Height="23"
+            Margin="108,38,66,0"
+            TextWrapping="Wrap"
+            Text="{Binding LongestPrefix, Source={StaticResource MainViewModel}}"
+            VerticalAlignment="Top" />
+        <Label
+            Content="{Binding DefinitionTitle, Source={StaticResource MainViewModel}}"
+            HorizontalAlignment="Left"
+            Margin="10,66,0,0"
+            VerticalAlignment="Top"
+            Width="93"
+            Height="26" />
+        <TextBlock
+            Text="{Binding Definition, Source={StaticResource MainViewModel}}"
+            Margin="108,71,66,35"
+            TextWrapping="Wrap" />
+        <Button
+            Content="Show alphabet"
+            HorizontalAlignment="Left"
+            Margin="9,0,0,10"
+            VerticalAlignment="Bottom"
+            Width="105"
+            Command="{Binding PostAlphabetCommand, Source={StaticResource MainViewModel}}" />
+        <Button
+            Content="Show all states"
+            HorizontalAlignment="Left"
+            Margin="119,0,0,10"
+            VerticalAlignment="Bottom"
+            Width="105"
+            Command="{Binding PostAllStatesCommand, Source={StaticResource MainViewModel}}" />
+        <Button
+            Content="Show final states"
+            HorizontalAlignment="Left"
+            Margin="229,0,0,10"
+            VerticalAlignment="Bottom"
+            Width="105"
+            Command="{Binding PostFinalStatesCommand, Source={StaticResource MainViewModel}}" />
+        <Button
+            Content="Show transitions"
+            HorizontalAlignment="Left"
+            Margin="339,0,0,10"
+            VerticalAlignment="Bottom"
+            Width="105"
+            Command="{Binding PostTransitionsCommand, Source={StaticResource MainViewModel}}" />
+        <Button
+            Content="Validate"
+            HorizontalAlignment="Left"
+            Margin="449,0,0,10"
+            VerticalAlignment="Bottom"
+            Width="105"
+            Command="{Binding ValidateCommand, Source={StaticResource MainViewModel}}" />
+        <Button
+            Content="Get longest prefix"
+            HorizontalAlignment="Left"
+            Margin="559,0,0,10"
+            VerticalAlignment="Bottom"
+            Width="105"
+            Command="{Binding GetLongestPrefixCommand, Source={StaticResource MainViewModel}}" />
+    </Grid>
+</Window>
