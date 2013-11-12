@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="Partea1.Model.ConstantStateMachine">
+    <Position X="8" Y="7.75" Width="7" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAgAAAAAEAAACAAAAAgADAAAAAA=</HashCode>
+      <FileName>Model\ConstantStateMachine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Partea1.Model.State&lt;T&gt;">
+    <Position X="0.5" Y="3.25" Width="7.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAAAgAAAAAAYEAAAAEAAAAAAACAAAAAA=</HashCode>
+      <FileName>Model\State.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Partea1.Model.StateMachine&lt;T&gt;">
+    <Position X="10" Y="4.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAgAAAAAAAAAGAAAAAAADAAABAA=</HashCode>
+      <FileName>Model\StateMachine.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="InitialState" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="States" />
+      <Property Name="Transitions" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Partea1.Model.Transition&lt;T&gt;">
+    <Position X="8.75" Y="0.5" Width="5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAkAAACAAAAAAAAAAAAgAAAAEAAAAgAAAAAA=</HashCode>
+      <FileName>Model\Transition.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Partea1.Persistence.Xml.XmlConstantStateMachineRepository" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="11.5" Width="6.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Persistence\Xml\XmlConstantStateMachineRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Partea1.ViewModels.MainViewModel" BaseTypeListCollapsed="true">
+    <Position X="16.5" Y="5.5" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>WQABAACAAAQAaABAoAAAIAAAgJAAOAgAAiBAKCMYJIA=</HashCode>
+      <FileName>ViewModels\MainViewModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_stateMachineRepository" />
+      <Field Name="_constantStateMachine" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Partea1.ViewModels.RelayCommand" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="6.75" Width="5.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEACAAQAAECAAAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\RelayCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Partea1.MainWindow" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="9.75" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\MainWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="Partea1.Persistence.Xml.StateMachineSettings">
+    <Position X="8.75" Y="14" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAACAAABAA=</HashCode>
+      <FileName>Persistence\Xml\StateMachineSettings.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="InitialState" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="FinalStates" />
+      <Property Name="Transitions" />
+    </ShowAsCollectionAssociation>
+  </Struct>
+  <Struct Name="Partea1.Persistence.Xml.StateSettings">
+    <Position X="8.75" Y="11.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Persistence\Xml\StateSettings.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Partea1.Persistence.Xml.TranstionSettings">
+    <Position X="8.25" Y="15.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIAAAAEAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Persistence\Xml\TranstionSettings.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Interface Name="Partea1.Persistence.IConstantStateMachineRepository">
+    <Position X="16.75" Y="3.5" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Persistence\IConstantStateMachineRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

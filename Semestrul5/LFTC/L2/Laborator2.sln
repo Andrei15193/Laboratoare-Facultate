@@ -6,6 +6,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FFC324E3-26FE-44F8-90AA-1E4FF7BE0AEC}"
 	ProjectSection(SolutionItems) = preProject
 		default.xml = default.xml
+		documentatieParte1.pdf = documentatieParte1.pdf
+		documentatieParte1.vsdx = documentatieParte1.vsdx
+		system.png = system.png
 	EndProjectSection
 EndProject
 Global
