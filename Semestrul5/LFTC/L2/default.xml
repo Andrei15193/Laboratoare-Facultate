@@ -5,13 +5,13 @@
         <StateSettings Name="decimal" />
         <StateSettings Name="octal1" />
         <StateSettings Name="octal2" />
-        <StateSettings Name="longSufix" />
-        <StateSettings Name="unsignedSufix" />
+        <StateSettings Name="longSufix1" />
+        <StateSettings Name="longSufix2" />
+        <StateSettings Name="unsignedSufix1" />
+        <StateSettings Name="unsignedSufix2" />
         <StateSettings Name="hexa2" />
     </FinalStates>
     <Transitions>
-        <TranstionSettings SourceState="start" DestinationState="minus" TranstitingCharacter="45" />
-
         <TranstionSettings SourceState="start" DestinationState="decimal" TranstitingCharacter="49" />
         <TranstionSettings SourceState="start" DestinationState="decimal" TranstitingCharacter="50" />
         <TranstionSettings SourceState="start" DestinationState="decimal" TranstitingCharacter="51" />
@@ -21,16 +21,6 @@
         <TranstionSettings SourceState="start" DestinationState="decimal" TranstitingCharacter="55" />
         <TranstionSettings SourceState="start" DestinationState="decimal" TranstitingCharacter="56" />
         <TranstionSettings SourceState="start" DestinationState="decimal" TranstitingCharacter="57" />
-
-        <TranstionSettings SourceState="minus" DestinationState="decimal" TranstitingCharacter="49" />
-        <TranstionSettings SourceState="minus" DestinationState="decimal" TranstitingCharacter="50" />
-        <TranstionSettings SourceState="minus" DestinationState="decimal" TranstitingCharacter="51" />
-        <TranstionSettings SourceState="minus" DestinationState="decimal" TranstitingCharacter="52" />
-        <TranstionSettings SourceState="minus" DestinationState="decimal" TranstitingCharacter="53" />
-        <TranstionSettings SourceState="minus" DestinationState="decimal" TranstitingCharacter="54" />
-        <TranstionSettings SourceState="minus" DestinationState="decimal" TranstitingCharacter="55" />
-        <TranstionSettings SourceState="minus" DestinationState="decimal" TranstitingCharacter="56" />
-        <TranstionSettings SourceState="minus" DestinationState="decimal" TranstitingCharacter="57" />
 
         <TranstionSettings SourceState="decimal" DestinationState="decimal" TranstitingCharacter="48" />
         <TranstionSettings SourceState="decimal" DestinationState="decimal" TranstitingCharacter="49" />
@@ -43,17 +33,17 @@
         <TranstionSettings SourceState="decimal" DestinationState="decimal" TranstitingCharacter="56" />
         <TranstionSettings SourceState="decimal" DestinationState="decimal" TranstitingCharacter="57" />
 
-        <TranstionSettings SourceState="decimal" DestinationState="longSufix" TranstitingCharacter="108" />
-        <TranstionSettings SourceState="decimal" DestinationState="longSufix" TranstitingCharacter="76" />
+        <TranstionSettings SourceState="decimal" DestinationState="longSufix1" TranstitingCharacter="108" />
+        <TranstionSettings SourceState="decimal" DestinationState="longSufix1" TranstitingCharacter="76" />
         
-        <TranstionSettings SourceState="longSufix" DestinationState="unsignedSufix" TranstitingCharacter="117" />
-        <TranstionSettings SourceState="longSufix" DestinationState="unsignedSufix" TranstitingCharacter="85" />
+        <TranstionSettings SourceState="longSufix1" DestinationState="unsignedSufix2" TranstitingCharacter="117" />
+        <TranstionSettings SourceState="longSufix1" DestinationState="unsignedSufix2" TranstitingCharacter="85" />
 
-        <TranstionSettings SourceState="decimal" DestinationState="unsignedSufix" TranstitingCharacter="117" />
-        <TranstionSettings SourceState="decimal" DestinationState="unsignedSufix" TranstitingCharacter="85" />
+        <TranstionSettings SourceState="decimal" DestinationState="unsignedSufix1" TranstitingCharacter="117" />
+        <TranstionSettings SourceState="decimal" DestinationState="unsignedSufix1" TranstitingCharacter="85" />
         
-        <TranstionSettings SourceState="unsignedSufix" DestinationState="longSufix" TranstitingCharacter="108" />
-        <TranstionSettings SourceState="unsignedSufix" DestinationState="longSufix" TranstitingCharacter="76" />
+        <TranstionSettings SourceState="unsignedSufix1" DestinationState="longSufix2" TranstitingCharacter="108" />
+        <TranstionSettings SourceState="unsignedSufix1" DestinationState="longSufix2" TranstitingCharacter="76" />
 
         <TranstionSettings SourceState="start" DestinationState="octal1" TranstitingCharacter="48" />
 
@@ -66,17 +56,17 @@
         <TranstionSettings SourceState="octal1" DestinationState="octal2" TranstitingCharacter="54" />
         <TranstionSettings SourceState="octal1" DestinationState="octal2" TranstitingCharacter="55" />
 
-        <TranstionSettings SourceState="octal1" DestinationState="longSufix" TranstitingCharacter="108" />
-        <TranstionSettings SourceState="octal1" DestinationState="longSufix" TranstitingCharacter="76" />
+        <TranstionSettings SourceState="octal1" DestinationState="longSufix1" TranstitingCharacter="108" />
+        <TranstionSettings SourceState="octal1" DestinationState="longSufix1" TranstitingCharacter="76" />
 
-        <TranstionSettings SourceState="octal1" DestinationState="unsignedSufix" TranstitingCharacter="117" />
-        <TranstionSettings SourceState="octal1" DestinationState="unsignedSufix" TranstitingCharacter="85" />
+        <TranstionSettings SourceState="octal1" DestinationState="unsignedSufix1" TranstitingCharacter="117" />
+        <TranstionSettings SourceState="octal1" DestinationState="unsignedSufix1" TranstitingCharacter="85" />
 
-        <TranstionSettings SourceState="octal2" DestinationState="longSufix" TranstitingCharacter="108" />
-        <TranstionSettings SourceState="octal2" DestinationState="longSufix" TranstitingCharacter="76" />
+        <TranstionSettings SourceState="octal2" DestinationState="longSufix1" TranstitingCharacter="108" />
+        <TranstionSettings SourceState="octal2" DestinationState="longSufix1" TranstitingCharacter="76" />
 
-        <TranstionSettings SourceState="octal2" DestinationState="unsignedSufix" TranstitingCharacter="117" />
-        <TranstionSettings SourceState="octal2" DestinationState="unsignedSufix" TranstitingCharacter="85" />
+        <TranstionSettings SourceState="octal2" DestinationState="unsignedSufix1" TranstitingCharacter="117" />
+        <TranstionSettings SourceState="octal2" DestinationState="unsignedSufix1" TranstitingCharacter="85" />
 
         <TranstionSettings SourceState="octal1" DestinationState="hexa1" TranstitingCharacter="120" />
         <TranstionSettings SourceState="octal1" DestinationState="hexa1" TranstitingCharacter="88" />
