@@ -93,5 +93,28 @@
         <TranstionSettings SourceState="hexa1" DestinationState="hexa2" TranstitingCharacter="68" />
         <TranstionSettings SourceState="hexa1" DestinationState="hexa2" TranstitingCharacter="69" />
         <TranstionSettings SourceState="hexa1" DestinationState="hexa2" TranstitingCharacter="70" />
+
+        <TranstionSettings SourceState="hexa2" DestinationState="hexa2" TranstitingCharacter="48" />
+        <TranstionSettings SourceState="hexa2" DestinationState="hexa2" TranstitingCharacter="49" />
+        <TranstionSettings SourceState="hexa2" DestinationState="hexa2" TranstitingCharacter="50" />
+        <TranstionSettings SourceState="hexa2" DestinationState="hexa2" TranstitingCharacter="51" />
+        <TranstionSettings SourceState="hexa2" DestinationState="hexa2" TranstitingCharacter="52" />
+        <TranstionSettings SourceState="hexa2" DestinationState="hexa2" TranstitingCharacter="53" />
+        <TranstionSettings SourceState="hexa2" DestinationState="hexa2" TranstitingCharacter="54" />
+        <TranstionSettings SourceState="hexa2" DestinationState="hexa2" TranstitingCharacter="55" />
+        <TranstionSettings SourceState="hexa2" DestinationState="hexa2" TranstitingCharacter="56" />
+        <TranstionSettings SourceState="hexa2" DestinationState="hexa2" TranstitingCharacter="57" />
+        <TranstionSettings SourceState="hexa2" DestinationState="hexa2" TranstitingCharacter="97" />
+        <TranstionSettings SourceState="hexa2" DestinationState="hexa2" TranstitingCharacter="98" />
+        <TranstionSettings SourceState="hexa2" DestinationState="hexa2" TranstitingCharacter="99" />
+        <TranstionSettings SourceState="hexa2" DestinationState="hexa2" TranstitingCharacter="100" />
+        <TranstionSettings SourceState="hexa2" DestinationState="hexa2" TranstitingCharacter="101" />
+        <TranstionSettings SourceState="hexa2" DestinationState="hexa2" TranstitingCharacter="102" />
+        <TranstionSettings SourceState="hexa2" DestinationState="hexa2" TranstitingCharacter="65" />
+        <TranstionSettings SourceState="hexa2" DestinationState="hexa2" TranstitingCharacter="66" />
+        <TranstionSettings SourceState="hexa2" DestinationState="hexa2" TranstitingCharacter="67" />
+        <TranstionSettings SourceState="hexa2" DestinationState="hexa2" TranstitingCharacter="68" />
+        <TranstionSettings SourceState="hexa2" DestinationState="hexa2" TranstitingCharacter="69" />
+        <TranstionSettings SourceState="hexa2" DestinationState="hexa2" TranstitingCharacter="70" />
     </Transitions>
 </StateMachineSettings>

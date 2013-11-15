@@ -68,19 +68,15 @@ namespace Partea1.Model
 
                 if (sequence.Length > 0)
                 {
-                    do
+                    while (currentIndex < sequence.Length && nextState != null)
                     {
                         currentState = nextState;
-                        if (currentState.IsFinalState)
-                            sequenceLength = currentIndex;
                         nextState = currentState.Transit(sequence[currentIndex]);
                         currentIndex++;
-                    } while (currentIndex < sequence.Length && nextState != null);
-
-                    if (nextState == null)
-                        return sequence.Substring(0, sequenceLength);
-                    else
-                        return sequence;
+                        if (nextState != null && nextState.IsFinalState)
+                            sequenceLength = currentIndex;
+                    }
+                    return sequence.Substring(0, sequenceLength);
                 }
                 else
                     return string.Empty;
