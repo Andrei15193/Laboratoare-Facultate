@@ -1,0 +1,151 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Programare Web Laborator 5</title>
+    <script src="jquery-1.10.2.min.js"></script>
+    <script>
+        var selectedText;
+
+        function getSelectedText()
+        {
+            var text;
+
+            if (window.getSelection)
+                text = window.getSelection().toString().trim();
+            else
+                if (document.selection && document.selection.type == "Text")
+                    text = document.selection.createRange().htmlText.trim();
+
+            if (text && text.match(new RegExp("^\\w+$")).length > 0)
+                return text;
+            else
+                return null;
+        }
+
+        function deselectText()
+        {
+            if (window.getSelection)
+                window.getSelection().removeAllRanges();
+            else
+                if (document.selection)
+                    document.selection.empty();
+        }
+
+        function count(collection, element)
+        {
+            var elementsFound = 0;
+
+            for (var index = 0; index < collection.length; index++)
+                if (element == collection[index])
+                    elementsFound++;
+
+            return elementsFound;
+        }
+
+        $(document).dblclick(function ()
+        {
+            if (selectedText)
+                $("span.textSelectionMatch").replaceWith(selectedText);
+
+            selectedText = getSelectedText();
+            if (selectedText)
+                $("body").html(function (elementIndex, oldHtml)
+                {
+                    var oldHtmlCurrentIndex = 0;
+                    var newHtml = new String();
+                    var replacement = "<span class=\"textSelectionMatch\">" + selectedText + "</span>";
+
+                    while (oldHtmlCurrentIndex < oldHtml.length)
+                    {
+                        var indexOfSelection = oldHtml.indexOf(selectedText, oldHtmlCurrentIndex);
+
+                        if (indexOfSelection != -1)
+                        {
+                            newHtml += oldHtml.substr(oldHtmlCurrentIndex, indexOfSelection - oldHtmlCurrentIndex);
+                            oldHtmlCurrentIndex = (indexOfSelection + selectedText.length);
+                            if (count(newHtml, '<') == count(newHtml, '>')
+                                && (indexOfSelection == 0 || oldHtml.charAt(indexOfSelection - 1).match(new RegExp("\\W")))
+                                && (indexOfSelection + selectedText.length == oldHtml.length || oldHtml.charAt(indexOfSelection + selectedText.length).match(new RegExp("\\W"))))
+                                newHtml += replacement;
+                            else
+                                newHtml += selectedText;
+                        }
+                        else
+                        {
+                            newHtml += oldHtml.substr(oldHtmlCurrentIndex, oldHtml.length - oldHtmlCurrentIndex);
+                            oldHtmlCurrentIndex = oldHtml.length;
+                        }
+                    }
+
+                    return newHtml;
+                });
+
+            deselectText();
+        });
+    </script>
+    <style>
+        body
+        {
+            margin: 30px 20px;
+            background-color: #F0F0F0;
+            font-family: Arial;
+        }
+
+        .textSelectionMatch
+        {
+            color: blue;
+            background-color: yellow;
+        }
+
+        div.forTesting
+        {
+            border: 1px dashed grey;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="forTesting">
+        <h1>For testing</h1>
+        <p>
+            p, h1, text, Text, style
+        </p>
+        <div style="background-color: red">
+            Has style attribute
+        </div>
+    </div>
+    <h1>Generated text</h1>
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vel purus vitae arcu blandit blandit. Maecenas neque enim, porttitor posuere ligula nec, consectetur tincidunt leo. Ut luctus justo nec risus cursus, eget accumsan ante venenatis. Nam sollicitudin scelerisque justo. Proin cursus nunc eget cursus porta. Proin ultricies enim ipsum, quis faucibus eros semper in. Sed convallis dolor ipsum, ac pellentesque lectus tristique a. Morbi consectetur mauris nec faucibus mollis. Mauris posuere vel ligula vel vestibulum. 
+    </p>
+    <p>
+        Ut consequat arcu sit amet dui congue, non malesuada dui pretium. Morbi est enim, malesuada sit amet dolor commodo, suscipit dapibus sem. Donec pharetra sapien nec ipsum vehicula, et adipiscing augue gravida. Nullam dignissim nisi sed nibh vestibulum, quis dictum neque pulvinar. Maecenas non ipsum sapien. Donec et tincidunt nibh, vel sollicitudin velit. Praesent non erat et magna fringilla faucibus. Cras nunc justo, condimentum ut fermentum quis, condimentum vel massa. Vestibulum sed mattis eros. In dignissim nisi libero, id lacinia odio sodales pellentesque. Proin pretium fringilla mauris, semper suscipit velit porta in. Quisque eleifend nisl in augue congue, sed malesuada arcu interdum. Duis auctor nulla at nisi ultrices ultrices. 
+    </p>
+    <p>
+        In rutrum, quam vel convallis lobortis, lacus nunc congue est, vel suscipit orci purus vitae est. Donec et eros at est laoreet consectetur. Nunc vitae quam sit amet est pellentesque gravida vitae ut ipsum. Aenean tincidunt, turpis non hendrerit dapibus, justo lacus eleifend elit, nec ultrices diam augue a velit. Nulla dui sem, congue eu venenatis eget, placerat vel mauris. Morbi luctus arcu dictum magna volutpat pretium. Nullam eu facilisis massa. Integer ut diam eu mauris rutrum ornare. Etiam a eros porttitor, tincidunt lectus vel, convallis libero. Ut pulvinar sapien vestibulum condimentum sodales. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque fringilla velit nec urna adipiscing, ut luctus lectus ultrices. 
+    </p>
+    <p>
+        Donec et enim fermentum, convallis dui sed, convallis odio. Nunc in nisi mi. Ut dapibus quis velit ac consequat. Maecenas dictum sed lorem sit amet bibendum. In nibh lorem, fermentum et porttitor vitae, molestie quis elit. Aliquam condimentum eget turpis ac condimentum. Aliquam suscipit gravida sapien, nec pretium felis eleifend accumsan. Cras sollicitudin nibh at aliquet ornare. In lectus leo, eleifend id lorem in, rhoncus ultricies sapien. Nunc augue turpis, elementum nec congue ac, ultrices sit amet ante. Sed est nisi, feugiat et odio a, pharetra aliquet mauris. Integer a purus elit. Ut eleifend dolor a nisl blandit, vulputate fermentum ligula porttitor. 
+    </p>
+    <p>
+        Integer sollicitudin neque et augue blandit, non venenatis nisl pretium. Pellentesque sodales mauris a neque interdum, in tempor ligula consectetur. Maecenas dictum, nisi at iaculis interdum, nunc quam aliquam nisl, quis semper risus lorem id nisi. Quisque vulputate arcu ac lorem sodales vestibulum. Nullam placerat tortor at vehicula porttitor. Donec nibh leo, pharetra sed viverra eu, pulvinar at mi. Ut cursus leo eget hendrerit ultricies. Donec posuere lorem sit amet diam vehicula, non commodo nibh tempus. Phasellus ipsum risus, hendrerit vel consequat et, sagittis lobortis dui. Integer massa est, condimentum sit amet nibh non, mollis suscipit metus. Vestibulum eleifend malesuada mi at vehicula. 
+    </p>
+    <p>
+        Donec lobortis facilisis sodales. Proin a justo gravida, placerat ligula congue, suscipit libero. Morbi tempor vestibulum hendrerit. Vivamus at est pretium, auctor quam ut, elementum nunc. Sed tempor lectus orci, non convallis velit tempor at. Nullam nec eros a elit dapibus faucibus vel in mi. Etiam diam nisl, accumsan non laoreet et, ultricies sit amet velit. Aliquam sodales arcu justo, tempor facilisis ante feugiat vel. Cras consequat ipsum ac scelerisque pharetra. Ut a magna id odio accumsan ultricies. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam ac risus sollicitudin, euismod ligula sit amet, laoreet nunc. Nullam et egestas turpis. In at nibh ut nisi lacinia laoreet sed porta ante. 
+    </p>
+    <p>
+        Interdum et malesuada fames ac ante ipsum primis in faucibus. Curabitur cursus, urna at venenatis pharetra, nibh tellus sagittis massa, non tristique sem tellus et enim. Nunc vel fermentum urna. Nam eu volutpat metus. Proin eget metus ligula. Morbi faucibus varius eros. Cras eu mauris rhoncus, pulvinar turpis ut, tempor orci. 
+    </p>
+    <p>
+        Etiam eleifend dui vitae libero lacinia sollicitudin. Mauris pellentesque metus non lectus dapibus, non adipiscing odio facilisis. In suscipit quis libero sed dignissim. Integer a arcu ac mi vulputate malesuada ut id mi. Suspendisse metus libero, consectetur quis adipiscing eu, lobortis sit amet enim. Nullam eget pharetra mauris. Curabitur ante orci, auctor in tempor vitae, faucibus convallis ipsum. 
+    </p>
+    <p>
+        Maecenas varius, nisl a vestibulum condimentum, neque nisl vehicula lorem, nec mollis enim quam quis nulla. Nunc adipiscing nisi sit amet dui rhoncus, non sodales enim ornare. Sed fermentum orci in ligula mollis, id consectetur ipsum cursus. Curabitur molestie eu ligula vitae luctus. Sed lacus mi, tempor non aliquam vitae, porta sit amet libero. Vestibulum venenatis vestibulum odio, eget gravida lectus. Curabitur velit tellus, blandit et hendrerit vel, cursus eget arcu. Cras volutpat ornare magna, sed pulvinar tellus congue quis. Morbi in est a nulla mollis tempus nec sit amet turpis. Sed pellentesque eros vitae odio aliquet consequat. Sed eleifend porttitor purus dapibus posuere. Morbi bibendum sapien diam, non malesuada arcu venenatis aliquam. Nulla vulputate justo in urna viverra mattis. 
+    </p>
+    <p>
+        Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis sapien massa, vehicula vel consequat ut, aliquam in magna. In nec sagittis ipsum. Aliquam tempor quis augue sit amet convallis. Maecenas ultricies magna ut sem aliquet mollis. Proin aliquam eget lectus id laoreet. In hac habitasse platea dictumst. Aliquam blandit lorem at dapibus sodales. Nam ornare nisl pretium lorem ullamcorper, a volutpat ante facilisis. Vivamus quis semper erat, et dictum purus. Ut sed vestibulum felis. Aenean nec lectus non tortor ultrices cursus aliquam eget dolor. Phasellus sed diam vitae erat posuere rhoncus. Curabitur ornare posuere turpis, nec suscipit tellus dignissim in. Aliquam erat volutpat. Nullam eleifend ac felis et interdum. 
+    </p>
+</body>
+</html>

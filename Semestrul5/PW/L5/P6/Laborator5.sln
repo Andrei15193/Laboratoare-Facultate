@@ -1,0 +1,14 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{207F9AAF-0017-4DF5-93D2-41E63F03A2E8}"
+	ProjectSection(SolutionItems) = preProject
+		jquery-1.10.2.min.js = jquery-1.10.2.min.js
+		Page.html = Page.html
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
