@@ -8,6 +8,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		default.xml = default.xml
 		documentatieParte1.pdf = documentatieParte1.pdf
 		documentatieParte1.vsdx = documentatieParte1.vsdx
+		documentatiePartea2.pdf = documentatiePartea2.pdf
 		system.png = system.png
 	EndProjectSection
 EndProject
