@@ -57,6 +57,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="DataAccess\IPurchasesRepository.cs" />
+    <Compile Include="DataAccess\IPersonsRepository.cs" />
+    <Compile Include="DataAccess\PurchasesRepository.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\Currency.cs" />
     <Compile Include="Model\Income.cs" />
@@ -100,7 +103,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DataAccess\" />
     <Folder Include="ViewModels\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
