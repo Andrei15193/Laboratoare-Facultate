@@ -1408,7 +1408,7 @@ namespace FamilyExpenses.ViewModels
                 if (personInfo != null)
                 {
                     XmlDocument xmlDocument = new XmlDocument();
-                    XmlNode rootXmlNode = xmlDocument.CreateElement("familyExpenses");
+                    XmlNode rootXmlNode = xmlDocument.CreateElement("FamilyExpenses");
                     XmlNode personsXmlNode = xmlDocument.CreateElement("Persons");
                     XmlNode personNameXmlNode = xmlDocument.CreateElement("name");
                     XmlNode personPreferedCurrencyXmlNode = xmlDocument.CreateElement("preferedCurrency");
@@ -1422,7 +1422,7 @@ namespace FamilyExpenses.ViewModels
                     rootXmlNode.AppendChild(personsXmlNode);
                     xmlDocument.AppendChild(rootXmlNode);
                     xmlDocument.Validate(null);
-                    xmlDocument.Save(XmlWriter.Create(personInfo.Item1 + ".xml", _xmlSettings));
+                    xmlDocument.Save(personInfo.Item1 + ".xml");
                     _loginCommand.Execute(personInfo.Item1);
                 }
             });
