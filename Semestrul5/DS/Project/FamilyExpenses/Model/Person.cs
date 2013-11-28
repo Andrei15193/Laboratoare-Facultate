@@ -19,7 +19,7 @@ namespace FamilyExpenses.Model
                 throw new ArgumentNullException("name");
         }
 
-        Currency PreferedCurrency
+        public Currency PreferedCurrency
         {
             get;
             set;

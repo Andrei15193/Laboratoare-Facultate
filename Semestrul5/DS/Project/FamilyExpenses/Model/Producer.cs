@@ -13,8 +13,8 @@ namespace FamilyExpenses.Model
                         if (!string.IsNullOrEmpty(country)
                             && !string.IsNullOrWhiteSpace(country))
                         {
-                            _name = name;
-                            _country = country;
+                            _name = name.Trim();
+                            _country = country.Trim();
                         }
                         else
                             throw new ArgumentException("Cannot be empty or whitespace only!", "country");

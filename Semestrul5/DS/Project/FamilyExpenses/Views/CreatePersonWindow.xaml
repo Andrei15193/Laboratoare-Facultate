@@ -1,0 +1,113 @@
+﻿<Window
+    x:Class="FamilyExpenses.Views.CreatePersonWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:validators="clr-namespace:FamilyExpenses.ViewModels.ValidationRules"
+    xmlns:covnerters="clr-namespace:FamilyExpenses.ViewModels.Converters"
+    Title="New person"
+    Height="138.534"
+    Width="306"
+    ResizeMode="NoResize"
+    FocusManager.FocusedElement="{Binding ElementName=personNameTextBox}">
+    <Window.Resources>
+        <covnerters:PersonInfoConverter
+            x:Key="PersonInfoConverter" />
+    </Window.Resources>
+    <Grid>
+        <Label
+            Content="Name:"
+            HorizontalAlignment="Left"
+            Margin="10,10,0,0"
+            VerticalAlignment="Top" />
+        <Label
+            Content="Prefered currency:"
+            HorizontalAlignment="Left"
+            Margin="10,39,0,0"
+            VerticalAlignment="Top" />
+        <Grid
+            Height="74"
+            Margin="121,14,7,0"
+            VerticalAlignment="Top">
+            <TextBox
+                Name="personNameTextBox"
+                Height="22"
+                VerticalAlignment="Top">
+                <TextBox.Text>
+                    <Binding
+                        Path="Text"
+                        ElementName="personNameTextBox">
+                        <Binding.ValidationRules>
+                            <validators:CheckFileValidator
+                                CheckOptions="CheckNotExists"
+                                ErrorMessage="Person already exists!"
+                                FileExtension=".xml"
+                                ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+                <TextBox.Style>
+                    <Style
+                        TargetType="{x:Type TextBox}">
+                        <Style.Triggers>
+                            <Trigger
+                                Property="Validation.HasError"
+                                Value="True">
+                                <Setter
+                                    Property="ToolTip"
+                                    Value="{Binding ElementName=personNameTextBox, Path=(Validation.Errors)[0].ErrorContent}" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+            <ComboBox
+                x:Name="preferedCurrencyComboBox"
+                Margin="0,27,0,0"
+                VerticalAlignment="Top"
+                SelectedIndex="0"
+                ItemsSource="{Binding CurrencyValues, Source={StaticResource MainViewModel}}" />
+            <Button
+                Content="Create"
+                VerticalAlignment="Top"
+                IsDefault="True"
+                HorizontalAlignment="Left"
+                Width="75"
+                Margin="0,54,0,0"
+                Click="_CreateButtonClick"
+                Command="{Binding CreatePersonCommand, Source={StaticResource MainViewModel}}">
+                <Button.CommandParameter>
+                    <MultiBinding
+                        Converter="{StaticResource PersonInfoConverter}">
+                        <Binding
+                            Path="Text"
+                            ElementName="personNameTextBox" />
+                        <Binding
+                            Path="SelectedItem"
+                            ElementName="preferedCurrencyComboBox" />
+                    </MultiBinding>
+                </Button.CommandParameter>
+                <Button.Style>
+                    <Style
+                        TargetType="{x:Type Button}">
+                        <Style.Triggers>
+                            <DataTrigger
+                                Binding="{Binding ElementName=personNameTextBox, Path=(Validation.HasError)}"
+                                Value="True">
+                                <Setter
+                                    Property="IsEnabled"
+                                    Value="False" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button
+                Content="Cancel"
+                VerticalAlignment="Top"
+                IsCancel="True"
+                HorizontalAlignment="Left"
+                Width="75"
+                Margin="80,54,0,0" />
+        </Grid>
+    </Grid>
+</Window>

@@ -8,7 +8,7 @@ namespace FamilyExpenses.Model
         {
             if (name != null)
                 if (!string.IsNullOrEmpty(name)
-                    && string.IsNullOrWhiteSpace(name))
+                    && !string.IsNullOrWhiteSpace(name))
                     if (address != null)
                     {
                         _name = name;
@@ -39,7 +39,7 @@ namespace FamilyExpenses.Model
             {
                 if (value != null)
                     if (!string.IsNullOrEmpty(value)
-                        && string.IsNullOrWhiteSpace(value))
+                        && !string.IsNullOrWhiteSpace(value))
                         _name = value;
                     else
                         throw new ArgumentException("Cannot be empty or whitespace only!", "Name");
@@ -61,6 +61,11 @@ namespace FamilyExpenses.Model
                 else
                     throw new ArgumentNullException("Address");
             }
+        }
+
+        public override string ToString()
+        {
+            return _name + " on " + _address.Street + ", " + _address.City;
         }
 
         private string _name;

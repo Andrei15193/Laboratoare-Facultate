@@ -1,37 +1,89 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using FamilyExpenses.DataAccess;
+using FamilyExpenses.Model;
+using FamilyExpenses.ViewModels;
 
 namespace FamilyExpenses.Views
 {
-    public partial class MainWindow
+    internal partial class MainWindow
         : Window
     {
         public MainWindow()
         {
+            Loaded += delegate
+            {
+                _applyFilterCommand = ((MainViewModel)FindResource("MainViewModel")).ApplyFliterCommand;
+                _applyFilterCommand.CanExecuteChanged += delegate
+                {
+                    _applyFilterCommandCanExecute = _applyFilterCommand.CanExecute(_filtersTreeView.SelectedItem);
+                };
+                _applyFilterCommandCanExecute = _applyFilterCommand.CanExecute(_filtersTreeView.SelectedItem);
+
+                _removePurchaseCommand = ((MainViewModel)FindResource("MainViewModel")).RemovePurchaseCommand;
+                _removePurchaseCommand.CanExecuteChanged += delegate
+                {
+                    ((MainViewModel)FindResource("MainViewModel")).SelectedPurchase = _purchasesListView.SelectedItem as Purchase;
+                    _removePurchaseCommandCanExecute = _removePurchaseCommand.CanExecute(null);
+                };
+                ((MainViewModel)FindResource("MainViewModel")).SelectedPurchase = _purchasesListView.SelectedItem as Purchase;
+                _removePurchaseCommandCanExecute = _removePurchaseCommand.CanExecute(null);
+            };
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void _LoginMenuItemClick(object sender, RoutedEventArgs e)
         {
-            new PurchasesRepository().Import();
+            new LoginWindow().ShowDialog();
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void _FiltersTreeViewSelectionChanged(object sender, RoutedEventArgs e)
         {
-            new PurchasesRepository().Export();
+            if (_applyFilterCommandCanExecute)
+                _applyFilterCommand.Execute(_filtersTreeView.SelectedItem);
         }
+
+        private void _PurchsesSelectionChangedListView(object sender, RoutedEventArgs e)
+        {
+            if (_purchasesListView.SelectedItem == null)
+            {
+                _modifyPurchaseMenuItem.IsEnabled = false;
+                _deletePurchaseMenuItem.IsEnabled = false;
+            }
+            else
+            {
+                _modifyPurchaseMenuItem.IsEnabled = true;
+                _deletePurchaseMenuItem.IsEnabled = true;
+            }
+        }
+
+        private void _CreateNewPurchaseMenuItemClick(object sender, RoutedEventArgs e)
+        {
+            new CreatePurchaseWindow().ShowDialog();
+        }
+
+        private void _ModifyPurchaseMenuItemClick(object sender, RoutedEventArgs e)
+        {
+            new ModifyPurchaseWindow(_purchasesListView.SelectedItem as Purchase).ShowDialog();
+        }
+
+        private void _PurchasesListViewDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (_purchasesListView.SelectedItem != null)
+                _ModifyPurchaseMenuItemClick(sender, e);
+        }
+
+        private void _DeletePurchaseMenuItemClick(object sender, RoutedEventArgs e)
+        {
+            if (_removePurchaseCommandCanExecute)
+            {
+                ((MainViewModel)FindResource("MainViewModel")).SelectedPurchase = _purchasesListView.SelectedItem as Purchase;
+                _removePurchaseCommand.Execute(null);
+            }
+        }
+
+        private bool _applyFilterCommandCanExecute;
+        private bool _removePurchaseCommandCanExecute;
+        private ICommand _applyFilterCommand;
+        private ICommand _removePurchaseCommand;
     }
 }

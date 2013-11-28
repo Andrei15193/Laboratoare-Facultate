@@ -44,6 +44,7 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Xml.Serialization" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -53,13 +54,54 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModels\Converters\AddressInfoConverter.cs" />
+    <Compile Include="ViewModels\Converters\ProducerInfoConverter.cs" />
+    <Compile Include="ViewModels\Converters\ProductInfoConverter.cs" />
+    <Compile Include="ViewModels\Converters\PurchaseInfoConverter.cs" />
+    <Compile Include="ViewModels\Converters\ShopInfoConverter.cs" />
+    <Compile Include="ViewModels\ValidationRules\ConstantValueValidator.cs" />
+    <Compile Include="ViewModels\ValidationRules\ProducerNameNotContainedValidator.cs" />
+    <Compile Include="ViewModels\ValidationRules\RegexValidator.cs" />
+    <Compile Include="Views\CreateAddressWindow.xaml.cs">
+      <DependentUpon>CreateAddressWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CreateProducerWindow.xaml.cs">
+      <DependentUpon>CreateProducerWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CreateProductWindow.xaml.cs">
+      <DependentUpon>CreateProductWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ModifyPurchaseWindow.xaml.cs">
+      <DependentUpon>ModifyPurchaseWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Views\CreateAddressWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CreatePersonWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CreateProducerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CreatePurchaseWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CreateShopWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LoginWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="DataAccess\IPurchasesRepository.cs" />
-    <Compile Include="DataAccess\IPersonsRepository.cs" />
-    <Compile Include="DataAccess\PurchasesRepository.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\Currency.cs" />
     <Compile Include="Model\Income.cs" />
@@ -70,10 +112,37 @@
     <Compile Include="Model\Purchase.cs" />
     <Compile Include="Model\Shop.cs" />
     <Compile Include="Model\ShopType.cs" />
+    <Compile Include="ViewModels\Converters\PersonInfoConverter.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\RelayCommand.cs" />
+    <Compile Include="ViewModels\SelectorTreeNode.cs" />
+    <Compile Include="ViewModels\TreeNode.cs" />
+    <Compile Include="ViewModels\ValidationRules\CheckFileValidator.cs" />
+    <Compile Include="ViewModels\ValidationRules\FileCheckOptions.cs" />
+    <Compile Include="Views\CreatePersonWindow.xaml.cs">
+      <DependentUpon>CreatePersonWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CreatePurchaseWindow.xaml.cs">
+      <DependentUpon>CreatePurchaseWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CreateShopWindow.xaml.cs">
+      <DependentUpon>CreateShopWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\CreateProductWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ModifyPurchaseWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -102,9 +171,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

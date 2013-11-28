@@ -1,0 +1,396 @@
+﻿<Window
+    x:Class="FamilyExpenses.Views.CreatePurchaseWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:validators="clr-namespace:FamilyExpenses.ViewModels.ValidationRules"
+    xmlns:covnerters="clr-namespace:FamilyExpenses.ViewModels.Converters"
+    Title="New purchase"
+    Height="226"
+    Width="432"
+    ResizeMode="NoResize">
+    <Window.Resources>
+        <covnerters:PurchaseInfoConverter
+            x:Key="PurchaseInfoConverter" />
+    </Window.Resources>
+    <Grid>
+        <Label
+            Content="Price:"
+            HorizontalAlignment="Left"
+            Margin="10,11,0,0"
+            VerticalAlignment="Top" />
+        <TextBox
+            Name="_priceTextBox"
+            HorizontalAlignment="Left"
+            Height="23"
+            Margin="110,15,0,0"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            Width="193">
+            <TextBox.Text>
+                <Binding
+                    Path="Text"
+                    ElementName="_priceTextBox">
+                    <Binding.ValidationRules>
+                        <validators:RegexValidator
+                            RegexPattern="^ *\d+ *$"
+                            ErrorMessage="Price must be numeric!"
+                            ValidatesOnTargetUpdated="True" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+            <TextBox.Style>
+                <Style
+                    TargetType="{x:Type TextBox}">
+                    <Style.Triggers>
+                        <Trigger
+                            Property="Validation.HasError"
+                            Value="True">
+                            <Setter
+                                Property="ToolTip"
+                                Value="{Binding ElementName=_priceTextBox, Path=(Validation.Errors)[0].ErrorContent}" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+        <TextBox
+            Name="_quantityTextBox"
+            HorizontalAlignment="Left"
+            Height="23"
+            Margin="110,43,0,0"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            Width="193">
+            <TextBox.Text>
+                <Binding
+                    Path="Text"
+                    ElementName="_quantityTextBox">
+                    <Binding.ValidationRules>
+                        <validators:RegexValidator
+                            RegexPattern="^ *[1-9]\d* *$"
+                            ErrorMessage="Quantity must be a strictly positive number!"
+                            ValidatesOnTargetUpdated="True" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+            <TextBox.Style>
+                <Style
+                    TargetType="{x:Type TextBox}">
+                    <Style.Triggers>
+                        <Trigger
+                            Property="Validation.HasError"
+                            Value="True">
+                            <Setter
+                                Property="ToolTip"
+                                Value="{Binding ElementName=_quantityTextBox, Path=(Validation.Errors)[0].ErrorContent}" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+        <DatePicker
+            Name="_datePurchasedDatePicker"
+            HorizontalAlignment="Left"
+            Margin="110,71,0,0"
+            VerticalAlignment="Top"
+            Width="193">
+            <DatePicker.Text>
+                <Binding
+                    Path="Text"
+                    ElementName="_datePurchasedDatePicker">
+                    <Binding.ValidationRules>
+                        <validators:RegexValidator
+                            RegexPattern=".+"
+                            ErrorMessage="Must provide a date!"
+                            ValidatesOnTargetUpdated="True" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </DatePicker.Text>
+            <DatePicker.Style>
+                <Style
+                    TargetType="{x:Type DatePicker}">
+                    <Style.Triggers>
+                        <Trigger
+                            Property="Validation.HasError"
+                            Value="True">
+                            <Setter
+                                Property="ToolTip"
+                                Value="{Binding ElementName=_datePurchasedDatePicker, Path=(Validation.Errors)[0].ErrorContent}" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DatePicker.Style>
+        </DatePicker>
+        <TextBox
+            Name="_hoursTextBox"
+            HorizontalAlignment="Left"
+            Height="23"
+            Margin="312,71,0,0"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            Width="39">
+            <TextBox.Text>
+                <Binding
+                    Path="Text"
+                    ElementName="_hoursTextBox">
+                    <Binding.ValidationRules>
+                        <validators:RegexValidator
+                            RegexPattern="^([0-1]?[0-9]|2[0-3])$"
+                            ErrorMessage="Must provide a value between 0 and 23!"
+                            ValidatesOnTargetUpdated="True" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+            <TextBox.Style>
+                <Style
+                    TargetType="{x:Type TextBox}">
+                    <Style.Triggers>
+                        <Trigger
+                            Property="Validation.HasError"
+                            Value="True">
+                            <Setter
+                                Property="ToolTip"
+                                Value="{Binding ElementName=_hoursTextBox, Path=(Validation.Errors)[0].ErrorContent}" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+        <TextBox
+            Name="_minutesTextBox"
+            HorizontalAlignment="Left"
+            Height="23"
+            Margin="362,71,0,0"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            Width="39">
+            <TextBox.Text>
+                <Binding
+                    Path="Text"
+                    ElementName="_minutesTextBox">
+                    <Binding.ValidationRules>
+                        <validators:RegexValidator
+                            RegexPattern="^[0-5]?[0-9]$"
+                            ErrorMessage="Must provide a value between 0 and 59!"
+                            ValidatesOnTargetUpdated="True" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+            <TextBox.Style>
+                <Style
+                    TargetType="{x:Type TextBox}">
+                    <Style.Triggers>
+                        <Trigger
+                            Property="Validation.HasError"
+                            Value="True">
+                            <Setter
+                                Property="ToolTip"
+                                Value="{Binding ElementName=_minutesTextBox, Path=(Validation.Errors)[0].ErrorContent}" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+        <Label
+            Padding="0"
+            Content=":"
+            HorizontalAlignment="Left"
+            Margin="355,72,0,0"
+            VerticalAlignment="Top"
+            Width="7" />
+        <Label
+            Content="Quantity:"
+            HorizontalAlignment="Left"
+            Margin="10,39,0,0"
+            VerticalAlignment="Top" />
+        <TextBlock
+            HorizontalAlignment="Left"
+            Margin="311,15,0,0"
+            TextWrapping="Wrap"
+            Text="{Binding LoggedinPerson.PreferedCurrency, Source={StaticResource MainViewModel}}"
+            VerticalAlignment="Top"
+            Width="74" />
+        <Label
+            Content="Date purchased:"
+            HorizontalAlignment="Left"
+            Margin="10,67,0,0"
+            VerticalAlignment="Top" />
+        <ComboBox
+            Name="_productComboBox"
+            HorizontalAlignment="Left"
+            Margin="110,100,0,0"
+            VerticalAlignment="Top"
+            Width="193"
+            ItemsSource="{Binding AllProducts, Source={StaticResource MainViewModel}}">
+            <ComboBox.SelectedValue>
+                <Binding
+                    Path="SelectedValue"
+                    ElementName="_productComboBox"
+                    UpdateSourceTrigger="LostFocus">
+                    <Binding.ValidationRules>
+                        <validators:ConstantValueValidator
+                            ErrorWhenEqual="True"
+                            ErrorMessage="A product must be selected!"
+                            ValidatesOnTargetUpdated="True" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </ComboBox.SelectedValue>
+            <ComboBox.Style>
+                <Style
+                    TargetType="{x:Type ComboBox}">
+                    <Style.Triggers>
+                        <Trigger
+                            Property="Validation.HasError"
+                            Value="True">
+                            <Setter
+                                Property="ToolTip"
+                                Value="{Binding ElementName=_productComboBox, Path=(Validation.Errors)[0].ErrorContent}" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ComboBox.Style>
+        </ComboBox>
+        <Label
+            Content="Product:"
+            HorizontalAlignment="Left"
+            Margin="10,96,0,0"
+            VerticalAlignment="Top" />
+        <Label
+            Content="Shop:"
+            HorizontalAlignment="Left"
+            Margin="10,123,0,0"
+            VerticalAlignment="Top" />
+        <ComboBox
+            Name="_shopComboBox"
+            HorizontalAlignment="Left"
+            Margin="110,127,0,0"
+            VerticalAlignment="Top"
+            Width="193"
+            ItemsSource="{Binding AllShops, Source={StaticResource MainViewModel}}">
+            <ComboBox.SelectedValue>
+                <Binding
+                    Path="SelectedValue"
+                    ElementName="_shopComboBox"
+                    UpdateSourceTrigger="LostFocus">
+                    <Binding.ValidationRules>
+                        <validators:ConstantValueValidator
+                            ErrorWhenEqual="True"
+                            ErrorMessage="A shop must be selected!"
+                            ValidatesOnTargetUpdated="True" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </ComboBox.SelectedValue>
+            <ComboBox.Style>
+                <Style
+                    TargetType="{x:Type ComboBox}">
+                    <Style.Triggers>
+                        <Trigger
+                            Property="Validation.HasError"
+                            Value="True">
+                            <Setter
+                                Property="ToolTip"
+                                Value="{Binding ElementName=_shopComboBox, Path=(Validation.Errors)[0].ErrorContent}" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ComboBox.Style>
+        </ComboBox>
+        <Button
+            Content="Add"
+            HorizontalAlignment="Left"
+            Margin="110,154,0,0"
+            VerticalAlignment="Top"
+            Width="75"
+            IsDefault="True"
+            Click="_AddPurachseButtonClick"
+            Command="{Binding AddPurchaseCommand, Source={StaticResource MainViewModel}}">
+            <Button.CommandParameter>
+                <MultiBinding
+                    Converter="{StaticResource PurchaseInfoConverter}">
+                    <Binding
+                        Path="Text"
+                        ElementName="_priceTextBox" />
+                    <Binding
+                        Path="Text"
+                        ElementName="_quantityTextBox" />
+                    <Binding
+                        Path="Text"
+                        ElementName="_datePurchasedDatePicker" />
+                    <Binding
+                        Path="Text"
+                        ElementName="_hoursTextBox" />
+                    <Binding
+                        Path="Text"
+                        ElementName="_minutesTextBox" />
+                    <Binding
+                        Path="SelectedItem"
+                        ElementName="_productComboBox" />
+                    <Binding
+                        Path="SelectedItem"
+                        ElementName="_shopComboBox" />
+                </MultiBinding>
+            </Button.CommandParameter>
+            <Button.Style>
+                <Style
+                    TargetType="{x:Type Button}">
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition
+                                    Binding="{Binding ElementName=_priceTextBox, Path=(Validation.HasError)}"
+                                    Value="False" />
+                                <Condition
+                                    Binding="{Binding ElementName=_quantityTextBox, Path=(Validation.HasError)}"
+                                    Value="False" />
+                                <Condition
+                                    Binding="{Binding ElementName=_datePurchasedDatePicker, Path=(Validation.HasError)}"
+                                    Value="False" />
+                                <Condition
+                                    Binding="{Binding ElementName=_hoursTextBox, Path=(Validation.HasError)}"
+                                    Value="False" />
+                                <Condition
+                                    Binding="{Binding ElementName=_minutesTextBox, Path=(Validation.HasError)}"
+                                    Value="False" />
+                                <Condition
+                                    Binding="{Binding ElementName=_productComboBox, Path=(Validation.HasError)}"
+                                    Value="False" />
+                                <Condition
+                                    Binding="{Binding ElementName=_shopComboBox, Path=(Validation.HasError)}"
+                                    Value="False" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter
+                                Property="IsEnabled"
+                                Value="True" />
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                    <Setter
+                        Property="IsEnabled"
+                        Value="False" />
+                </Style>
+            </Button.Style>
+        </Button>
+        <Button
+            Content="Cancel"
+            HorizontalAlignment="Left"
+            Margin="190,154,0,0"
+            VerticalAlignment="Top"
+            Width="75"
+            IsCancel="True" />
+        <Button
+            Content="New product"
+            HorizontalAlignment="Left"
+            Margin="312,100,0,0"
+            VerticalAlignment="Top"
+            Width="89"
+            Click="_NewProductButtonClick"
+            Height="22" />
+        <Button
+            Content="New shop"
+            HorizontalAlignment="Left"
+            Margin="312,127,0,0"
+            VerticalAlignment="Top"
+            Width="89"
+            Height="22"
+            Click="_CreateShopButtonClick" />
+    </Grid>
+</Window>

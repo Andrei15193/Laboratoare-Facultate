@@ -8,16 +8,16 @@ namespace FamilyExpenses.Model
         {
             if (street != null)
                 if (!string.IsNullOrEmpty(street)
-                    && string.IsNullOrWhiteSpace(street))
+                    && !string.IsNullOrWhiteSpace(street))
                     if (city != null)
                         if (!string.IsNullOrEmpty(city)
-                            && string.IsNullOrWhiteSpace(city))
+                            && !string.IsNullOrWhiteSpace(city))
                             if (county != null)
                                 if (!string.IsNullOrEmpty(county)
-                                    && string.IsNullOrWhiteSpace(county))
+                                    && !string.IsNullOrWhiteSpace(county))
                                     if (country != null)
                                         if (!string.IsNullOrEmpty(country)
-                                            && string.IsNullOrWhiteSpace(country))
+                                            && !string.IsNullOrWhiteSpace(country))
                                         {
                                             _street = street;
                                             _city = city;
@@ -52,7 +52,7 @@ namespace FamilyExpenses.Model
             {
                 if (value != null)
                     if (!string.IsNullOrEmpty(value)
-                        && string.IsNullOrWhiteSpace(value))
+                        && !string.IsNullOrWhiteSpace(value))
                         _street = value;
                     else
                         throw new ArgumentException("Cannot be empty or whitespace only!", "street");
@@ -65,13 +65,13 @@ namespace FamilyExpenses.Model
         {
             get
             {
-                return _street;
+                return _city;
             }
             set
             {
                 if (value != null)
                     if (!string.IsNullOrEmpty(value)
-                        && string.IsNullOrWhiteSpace(value))
+                        && !string.IsNullOrWhiteSpace(value))
                         _city = value;
                     else
                         throw new ArgumentException("Cannot be empty or whitespace only!", "City");
@@ -84,13 +84,13 @@ namespace FamilyExpenses.Model
         {
             get
             {
-                return _street;
+                return _county;
             }
             set
             {
                 if (value != null)
                     if (!string.IsNullOrEmpty(value)
-                        && string.IsNullOrWhiteSpace(value))
+                        && !string.IsNullOrWhiteSpace(value))
                         _county = value;
                     else
                         throw new ArgumentException("Cannot be empty or whitespace only!", "County");
@@ -103,13 +103,13 @@ namespace FamilyExpenses.Model
         {
             get
             {
-                return _street;
+                return _country;
             }
             set
             {
                 if (value != null)
                     if (!string.IsNullOrEmpty(value)
-                        && string.IsNullOrWhiteSpace(value))
+                        && !string.IsNullOrWhiteSpace(value))
                         _country = value;
                     else
                         throw new ArgumentException("Cannot be empty or whitespace only!", "Country");

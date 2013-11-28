@@ -76,10 +76,10 @@ create table Producers(
 go
 
 create table Products(
-    name varchar(100),
+    name varchar(100) not null,
     type int not null,
     producer varchar(100) not null,
-    constraint pkProducts primary key (name),
+    constraint pkProducts primary key (name, producer),
     constraint fkProductsToProducer foreign key (producer) references Producers(name)
 )
 go
@@ -91,7 +91,9 @@ create table Purchases(
     shopAddress int not null,
     purchaser varchar(100) not null,
     product varchar(100) not null,
-    constraint fkPurchasesToProduct foreign key (product) references Products(name),
+    productProducer varchar(100) not null,
+    datePurchased datetime not null,
+    constraint fkPurchasesToProduct foreign key (product, productProducer) references Products(name, producer),
     constraint fkPurchasesToPerson foreign key (purchaser) references Persons(name),
     constraint fkPurchasesToShop foreign key (shop, shopAddress) references Shops(name, address)
 )
@@ -117,8 +119,8 @@ insert into Producers(country, name)
 insert into Products(name, producer, type)
     values ('Lapte 1L', 'Napolact', 0)
 
-insert into Purchases(price, product, purchaser, quantity, shop, shopAddress)
-    values (10, 'Lapte 1L', 'Andrei', 1, 'Billa', @addressId)
+insert into Purchases(datePurchased, price, product, productProducer, purchaser, quantity, shop, shopAddress)
+    values (CURRENT_TIMESTAMP, 10, 'Lapte 1L', 'Napolact', 'Andrei', 1, 'Billa', @addressId)
 go
 
 declare @addressId int = (select (ISNULL(max(id), 0) + 1) from Addresses)
@@ -135,6 +137,6 @@ insert into Addresses(city, country, county, id, street)
 insert into Shops(address, name, type)
     values (@addressId, 'Cora', 0)
 
-insert into Purchases(price, product, purchaser, quantity, shop, shopAddress)
-    values (10, 'Lapte 1L', 'Ion', 1, 'Cora', @addressId)
+insert into Purchases(datePurchased, price, product, productProducer, purchaser, quantity, shop, shopAddress)
+    values (CURRENT_TIMESTAMP, 10, 'Lapte 1L', 'Napolact', 'Ion', 1, 'Cora', @addressId)
 go

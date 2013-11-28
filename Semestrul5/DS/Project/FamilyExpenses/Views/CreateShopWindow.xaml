@@ -1,0 +1,183 @@
+﻿<Window
+    x:Class="FamilyExpenses.Views.CreateShopWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:validators="clr-namespace:FamilyExpenses.ViewModels.ValidationRules"
+    xmlns:covnerters="clr-namespace:FamilyExpenses.ViewModels.Converters"
+    Title="Add shop"
+    Height="300"
+    Width="300">
+    <Window.Resources>
+        <covnerters:ShopInfoConverter
+            x:Key="ShopInfoConverter" />
+    </Window.Resources>
+    <Grid>
+        <Label
+            Content="Name:"
+            HorizontalAlignment="Left"
+            Margin="10,10,0,0"
+            VerticalAlignment="Top" />
+        <Label
+            Content="Type:"
+            HorizontalAlignment="Left"
+            Margin="10,41,0,0"
+            VerticalAlignment="Top" />
+        <TextBox
+            Name="_nameTextBox"
+            Height="23"
+            Margin="59,14,10,0"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top">
+            <TextBox.Text>
+                <Binding
+                    Path="Text"
+                    ElementName="_nameTextBox">
+                    <Binding.ValidationRules>
+                        <validators:RegexValidator
+                            RegexPattern="^ *[\w\d]+( [\w\d]+)* *$"
+                            ErrorMessage="Name can contain only alphanumeric characters!"
+                            ValidatesOnTargetUpdated="True" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+            <TextBox.Style>
+                <Style
+                    TargetType="{x:Type TextBox}">
+                    <Style.Triggers>
+                        <Trigger
+                            Property="Validation.HasError"
+                            Value="True">
+                            <Setter
+                                Property="ToolTip"
+                                Value="{Binding ElementName=_nameTextBox, Path=(Validation.Errors)[0].ErrorContent}" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+        <ComboBox
+            Name="_typeComboBox"
+            Margin="59,45,10,0"
+            VerticalAlignment="Top"
+            SelectedIndex="0"
+            ItemsSource="{Binding ShopTypes, Source={StaticResource MainViewModel}}" />
+        <ListView
+            Name="_addressesListView"
+            Margin="10,103,10,40"
+            ItemsSource="{Binding AllAddresses, Source={StaticResource MainViewModel}}">
+            <ListView.SelectedItem>
+                <Binding
+                    Path="SelectedItem"
+                    ElementName="_addressesListView"
+                    UpdateSourceTrigger="LostFocus">
+                    <Binding.ValidationRules>
+                        <validators:ConstantValueValidator
+                            ErrorWhenEqual="True"
+                            ErrorMessage="An address must be selected!"
+                            ValidatesOnTargetUpdated="True" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </ListView.SelectedItem>
+            <ListView.Style>
+                <Style
+                    TargetType="{x:Type ListView}">
+                    <Style.Triggers>
+                        <Trigger
+                            Property="Validation.HasError"
+                            Value="True">
+                            <Setter
+                                Property="ToolTip"
+                                Value="{Binding ElementName=_addressesListView, Path=(Validation.Errors)[0].ErrorContent}" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.Style>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn
+                        Width="100"
+                        Header="Street"
+                        DisplayMemberBinding="{Binding Street}" />
+                    <GridViewColumn
+                        Width="50"
+                        Header="City"
+                        DisplayMemberBinding="{Binding City}" />
+                    <GridViewColumn
+                        Width="50"
+                        Header="County"
+                        DisplayMemberBinding="{Binding County}" />
+                    <GridViewColumn
+                        Width="50"
+                        Header="Country"
+                        DisplayMemberBinding="{Binding Country}" />
+                </GridView>
+            </ListView.View>
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem
+                        Header="Add address"
+                        Click="_CreateAddressMenuItemClick" />
+                </ContextMenu>
+            </ListView.ContextMenu>
+        </ListView>
+        <Button
+            Content="Add"
+            HorizontalAlignment="Left"
+            Margin="10,0,0,15"
+            VerticalAlignment="Bottom"
+            Width="75"
+            IsDefault="True"
+            Click="_AddButtonClick"
+            Command="{Binding AddShopCommand, Source={StaticResource MainViewModel}}">
+            <Button.CommandParameter>
+                <MultiBinding
+                    Converter="{StaticResource ShopInfoConverter}">
+                    <Binding
+                        Path="Text"
+                        ElementName="_nameTextBox" />
+                    <Binding
+                        Path="SelectedItem"
+                        ElementName="_typeComboBox" />
+                    <Binding
+                        Path="SelectedItem"
+                        ElementName="_addressesListView" />
+                </MultiBinding>
+            </Button.CommandParameter>
+            <Button.Style>
+                <Style
+                    TargetType="{x:Type Button}">
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition
+                                    Binding="{Binding ElementName=_nameTextBox, Path=(Validation.HasError)}"
+                                    Value="False" />
+                                <Condition
+                                    Binding="{Binding ElementName=_addressesListView, Path=(Validation.HasError)}"
+                                    Value="False" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter
+                                Property="IsEnabled"
+                                Value="True" />
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                    <Setter
+                        Property="IsEnabled"
+                        Value="False" />
+                </Style>
+            </Button.Style>
+        </Button>
+        <Button
+            Content="Cancel"
+            HorizontalAlignment="Left"
+            Margin="90,0,0,15"
+            VerticalAlignment="Bottom"
+            Width="75"
+            IsCancel="True" />
+        <Label
+            Content="Addresses"
+            HorizontalAlignment="Left"
+            Margin="10,72,0,0"
+            VerticalAlignment="Top" />
+    </Grid>
+</Window>

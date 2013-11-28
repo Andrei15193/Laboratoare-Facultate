@@ -11,7 +11,8 @@ namespace FamilyExpenses.Model
                     && !string.IsNullOrWhiteSpace(name))
                     if (producer != null)
                     {
-                        _name = name;
+                        _name = name.Trim();
+                        _producer = producer;
                         Type = type;
                     }
                     else
@@ -60,6 +61,11 @@ namespace FamilyExpenses.Model
                 else
                     throw new ArgumentNullException("Producer");
             }
+        }
+
+        public override string ToString()
+        {
+            return _name + " by " + _producer.Name;
         }
 
         private string _name;
