@@ -1,0 +1,63 @@
+%{
+#include <stdio.h>
+#include "bison.tab.h"
+
+int line = 1;
+%}
+%option noyywrap
+%%
+[ \t]+                                       /* ignore white spaces */
+"#".*\n                                      /* ignore one-line comments */
+"#{".*"}"                                    /* ignore multi-line comments */
+"\r\n"                                       line++;
+"assert"                                     return Assert;
+"begin"                                      return Begin;
+"do"                                         return Do;
+"else"                                       return Else;
+"end"                                        return End;
+"fact"                                       return Fact;
+"false"                                      return False;
+"new"                                        return New;
+"predicate"                                  return Predicate;
+"skip"                                       return Skip;
+"stop"                                       return Stop;
+"then"                                       return Then;
+"true"                                       return True;
+"when"                                       return When;
+"while"                                      return While;
+"throw"                                      return Throw;
+"try"                                        return Try;
+"catch"                                      return Catch;
+"finally"                                    return Finally;
+"::"                                         return Scope;
+"*"                                          return Star;
+"%"                                          return Percentage;
+"/"                                          return Slash;
+"\\"                                         return Backslash;
+"+"                                          return Plus;
+"-"                                          return Minus;
+"<"                                          return LessThan;
+"<="                                         return LessThanOrEqualTo;
+"="                                          return Equal;
+">="                                         return GreaterThanOrEqualTo;
+">"                                          return GreaterThan;
+"!"                                          return Negation;
+"and"                                        return And;
+"or"                                         return Or;
+"("                                          return OpeningRoundParenthesis;
+")"                                          return ClosingRoundParenthesis;
+"["                                          return OpeningSquareParenthesis;
+"]"                                          return ClosingSquareParenthesis;
+"."                                          return Dot;
+":"                                          return Colon;
+","                                          return Comma;
+[_a-zA-Z][_a-zA-Z0-9]*                       return Identifier;
+0|[1-9][0-9]*                                return IntegerNumericConstant;
+0|[1-9][0-9]*"."[0-9]+                       return FloatNumericConstant;
+"\""([^\"\\]|\\(t|r|s|"\""))*"\""            return StringConstant;
+"'"([^\'\\]|\\(t|r|s|"'"))"'"                return StringConstant;
+[^ \t\r\n:\*%/\\+\-\<\<=\>\(\)\[\]\.,\'\"]+  {
+                                                  printf("\r\nUnknown symbol: %s on line: %i", yytext, line);
+                                                  exit(2);
+                                             }
+%%
