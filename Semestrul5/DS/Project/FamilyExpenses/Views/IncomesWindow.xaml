@@ -1,0 +1,44 @@
+﻿<Window
+	x:Class="FamilyExpenses.Views.IncomesWindow"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:validators="clr-namespace:FamilyExpenses.ViewModels.ValidationRules"
+	xmlns:converters="clr-namespace:FamilyExpenses.ViewModels.Converters"
+	Title="IncomeWindow"
+	Height="300"
+	Width="300">
+	<Window.Resources>
+		<converters:DateTimeConverter
+			x:Key="DateTimeConverter" />
+	</Window.Resources>
+	<Grid>
+		<ListView
+			Margin="10,41,10,10"
+			ItemsSource="{Binding Incomes, Source={StaticResource MainViewModel}}">
+			<ListView.ContextMenu>
+				<ContextMenu>
+					<MenuItem 
+						Header="Add income"
+						Click="_AddIncomeMenuItemClick"/>
+				</ContextMenu>
+			</ListView.ContextMenu>
+			<ListView.View>
+				<GridView>
+					<GridViewColumn
+						Header="Sum"
+						Width="130px"
+						DisplayMemberBinding="{Binding Sum}" />
+					<GridViewColumn
+						Header="Date received"
+						Width="130px"
+						DisplayMemberBinding="{Binding DateReceived, Converter={StaticResource DateTimeConverter}}" />
+				</GridView>
+			</ListView.View>
+		</ListView>
+		<Label
+			Content="Incomes:"
+			HorizontalAlignment="Left"
+			Margin="10,10,0,0"
+			VerticalAlignment="Top" />
+	</Grid>
+</Window>
