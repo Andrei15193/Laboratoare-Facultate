@@ -11,32 +11,29 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
 namespace FamilyExpenses.Views
 {
-    /// <summary>
-    /// Interaction logic for CreatePurchaseWindow.xaml
-    /// </summary>
-    public partial class CreatePurchaseWindow : Window
-    {
-        public CreatePurchaseWindow()
-        {
-            InitializeComponent();
-        }
+	/// <summary>
+	/// Interaction logic for CreatePurchaseWindow.xaml
+	/// </summary>
+	public partial class CreatePurchaseWindow : Window
+	{
+		public CreatePurchaseWindow()
+		{
+			InitializeComponent();
+		}
 
-        private void _NewProductButtonClick(object sender, RoutedEventArgs e)
-        {
-            new CreateProductWindow().ShowDialog();
-        }
-
-        private void _CreateShopButtonClick(object sender, RoutedEventArgs e)
-        {
-            new CreateShopWindow().ShowDialog();
-        }
-
-        private void _AddPurachseButtonClick(object sender, RoutedEventArgs e)
-        {
-            DialogResult = true;
-        }
-    }
+		private void _NewProductButtonClick(object sender, RoutedEventArgs e)
+		{
+			new CreateProductWindow().ShowDialog();
+		}
+		private void _CreateShopButtonClick(object sender, RoutedEventArgs e)
+		{
+			new CreateShopWindow().ShowDialog();
+		}
+		private void _AddPurachseButtonClick(object sender, RoutedEventArgs e)
+		{
+			DialogResult = true;
+		}
+	}
 }

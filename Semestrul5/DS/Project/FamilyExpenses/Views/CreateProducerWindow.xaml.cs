@@ -11,22 +11,21 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
 namespace FamilyExpenses.Views
 {
-    /// <summary>
-    /// Interaction logic for CreateProducerWindow.xaml
-    /// </summary>
-    public partial class CreateProducerWindow : Window
-    {
-        public CreateProducerWindow()
-        {
-            InitializeComponent();
-        }
+	/// <summary>
+	/// Interaction logic for CreateProducerWindow.xaml
+	/// </summary>
+	public partial class CreateProducerWindow : Window
+	{
+		public CreateProducerWindow()
+		{
+			InitializeComponent();
+		}
 
-        private void _AddProducerButtonClick(object sender, RoutedEventArgs e)
-        {
-            DialogResult = true;
-        }
-    }
+		private void _AddProducerButtonClick(object sender, RoutedEventArgs e)
+		{
+			DialogResult = true;
+		}
+	}
 }

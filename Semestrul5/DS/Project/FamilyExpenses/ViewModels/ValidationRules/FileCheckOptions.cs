@@ -1,8 +1,8 @@
 ﻿namespace FamilyExpenses.ViewModels.ValidationRules
 {
-    internal enum FileCheckOptions
-    {
-        CheckExists,
-        CheckNotExists
-    }
+	internal enum FileCheckOptions
+	{
+		CheckExists,
+		CheckNotExists
+	}
 }

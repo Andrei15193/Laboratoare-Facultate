@@ -2,29 +2,32 @@
 using System.Globalization;
 using System.Windows.Data;
 using FamilyExpenses.Model;
-
 namespace FamilyExpenses.ViewModels.Converters
 {
-    internal sealed class PersonInfoConverter
-        : IMultiValueConverter
-    {
-        #region IMultiValueConverter Members
+	internal sealed class PersonInfoConverter
+		: IMultiValueConverter
+	{
+		#region IMultiValueConverter Members
+		public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+		{
+			try
+			{
+				return Tuple.Create((string)values[0], (string)values[1]);
+			}
+			catch
+			{
+				return null;
+			}
+		}
+		public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+		{
+			Tuple<string, string> personInfo = value as Tuple<string, string>;
 
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-        {
-            return Tuple.Create((string)values[0], (string)values[1]);
-        }
-
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-        {
-            Tuple<string, string> personInfo = value as Tuple<string, string>;
-
-            if (personInfo != null)
-                return new object[] { personInfo.Item1, personInfo.Item2 };
-            else
-                return new object[] { string.Empty, Currency.RON.ToString() };
-        }
-
-        #endregion
-    }
+			if (personInfo != null)
+				return new object[] { personInfo.Item1, personInfo.Item2 };
+			else
+				return new object[] { string.Empty, Currency.RON.ToString() };
+		}
+		#endregion
+	}
 }

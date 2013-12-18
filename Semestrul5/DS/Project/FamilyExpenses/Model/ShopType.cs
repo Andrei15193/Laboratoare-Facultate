@@ -1,8 +1,8 @@
 ﻿namespace FamilyExpenses.Model
 {
-    public enum ShopType
-    {
-        Virtual,
-        Physical
-    }
+	public enum ShopType
+	{
+		Virtual,
+		Physical
+	}
 }

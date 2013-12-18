@@ -2,29 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using FamilyExpenses.Model;
-
 namespace FamilyExpenses.ViewModels
 {
-    internal sealed class SelectorTreeNode
-         : TreeNode
-    {
-        public SelectorTreeNode(string header, Func<IEnumerable<Purchase>> selector)
-            : base(header)
-        {
-            if (selector != null)
-                _selector = selector;
-            else
-                throw new ArgumentNullException("selector");
-        }
+	internal sealed class SelectorTreeNode
+		 : TreeNode
+	{
+		public SelectorTreeNode(string header, Func<IEnumerable<Purchase>> selector)
+			: base(header)
+		{
+			if (selector == null)
+				throw new ArgumentNullException("selector");
+			_selector = selector;
+		}
 
-        public IReadOnlyList<Purchase> GetPurchases()
-        {
-            if (_selector != null)
-                return _selector().ToList();
-            else
-                throw new InvalidOperationException("selector cannot be null!");
-        }
+		public IReadOnlyList<Purchase> GetPurchases()
+		{
+			if (_selector == null)
+				throw new InvalidOperationException("selector cannot be null!");
+			return _selector().ToList();
+		}
 
-        private readonly Func<IEnumerable<Purchase>> _selector;
-    }
+		private readonly Func<IEnumerable<Purchase>> _selector;
+	}
 }

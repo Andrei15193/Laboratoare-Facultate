@@ -33,7 +33,18 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>app.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="saxon9pe, Version=9.4.0.9, Culture=neutral, PublicKeyToken=e1fdd002d5083fe6, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Saxonica\SaxonPE9.4N\bin\saxon9pe.dll</HintPath>
+    </Reference>
+    <Reference Include="saxon9pe-api, Version=9.4.0.9, Culture=neutral, PublicKeyToken=e1fdd002d5083fe6, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Saxonica\SaxonPE9.4N\bin\saxon9pe-api.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -55,6 +66,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ViewModels\Converters\AddressInfoConverter.cs" />
+    <Compile Include="ViewModels\Converters\DateTimeConverter.cs" />
+    <Compile Include="ViewModels\Converters\IncomeInfoConverter.cs" />
     <Compile Include="ViewModels\Converters\ProducerInfoConverter.cs" />
     <Compile Include="ViewModels\Converters\ProductInfoConverter.cs" />
     <Compile Include="ViewModels\Converters\PurchaseInfoConverter.cs" />
@@ -65,16 +78,26 @@
     <Compile Include="Views\CreateAddressWindow.xaml.cs">
       <DependentUpon>CreateAddressWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\CreateIncomeWindow.xaml.cs">
+      <DependentUpon>CreateIncomeWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CreateProducerWindow.xaml.cs">
       <DependentUpon>CreateProducerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CreateProductWindow.xaml.cs">
       <DependentUpon>CreateProductWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\IncomesWindow.xaml.cs">
+      <DependentUpon>IncomesWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ModifyPurchaseWindow.xaml.cs">
       <DependentUpon>ModifyPurchaseWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\CreateAddressWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CreateIncomeWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -91,6 +114,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CreateShopWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\IncomesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -171,7 +198,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="app.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

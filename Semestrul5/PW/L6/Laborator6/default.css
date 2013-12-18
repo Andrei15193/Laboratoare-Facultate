@@ -1,0 +1,104 @@
+body
+{
+	margin: 0;
+	padding: 0;
+	background-color: #F0F0F0;
+	color: #2E382F;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.small
+{
+	font-size: 7pt;
+}
+
+div#header
+{
+	border: 10px solid black;
+	border-width: 0 0 10px;
+	padding: 0 10px;
+	height: 70px;
+	background-color: #2F4E6F;
+	color: #F0F0F0;
+}
+
+	div#header h1
+	{
+		margin: 0;
+		padding: 5px 0 0;
+	}
+
+div#menuBar
+{
+	padding: 0 10px;
+	text-align: right;
+}
+
+ul#menu
+{
+	margin: 20px 0 0 10px;
+	padding: 0;
+	float: left;
+	list-style: none;
+	width: 130px;
+}
+
+	ul#menu li
+	{
+		margin: 0 0 20px;
+	}
+
+		ul#menu li a.button
+		{
+			display: block;
+			border: 2px solid black;
+			border-color: #CC0000;
+			padding: 10px;
+			color: #CC0000;
+			text-decoration: none;
+			font-size: 14pt;
+		}
+
+		ul#menu li a:hover.button
+		{
+			border-color: #FF6600;
+			color: #FF6600;
+			text-decoration: none;
+		}
+
+		ul#menu li div.menuOptionBar
+		{
+			text-align: right;
+		}
+
+div#content
+{
+	margin: 20px 10px 0 180px;
+}
+
+input
+{
+	width: 200px;
+}
+
+	input.button
+	{
+		width: auto;
+	}
+
+.error
+{
+	margin: 10px;
+	border: 1px solid red;
+	border-radius: 10px;
+	padding: 10px;
+	background-color: #FFD0D0;
+}
+
+	.error h1
+	{
+		margin: 0;
+		padding: 0;
+		color: red;
+		font-size: 17pt;
+	}

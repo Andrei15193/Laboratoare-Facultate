@@ -11,27 +11,25 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
 namespace FamilyExpenses.Views
 {
-    /// <summary>
-    /// Interaction logic for CreateShopWindow.xaml
-    /// </summary>
-    public partial class CreateShopWindow : Window
-    {
-        public CreateShopWindow()
-        {
-            InitializeComponent();
-        }
+	/// <summary>
+	/// Interaction logic for CreateShopWindow.xaml
+	/// </summary>
+	public partial class CreateShopWindow : Window
+	{
+		public CreateShopWindow()
+		{
+			InitializeComponent();
+		}
 
-        private void _CreateAddressMenuItemClick(object sender, RoutedEventArgs e)
-        {
-            new CreateAddressWindow().ShowDialog();
-        }
-
-        private void _AddButtonClick(object sender, RoutedEventArgs e)
-        {
-            DialogResult = true;
-        }
-    }
+		private void _CreateAddressMenuItemClick(object sender, RoutedEventArgs e)
+		{
+			new CreateAddressWindow().ShowDialog();
+		}
+		private void _AddButtonClick(object sender, RoutedEventArgs e)
+		{
+			DialogResult = true;
+		}
+	}
 }

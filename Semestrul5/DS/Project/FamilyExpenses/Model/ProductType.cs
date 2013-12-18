@@ -1,8 +1,10 @@
 ﻿namespace FamilyExpenses.Model
 {
-    public enum ProductType
-    {
-        Electronic,
-        Physical
-    }
+	public enum ProductType
+	{
+		Food,
+		Maintenance,
+		Electric,
+		Toy,
+	}
 }
