@@ -1,0 +1,239 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8" />
+	<title>Programare Web Laborator 7.8</title>
+	<script>
+		function GetData(page, params, callback)
+		{
+			var xmlhttp;
+			if (window.XMLHttpRequest)
+				xmlhttp = new XMLHttpRequest();
+			else
+				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+			xmlhttp.onreadystatechange = function ()
+			{
+				if (xmlhttp.readyState == 4 && xmlhttp.status == 200 && callback)
+					callback(xmlhttp);
+			}
+			xmlhttp.open("GET", page, true);
+			var parameters = new Array();
+			if (params)
+				for (var paramIndex = 0; paramIndex < params.length; paramIndex++)
+					parameters[paramIndex] = params[paramIndex].join("=");
+			xmlhttp.send(parameters.join("&"));
+		}
+
+		function PostData(page, params, callback)
+		{
+			var xmlhttp;
+			if (window.XMLHttpRequest)
+				xmlhttp = new XMLHttpRequest();
+			else
+				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+			xmlhttp.onreadystatechange = function ()
+			{
+				if (xmlhttp.readyState == 4 && xmlhttp.status == 200 && callback)
+					callback(xmlhttp);
+			}
+			xmlhttp.open("POST", page, true);
+			xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			var parameters = new Array();
+			if (params)
+				for (var paramIndex = 0; paramIndex < params.length; paramIndex++)
+					parameters[paramIndex] = params[paramIndex].join("=");
+			xmlhttp.send(parameters.join("&"));
+		}
+
+		function UpdateTable()
+		{
+			GetData("get.php", null, function (xmlhttp)
+			{
+				var contentTable = document.getElementById("clasament");
+				var receivedRows = xmlhttp.responseText.toString().split(";");
+				for (var rowIndex = 1; rowIndex <= 18; rowIndex++)
+				{
+					var receivedCells = receivedRows[rowIndex - 1].split(",");
+					for (var columnIndex = 0; columnIndex < 8; columnIndex++)
+						contentTable.rows[rowIndex].cells[columnIndex + 1].innerHTML = receivedCells[columnIndex];
+				}
+			});
+		}
+
+		function SendInfo()
+		{
+			var params = new Array();
+			var infoForm = document.getElementById("informatii");
+			for (var elementIndex = 0; elementIndex < infoForm.elements.length; elementIndex++)
+				params[elementIndex] = new Array(infoForm.elements[elementIndex].name, infoForm.elements[elementIndex].value);
+			PostData("update.php", params);
+		}
+
+		onload = function ()
+		{
+			GetData("get.php", null, function (xmlhttp)
+			{
+				var teamsSelect = document.getElementById("echipe");
+				var contentTable = document.getElementById("clasament");
+				var receivedRows = xmlhttp.responseText.toString().split(";");
+				for (var rowIndex = 1; rowIndex <= 18; rowIndex++)
+				{
+					var insertedRow = contentTable.insertRow(rowIndex);
+					var receivedCells = receivedRows[rowIndex - 1].split(",");
+					var option = document.createElement("option");
+					option.text = receivedCells[0];
+					teamsSelect.add(option, null);
+					insertedRow.insertCell(0).innerHTML = rowIndex.toString();
+					for (var columnIndex = 0; columnIndex < 8; columnIndex++)
+						insertedRow.insertCell(columnIndex + 1).innerHTML = receivedCells[columnIndex];
+				}
+			});
+			setInterval("UpdateTable()", 1000);
+		}
+	</script>
+	<style>
+		body
+		{
+			background-color: #F0F0F0;
+			font-family: Arial;
+		}
+
+		div#info
+		{
+			margin: 50px auto 100px;
+			width: 370px;
+		}
+
+			div#info button
+			{
+				margin: 10px;
+			}
+
+		div#info form#informatii input, div#info form#informatii select
+		{
+			width: 100%;
+		}
+
+			div#info form#informatii input.button
+			{
+				width: auto;
+			}
+
+		table#clasament
+		{
+			width: 100%;
+			border-collapse: collapse;
+		}
+
+			table#clasament caption
+			{
+				text-align: left;
+				font-size: 20pt;
+				font-weight: bold;
+			}
+
+			table#clasament tr, table#clasament th, table#clasament td
+			{
+				border: 1px solid black;
+			}
+
+			table#clasament th, table#clasament td
+			{
+				padding: 2px 5px;
+			}
+
+			table#clasament th
+			{
+				background-color: #D0D0D0;
+			}
+	</style>
+</head>
+<body>
+	<table id="clasament">
+		<caption>Clasamentul ligii 1:</caption>
+		<tr>
+			<th>Pozitie</th>
+			<th>Echipa</th>
+			<th>Meciuri</th>
+			<th>Victorii</th>
+			<th>Egaluri</th>
+			<th>Infrangeri</th>
+			<th>Goluri marcate</th>
+			<th>Goluri primite</th>
+			<th>Puncte</th>
+		</tr>
+	</table>
+	<div id="info">
+		<form id="informatii" method="post">
+			<table>
+				<tr>
+					<td style="width: 120px;">
+						<label>Echipa:</label>
+					</td>
+					<td>
+						<select id="echipe" name="echipa"></select>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label>Meciuri: </label>
+					</td>
+					<td>
+						<input name="meciuri" type="text" value="0" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label>Victorii: </label>
+					</td>
+					<td>
+						<input name="victorii" type="text" value="0" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label>Egaluri: </label>
+					</td>
+					<td>
+						<input name="egaluri" type="text" value="0" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label>Infrangeri: </label>
+					</td>
+					<td>
+						<input name="infrangeri" type="text" value="0" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label>Goluri marcate: </label>
+					</td>
+					<td>
+						<input name="goluriMarcate" type="text" value="0" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label>Goluri primite: </label>
+					</td>
+					<td>
+						<input name="goluriPrimite" type="text" value="0" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label>Puncte: </label>
+					</td>
+					<td>
+						<input name="puncte" type="text" value="0" />
+					</td>
+				</tr>
+			</table>
+		</form>
+		<button onclick="SendInfo();" name="submit" value="Update">Update</button>
+	</div>
+</body>
+</html>
