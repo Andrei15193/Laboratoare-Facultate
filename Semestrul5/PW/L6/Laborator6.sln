@@ -1,0 +1,24 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6A30D898-6E3C-4EBA-BF88-7D9421FEB6BD}"
+	ProjectSection(SolutionItems) = preProject
+		default.css = default.css
+		editPage.php = editPage.php
+		index.php = index.php
+		login.php = login.php
+		logout.php = logout.php
+		newPage.php = newPage.php
+		removePage.php = removePage.php
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{A3B4496C-277D-4EC5-81FB-C4616306D89E}"
+EndProject
+Global
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A3B4496C-277D-4EC5-81FB-C4616306D89E} = {6A30D898-6E3C-4EBA-BF88-7D9421FEB6BD}
+	EndGlobalSection
+EndGlobal

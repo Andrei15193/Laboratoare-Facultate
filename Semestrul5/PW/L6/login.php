@@ -41,7 +41,7 @@ $pagesQueryResult = mysql_query("select title from Pages");
 		echo "<ul id=\"menu\">";
 		while ($row = mysql_fetch_array($pagesQueryResult))
 		{
-			echo "<li><a class=\"button\" href=\"?page=".$row[0]."\">".$row[0]."</a>";
+			echo "<li><a class=\"button\" href=\"index.php?page=".$row[0]."\">".$row[0]."</a>";
 			if (isset($_SESSION["username"]))
 			{
 				echo "<div class=\"menuOptionBar\">";
