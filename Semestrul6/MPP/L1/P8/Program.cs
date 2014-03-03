@@ -89,7 +89,7 @@ namespace P8
 
 			string numberAsNameString = numberStringBuilder.ToString().Trim();
 
-			Console.WriteLine("{0} = {1}, care are {2} litere", numberCopy, numberAsNameString, numberAsNameString.Length);
+			Console.WriteLine("{0} = {1}, care are {2} litere", numberCopy, numberAsNameString, numberAsNameString.Replace(" ", string.Empty).Length);
 		}
 
 		private static int _ReadInteger(string message, int minValue, int maxValue)
