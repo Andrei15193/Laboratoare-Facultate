@@ -42,5 +42,5 @@ Materii din semestrul 6
 * CN   = Calcul Numeric
 * MPP  = Medii de Proiectare și Programare
 * VVSS = Verficarea și Validarea Sistemelor Soft
-* ADP  = Aplicații pentru Dispozitive Mobile
+* ADM  = Aplicații pentru Dispozitive Mobile
 * TRSI = Tehnici de Realizare a Sistemelor Inteligente
