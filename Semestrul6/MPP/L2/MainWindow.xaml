@@ -1,0 +1,130 @@
+﻿<Window
+	x:Class="L2.MainWindow"
+	x:ClassModifier="internal"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:system="clr-namespace:System;assembly=mscorlib"
+	xmlns:l2="clr-namespace:L2"
+	Title="MainWindow"
+	MinHeight="350"
+	MinWidth="650">
+	<Window.Resources>
+		<ResourceDictionary>
+			<l2:MainViewModel
+				x:Key="MainViewModel" />
+			<system:Double
+				x:Key="InputWidth">100</system:Double>
+			<ObjectDataProvider
+				x:Key="MetodaDeSortare"
+				MethodName="GetValues"
+				ObjectType="system:Enum">
+				<ObjectDataProvider.MethodParameters>
+					<x:TypeExtension
+						Type="l2:MetodaDeSortare" />
+				</ObjectDataProvider.MethodParameters>
+			</ObjectDataProvider>
+			<ObjectDataProvider
+				x:Key="TipSortare"
+				MethodName="GetValues"
+				ObjectType="system:Enum">
+				<ObjectDataProvider.MethodParameters>
+					<x:TypeExtension
+						Type="l2:TipSortare" />
+				</ObjectDataProvider.MethodParameters>
+			</ObjectDataProvider>
+		</ResourceDictionary>
+	</Window.Resources>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition
+				Height="auto" />
+			<RowDefinition />
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition
+				Width="1*" />
+			<ColumnDefinition
+				Width="5px" />
+			<ColumnDefinition
+				Width="1*" />
+		</Grid.ColumnDefinitions>
+		<StackPanel
+			Orientation="Horizontal"
+			Grid.Row="0"
+			Grid.Column="0"
+			Grid.ColumnSpan="3">
+			<Label
+				Content="Metoda de sortare: " />
+			<ComboBox
+				Width="{StaticResource InputWidth}"
+				SelectedItem="{Binding Path=MetodaDeSortare,
+									   Source={StaticResource MainViewModel}}"
+				ItemsSource="{Binding Source={StaticResource MetodaDeSortare}}"
+				VerticalAlignment="Center" />
+			<Label
+				Content="Tip sortare: " />
+			<ComboBox
+				VerticalAlignment="Center"
+				Width="{StaticResource InputWidth}"
+				SelectedItem="{Binding Path=TipSortare,
+									   Source={StaticResource MainViewModel}}"
+				ItemsSource="{Binding Source={StaticResource TipSortare}}" />
+			<Label
+				Content="Adauga valoarea: " />
+			<TextBox
+				x:Name="_newNumberTextBox"
+				x:FieldModifier="private"
+				VerticalAlignment="Center"
+				Width="{StaticResource InputWidth}" />
+			<Border
+				Padding="5,0,0,0">
+				<Button
+					Content=" Adauga numar "
+					Height="22px"
+					HorizontalAlignment="Center"
+					Command="{Binding Path=ComandaPentruAdaugare,
+									  Source={StaticResource MainViewModel}}"
+					CommandParameter="{Binding Path=Text,
+											   ElementName=_newNumberTextBox}" />
+			</Border>
+			<Border
+				Padding="5,0,0,0">
+				<Button
+					Content=" Elimina numar "
+					Height="22px"
+					HorizontalAlignment="Center"
+					IsEnabled="{Binding Path=PoateElimina,
+										Source={StaticResource MainViewModel}}"
+					Command="{Binding Path=ComandaPentruEliminare,
+									  Source={StaticResource MainViewModel}}" />
+			</Border>
+			<Border
+				Padding="5,0,0,0">
+				<Button
+					Content=" Sorteaza "
+					Height="22px"
+					HorizontalAlignment="Center"
+					Command="{Binding Path=ComandaPentruSortare,
+									  Source={StaticResource MainViewModel}}" />
+			</Border>
+		</StackPanel>
+		<ListBox
+			x:Name="_elementsListBox"
+			x:FieldModifier="private"
+			Grid.Row="1"
+			Grid.Column="0"
+			SelectedIndex="{Binding Path=IndexSelectat,
+									Source={StaticResource MainViewModel}}"
+			HorizontalAlignment="Stretch"
+			VerticalAlignment="Stretch"
+			ItemsSource="{Binding Path=Sursa,
+								  Source={StaticResource MainViewModel}}" />
+		<ListBox
+			Grid.Row="1"
+			Grid.Column="2"
+			HorizontalAlignment="Stretch"
+			VerticalAlignment="Stretch"
+			ItemsSource="{Binding Path=Sortat,
+								  Source={StaticResource MainViewModel}}" />
+	</Grid>
+</Window>
