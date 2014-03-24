@@ -44,6 +44,275 @@ namespace L3
 		}
 
 		/// <summary>
+		/// Realizes the union between two sets.
+		/// </summary>
+		/// <param name="first">
+		/// The first Set to use in union.
+		/// </param>
+		/// <param name="second">
+		/// The second Set to use in union.
+		/// </param>
+		/// <returns>
+		/// Returns a new Set that contains the elements of both sets.
+		/// </returns>
+		public static Set operator +(Set first, Set second)
+		{
+			if (first == null)
+				if (second == null)
+					return new Set();
+				else
+					return second;
+			else
+				if (second == null)
+					return first;
+				else
+					return first.Union(first);
+		}
+		/// <summary>
+		/// Realizes the union between two sets.
+		/// </summary>
+		/// <param name="first">
+		/// The first Set to use in union.
+		/// </param>
+		/// <param name="second">
+		/// The second Set to use in union.
+		/// </param>
+		/// <returns>
+		/// Returns a new Set that contains the elements of both sets.
+		/// </returns>
+		public static Set operator +(object first, Set second)
+		{
+			return ((first as Set) + second);
+		}
+		/// <summary>
+		/// Realizes the union between two sets.
+		/// </summary>
+		/// <param name="first">
+		/// The first Set to use in union.
+		/// </param>
+		/// <param name="second">
+		/// The second Set to use in union.
+		/// </param>
+		/// <returns>
+		/// Returns a new Set that contains the elements of both sets.
+		/// </returns>
+		public static Set operator +(IEnumerable<int> first, Set second)
+		{
+			return ((first as Set) + second);
+		}
+		/// <summary>
+		/// Realizes the union between two sets.
+		/// </summary>
+		/// <param name="first">
+		/// The first Set to use in union.
+		/// </param>
+		/// <param name="second">
+		/// The second Set to use in union.
+		/// </param>
+		/// <returns>
+		/// Returns a new Set that contains the elements of both sets.
+		/// </returns>
+		public static Set operator +(Set first, object second)
+		{
+			return (first + (second as Set));
+		}
+		/// <summary>
+		/// Realizes the union between two sets.
+		/// </summary>
+		/// <param name="first">
+		/// The first Set to use in union.
+		/// </param>
+		/// <param name="second">
+		/// The second Set to use in union.
+		/// </param>
+		/// <returns>
+		/// Returns a new Set that contains the elements of both sets.
+		/// </returns>
+		public static Set operator +(Set first, IEnumerable<int> second)
+		{
+			return (first + (second as Set));
+		}
+		/// <summary>
+		/// Realizes the intersection between two sets.
+		/// </summary>
+		/// <param name="first">
+		/// The first Set to use in intersection.
+		/// </param>
+		/// <param name="second">
+		/// The second Set to use in intersection.
+		/// </param>
+		/// <returns>
+		/// Returns a new Set that contains only the elements that are found in both sets.
+		/// </returns>
+		public static Set operator -(Set first, Set second)
+		{
+			if (first == null)
+				return new Set();
+			else
+				if (second == null)
+					return first;
+				else
+					return first.Intersect(first);
+		}
+		/// <summary>
+		/// Realizes the intersection between two sets.
+		/// </summary>
+		/// <param name="first">
+		/// The first Set to use in intersection.
+		/// </param>
+		/// <param name="second">
+		/// The second Set to use in intersection.
+		/// </param>
+		/// <returns>
+		/// Returns a new Set that contains only the elements that are found in both sets.
+		/// </returns>
+		public static Set operator -(object first, Set second)
+		{
+			return ((first as Set) - second);
+		}
+		/// <summary>
+		/// Realizes the intersection between two sets.
+		/// </summary>
+		/// <param name="first">
+		/// The first Set to use in intersection.
+		/// </param>
+		/// <param name="second">
+		/// The second Set to use in intersection.
+		/// </param>
+		/// <returns>
+		/// Returns a new Set that contains only the elements that are found in both sets.
+		/// </returns>
+		public static Set operator -(IEnumerable<int> first, Set second)
+		{
+			return ((first as Set) - second);
+		}
+		/// <summary>
+		/// Realizes the intersection between two sets.
+		/// </summary>
+		/// <param name="first">
+		/// The first Set to use in intersection.
+		/// </param>
+		/// <param name="second">
+		/// The second Set to use in intersection.
+		/// </param>
+		/// <returns>
+		/// Returns a new Set that contains only the elements that are found in both sets.
+		/// </returns>
+		public static Set operator -(Set first, object second)
+		{
+			return (first - (second as Set));
+		}
+		/// <summary>
+		/// Realizes the intersection between two sets.
+		/// </summary>
+		/// <param name="first">
+		/// The first Set to use in intersection.
+		/// </param>
+		/// <param name="second">
+		/// The second Set to use in intersection.
+		/// </param>
+		/// <returns>
+		/// Returns a new Set that contains only the elements that are found in both sets.
+		/// </returns>
+		public static Set operator -(Set first, IEnumerable<int> second)
+		{
+			return (first - (second as Set));
+		}
+		/// <summary>
+		/// Realizes the intersection between two sets.
+		/// </summary>
+		/// <param name="first">
+		/// The first Set to use in intersection.
+		/// </param>
+		/// <param name="second">
+		/// The second Set to use in intersection.
+		/// </param>
+		/// <returns>
+		/// Returns a new Set that contains only the elements that are found in both sets.
+		/// </returns>
+		public static Set operator *(Set first, Set second)
+		{
+			if (first == null)
+				if (second == null)
+					return new Set();
+				else
+					return second;
+			else
+				if (second == null)
+					return first;
+				else
+					return first.Union(first);
+		}
+		/// <summary>
+		/// Realizes the difference between two sets.
+		/// </summary>
+		/// <param name="first">
+		/// The first Set to use in difference.
+		/// </param>
+		/// <param name="second">
+		/// The second Set to use in difference.
+		/// </param>
+		/// <returns>
+		/// Returns a new Set that contains only the elements that are found in the first Set
+		/// and not in the second Set.
+		/// </returns>
+		public static Set operator *(object first, Set second)
+		{
+			return ((first as Set) * second);
+		}
+		/// <summary>
+		/// Realizes the difference between two sets.
+		/// </summary>
+		/// <param name="first">
+		/// The first Set to use in difference.
+		/// </param>
+		/// <param name="second">
+		/// The second Set to use in difference.
+		/// </param>
+		/// <returns>
+		/// Returns a new Set that contains only the elements that are found in the first Set
+		/// and not in the second Set.
+		/// </returns>
+		public static Set operator *(IEnumerable<int> first, Set second)
+		{
+			return ((first as Set) * second);
+		}
+		/// <summary>
+		/// Realizes the difference between two sets.
+		/// </summary>
+		/// <param name="first">
+		/// The first Set to use in difference.
+		/// </param>
+		/// <param name="second">
+		/// The second Set to use in difference.
+		/// </param>
+		/// <returns>
+		/// Returns a new Set that contains only the elements that are found in the first Set
+		/// and not in the second Set.
+		/// </returns>
+		public static Set operator *(Set first, object second)
+		{
+			return (first * (second as Set));
+		}
+		/// <summary>
+		/// Realizes the difference between two sets.
+		/// </summary>
+		/// <param name="first">
+		/// The first Set to use in difference.
+		/// </param>
+		/// <param name="second">
+		/// The second Set to use in difference.
+		/// </param>
+		/// <returns>
+		/// Returns a new Set that contains only the elements that are found in the first Set
+		/// and not in the second Set.
+		/// </returns>
+		public static Set operator *(Set first, IEnumerable<int> second)
+		{
+			return (first * (second as Set));
+		}
+
+		/// <summary>
 		/// Determines whether the two Sets are equal.
 		/// </summary>
 		/// <param name="first">

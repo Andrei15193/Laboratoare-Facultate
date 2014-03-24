@@ -26,14 +26,14 @@ namespace L3
 			switch ((SetOperation)_setOperationComboBox.Items[_setOperationComboBox.SelectedIndex])
 			{
 				case SetOperation.Reuniune:
-					operation = (first, second) => first.Union(second);
+					operation = (first, second) => (first + second);
 					break;
 				case SetOperation.Diferenta:
-					operation = (first, second) => first.Difference(second);
+					operation = (first, second) => (first - second);
 					break;
 				case SetOperation.Intersectie:
 				default:
-					operation = (first, second) => first.Intersect(second);
+					operation = (first, second) => (first * second);
 					break;
 			}
 
