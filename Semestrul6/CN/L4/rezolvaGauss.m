@@ -12,7 +12,7 @@ function x = rezolvaGauss(A, b)
             p = p + 1;
         end
 
-        if p == n
+        if p > n
             error('Nu exista solutie unica!');
         end
         if (p ~= i)
@@ -35,5 +35,6 @@ function x = rezolvaGauss(A, b)
         end
         
         x(i, 1) = (A(i, n + 1) - suma) / A(i, i);
+        % x(i, 1) = (A(i, n + 1) - A(i, i + 1:n) * x(i + 1:n)) / A(i, i)
     end
 end
