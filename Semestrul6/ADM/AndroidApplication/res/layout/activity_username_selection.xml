@@ -1,0 +1,39 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="ro.andrei15193.bitbucketbrowser.UsernameSelectionActivity"
+    tools:ignore="MergeRootFrame" >
+
+    <EditText
+        android:id="@+id/usernameInput"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/bitBucketUsername_hint"
+        android:textSize="@dimen/paragraph_size" />
+
+    <Button
+        android:id="@+id/browseUsernameAction"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/browseUser_ButtonText"
+        android:textSize="@dimen/paragraph_size" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/browsedUsers_Label"
+        android:textSize="@dimen/paragraph_size" />
+
+    <ListView
+        android:id="@+id/usersList"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent" />
+
+</LinearLayout>

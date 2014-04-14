@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">BitBucket Browser</string>
+    <string name="title_activity_user_selection">BitBucket Browser</string>
+    <string name="bitBucketUsername_hint">BitBucket username</string>
+    <string name="browseUser_ButtonText">Browse user</string>
+    <string name="browsedUsers_Label">Browsed users</string>
+    <string name="title_activity_repositories">Repositories</string>
+    <string name="title_activity_repository">Details</string>
+    <string name="description_label">Description</string>
+    <string name="owner_label">Owner:</string>
+    <string name="language_label">Language:</string>
+
+</resources>
