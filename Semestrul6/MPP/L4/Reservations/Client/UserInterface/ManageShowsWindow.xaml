@@ -1,0 +1,55 @@
+﻿<Window
+	x:Class="Reservations.UserInterface.ManageShowsWindow"
+	x:ClassModifier="internal"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	Title="Gestionează spectacole"
+	Height="350"
+	Width="525">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition
+				Height="auto" />
+			<RowDefinition />
+		</Grid.RowDefinitions>
+		<Label
+			Margin="7,3"
+			Padding="0"
+			FontSize="24pt"
+			Content="Gestionează spectacole" />
+		<ListView
+			Grid.Row="1"
+			SelectedItem="{Binding Path=SelectedShow,
+								   Source={StaticResource MainViewModel}}"
+			ItemsSource="{Binding Path=Shows,
+								  Source={StaticResource MainViewModel}}">
+			<ListView.View>
+				<GridView>
+					<GridViewColumn
+						Width="400"
+						Header="Spectacol"
+						DisplayMemberBinding="{Binding Path=Name}" />
+					<GridViewColumn
+						Header="Data susținerii"
+						DisplayMemberBinding="{Binding Path=Scheduled,
+													   StringFormat=d/M/yyyy}" />
+				</GridView>
+			</ListView.View>
+			<ListView.ContextMenu>
+				<ContextMenu
+					DataContext="{Binding Path=PlacementTarget,
+										  RelativeSource={RelativeSource Self}}">
+					<MenuItem
+						Header="Adaugă spectacol"
+						Command="{Binding Path=AddShowCommand,
+										  Source={StaticResource MainViewModel}}" />
+					<MenuItem
+						Header="Șterge spectacol"
+						Command="{Binding Path=DeleteShowCommand,
+										  Source={StaticResource MainViewModel}}"
+						CommandParameter="{Binding Path=SelectedItem}" />
+				</ContextMenu>
+			</ListView.ContextMenu>
+		</ListView>
+	</Grid>
+</Window>
