@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reservations.Model.Network.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reservations.Server", "Server\Reservations.Server.csproj", "{197F9C8F-9A54-4114-BA04-3FB96D18052E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reservations.Model.Tests", "Model\Reservations.Model.Tests\Reservations.Model.Tests.csproj", "{2E51A8DC-39BD-4FC8-B543-FE9FEC714812}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reservations.Model.Tests", "Model\Tests\Reservations.Model.Tests.csproj", "{2E51A8DC-39BD-4FC8-B543-FE9FEC714812}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

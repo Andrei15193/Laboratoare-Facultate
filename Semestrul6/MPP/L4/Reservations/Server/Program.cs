@@ -135,11 +135,11 @@ namespace ReservationsServer
 												string.Join(", ", e.ShowReservations.Select(showReservation => string.Format("{0}, {1}", showReservation.HallLocation.ToString(), showReservation.HallPlacement))));
 				}
 
-				_SendShowReservationsToClinet(xDocument);
+				_SendShowReservationsToClient(xDocument);
 			}
 		}
 
-		private static void _SendShowReservationsToClinet(XDocument xDocument)
+		private static void _SendShowReservationsToClient(XDocument xDocument)
 		{
 			string todaySchedule = DateTime.Now.ToString("yyyy-MM-dd");
 			XElement showXElement = xDocument.Root.Elements("Show").FirstOrDefault(showXmlElement => string.Equals(todaySchedule, showXmlElement.Attribute("Scheduled").Value, StringComparison.Ordinal));

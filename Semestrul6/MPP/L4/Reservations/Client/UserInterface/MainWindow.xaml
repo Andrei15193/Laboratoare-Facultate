@@ -6,7 +6,7 @@
 	xmlns:system="clr-namespace:System;assembly=mscorlib"
 	xmlns:converters="clr-namespace:Reservations.UserInterface.Converters"
 	xmlns:model="clr-namespace:Reservations.Model;assembly=Reservations.Model"
-	Title="Rezerva locuri"
+	Title="Rezervă locuri"
 	Height="350"
 	Width="525">
 	<Grid
@@ -23,7 +23,7 @@
 			Margin="7,3"
 			Padding="0"
 			FontSize="24pt"
-			Content="Rezervari" />
+			Content="Rezervări" />
 		<GroupBox
 			Grid.Row="1">
 			<GroupBox.Resources>

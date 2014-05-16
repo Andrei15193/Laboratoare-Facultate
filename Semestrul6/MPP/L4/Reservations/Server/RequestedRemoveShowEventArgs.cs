@@ -3,7 +3,7 @@ using Reservations.Model;
 namespace Reservations.Server
 {
 	internal class RequestedRemoveShowEventArgs
-		:EventArgs
+		: EventArgs
 	{
 		internal RequestedRemoveShowEventArgs(Show oldShow)
 		{
