@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Deployment xmlns="http://schemas.microsoft.com/windowsphone/2012/deployment" AppPlatformVersion="8.0">
+  <DefaultLanguage xmlns="" code="en-GB" />
+  <App xmlns="" ProductID="{d945e47f-85df-4f9f-a237-4c3120207b76}" Title="BitBucket Browser" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="BitBucketBrowser author" Description="This is a simple application that allows browsing through ones BitBucket public repositories." Publisher="BitBucketBrowser" PublisherID="{48447be3-c2c6-449a-af74-e32182f8179c}">
+    <IconPath IsRelative="true" IsResource="false">Assets\Icon.png</IconPath>
+    <Capabilities>
+      <Capability Name="ID_CAP_NETWORKING" />
+      <Capability Name="ID_CAP_WEBBROWSERCOMPONENT" />
+    </Capabilities>
+    <Tasks>
+      <DefaultTask Name="_default" NavigationPage="MainPage.xaml" />
+    </Tasks>
+    <Tokens>
+      <PrimaryToken TokenID="BitBucketBrowserToken" TaskName="_default">
+        <TemplateFlip>
+          <SmallImageURI IsRelative="true" IsResource="false">Assets\Icon.png</SmallImageURI>
+          <Count>0</Count>
+          <BackgroundImageURI IsRelative="true" IsResource="false">Assets\Icon.png</BackgroundImageURI>
+          <Title>BitBucket Browser</Title>
+          <BackContent>
+          </BackContent>
+          <BackBackgroundImageURI>
+          </BackBackgroundImageURI>
+          <BackTitle>
+          </BackTitle>
+          <DeviceLockImageURI>
+          </DeviceLockImageURI>
+          <HasLarge>
+          </HasLarge>
+        </TemplateFlip>
+      </PrimaryToken>
+    </Tokens>
+    <ScreenResolutions>
+      <ScreenResolution Name="ID_RESOLUTION_WVGA" />
+    </ScreenResolutions>
+  </App>
+</Deployment>
