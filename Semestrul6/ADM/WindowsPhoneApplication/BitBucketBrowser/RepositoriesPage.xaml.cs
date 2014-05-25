@@ -66,10 +66,10 @@ namespace BitBucketBrowser
 			string username;
 			SelectedRepository = null;
 
-			if (NavigationContext.QueryString.TryGetValue("username", out username))
+			if (e.NavigationMode != NavigationMode.Back && NavigationContext.QueryString.TryGetValue("username", out username))
 			{
 				Username = username;
-
+				_repositories.Clear();
 				_SetRepositoriesAsync().ContinueWith(task => App.Log("_SetRepositories task compelted"));
 			}
 		}
