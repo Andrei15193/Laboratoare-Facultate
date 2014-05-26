@@ -1,0 +1,1 @@
+﻿Aplicația pentru licență este proiectul de semestru la această materie.
